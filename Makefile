@@ -1,2 +1,13 @@
-chem: chem.o
-	clang -o chem chem.o -lfl
+all: chem
+
+chem.tab.c chem.tab.h:	chem.y
+	bison -d chem.y
+
+lex.yy.c: chem.l chem.tab.h
+	flex chem.l
+
+chem: lex.yy.c chem.tab.c chem.tab.h
+	gcc -o chem chem.tab.c lex.yy.c
+
+clean:
+	rm chem chem.tab.c lex.yy.c chem.tab.h

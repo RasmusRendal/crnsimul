@@ -29,25 +29,20 @@ void yyerror(const char* s);
 
 %%
 
-program:
-	   | concentration T_NEWLINE reaction T_NEWLINE {printf("Program");}
-;
+program: concentration T_NEWLINE reaction T_NEWLINE {printf("Program");};
 
-concentration:
-				  | concentration T_NEWLINE concentration {printf("Conc");}
-				  | T_NAME T_SET T_NUMBER {printf("The concentration of %s is %d", $1, $3);}
-				  ;
+concentration: concentration T_NEWLINE concentration {printf("Conc");}
+			 | T_NAME T_SET T_NUMBER {printf("The concentration of %s is %d", $1, $3);}
+			 ;
 
-reaction:
-		 | reaction T_NEWLINE reaction
-		 | species T_RIGHTARROW species {printf("One reaction");}
-		 ;
+reaction: reaction T_NEWLINE reaction
+		| species T_RIGHTARROW species {printf("One reaction");}
+		;
 
-species:
-		   | species T_PLUS species
-		   | T_NUMBER T_NAME {printf("Species");}
-		   | T_NAME {printf("Species");}
-		   ;
+species: species T_PLUS species
+       | T_NUMBER T_NAME {printf("Species");}
+       | T_NAME {printf("Species");}
+       ;
 
 %%
 

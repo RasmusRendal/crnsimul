@@ -1,2 +1,5 @@
 chem.o
 chem
+chem.tab.c
+chem.tab.h
+lex.yy.c

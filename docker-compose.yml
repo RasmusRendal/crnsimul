@@ -1,0 +1,6 @@
+version: "3.7"
+services:
+  chem:
+    build:
+      context: .
+    command: bash -c 'echo "a:=0\na->b\n" | /chem/chem'

@@ -2,17 +2,58 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern int yylex();
 extern int yyparse();
 extern FILE* yyin;
 
 void yyerror(const char* s);
+
+struct node {
+	char name[100];
+	char value[100];
+	struct node *child;
+	struct node *child2;
+};
+
+char *print_node(struct node *n) {
+	printf("Node name: %s", n->name);
+	if (strlen(n->value) > 0) {
+		printf(" Node value: %s", n->value);
+	}
+
+	if (n->child != NULL || n->child2 != NULL) {
+		printf(" Children (");
+		if (n->child != NULL) {
+			printf("(");
+			print_node(n->child);
+			printf(")");
+		}
+		if (n->child2 != NULL) {
+			printf("(");
+			print_node(n->child2);
+			printf(")");
+		}
+		printf(")");
+	}
+}
+
+struct node *make_node(char *name, char *value, struct node *child, struct node *child2) {
+	struct node *n = malloc(sizeof(struct node));
+	strcpy(n->name, name);
+	strcpy(n->value, value);
+	n->child = child;
+	n->child2 = child2;
+	return n;
+}
+
 %}
 
 %union {
 	int ival;
 	char *sval;
+	struct node *nval;
 }
 
 %token<ival> T_NUMBER
@@ -20,28 +61,28 @@ void yyerror(const char* s);
 %token T_BIARROW T_PARENSTART T_PARENEND T_SET
 %left T_PLUS T_RIGHTARROW T_NEWLINE
 
-%type concentration
-%type reaction
+%type<nval> concentration
+%type<nval> reaction
 
-%type species
+%type<nval> species
 
 %start program
 
 %%
 
-program: concentration T_NEWLINE reaction T_NEWLINE {printf("Program");};
+program: concentration T_NEWLINE reaction T_NEWLINE { struct node *n = make_node("Program", "", $1, $3); printf("\n\n"); print_node(n); printf("\n\n"); };
 
-concentration: concentration T_NEWLINE concentration {printf("Conc");}
-			 | T_NAME T_SET T_NUMBER {printf("The concentration of %s is %d", $1, $3);}
+concentration: concentration T_NEWLINE concentration { struct node *n = make_node( "conclist", "", $1, $3); $$ = n; }
+			 | T_NAME T_SET T_NUMBER { struct node *n = make_node( "conc", "", NULL, NULL ); $$ = n; }
 			 ;
 
-reaction: reaction T_NEWLINE reaction
-		| species T_RIGHTARROW species {printf("One reaction");}
+reaction: reaction T_NEWLINE reaction { struct node *n = make_node("reactionlist", "", $1, $3); $$ = n; }
+		| species T_RIGHTARROW species { struct node *n = make_node("reaction", "", $1, $3); }
 		;
 
-species: species T_PLUS species
-       | T_NUMBER T_NAME {printf("Species");}
-       | T_NAME {printf("Species");}
+species: species T_PLUS species { struct node *n = make_node("specieslist", "", $1, $3); $$ = n; }
+       | T_NUMBER T_NAME { struct node *n = make_node("species", $2, NULL, NULL); $$ = n; }
+       | T_NAME { struct node *n = make_node("species", $1, NULL, NULL); $$ = n; }
        ;
 
 %%

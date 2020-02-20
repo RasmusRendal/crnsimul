@@ -11,7 +11,7 @@
 
 [ \t] ;
 [0-9]+  {yylval.ival = atof(yytext); return T_NUMBER;}
-[a-zA-Z]+  {yylval.sval = yytext; return T_NAME;}
+[a-zA-Z]+  {yylval.sval = strdup(yytext); return T_NAME;}
 "->"  {return T_RIGHTARROW;}
 "<->"  {return T_BIARROW;}
 "("  {return T_PARENSTART;}

@@ -1,3 +1,6 @@
+%define parse.trace
+%define parse.error verbose
+%define parse.lac full
 %{
 
 #include <stdio.h>

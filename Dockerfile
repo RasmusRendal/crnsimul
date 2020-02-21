@@ -1,9 +1,13 @@
 FROM alpine
 
-RUN apk add gcc make flex bison libc-dev bash
+RUN apk add gcc g++ libstdc++ make flex bison libc-dev gtest gtest-dev
 
 RUN mkdir /chem
 
-COPY Makefile chem.l chem.y /chem/
+WORKDIR /chem
 
-RUN sh -c "cd /chem && make"
+COPY Makefile chem.l chem.y ./
+RUN mkdir tests
+COPY tests/* ./tests/
+
+RUN sh -c "ls && make"

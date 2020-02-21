@@ -3,4 +3,7 @@ services:
   chem:
     build:
       context: .
-    command: bash -c 'echo "a:=0\na->b\n" | /chem/chem'
+    command: bash -c 'cd /target && cat file | /chem/chem'
+    volumes:
+        - ./:/target
+

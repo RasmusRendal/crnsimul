@@ -1,4 +1,4 @@
-from alpine
+FROM alpine
 
 RUN apk add gcc make flex bison libc-dev bash
 

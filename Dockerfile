@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk add gcc g++ libstdc++ make flex bison libc-dev gtest gtest-dev
+RUN apk add gcc g++ libstdc++ make flex bison libc-dev gtest gtest-dev bash
 
 RUN mkdir /chem
 

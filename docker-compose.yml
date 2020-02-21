@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  chem:
+    build:
+      context: .
+    command: bash -c 'cd /target && cat file | /chem/chem'
+    volumes:
+        - ./:/target
+

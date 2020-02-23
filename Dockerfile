@@ -6,7 +6,7 @@ RUN mkdir /chem
 
 WORKDIR /chem
 
-COPY Makefile chem.l chem.y ./
+COPY src/GCRN/Makefile src/GCRN/driver.cc src/GCRN/driver.hh src/GCRN/GCRNParse.yy src/GCRN/GCRNScan.l src/GCRN/input src/GCRN/main.cc ./
 RUN mkdir tests
 COPY tests/* ./tests/
 

@@ -3,7 +3,7 @@ services:
   chem:
     build:
       context: .
-    command: bash -c 'cd /target && cat file | /chem/chem'
+    command: bash -c 'cd /target &&  /chem/main /chem/input'
     volumes:
         - ./:/target
 

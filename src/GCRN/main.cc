@@ -10,8 +10,7 @@ void PrintConcen(driver drv)
     std::cout << "Specie " << Spec.second << Spec.first << '\n';
 }
 
-int
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
   int res = 0;
   driver drv;

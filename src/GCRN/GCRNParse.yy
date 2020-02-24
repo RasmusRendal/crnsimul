@@ -48,7 +48,7 @@
 program         : %empty {}
                 | concentration {}
                 | specie {}
-                | concentrations "->" reactions {}
+                | concentrations "->" reaction {}
                 ;
 
 concentrations  : concentration {}
@@ -56,10 +56,6 @@ concentrations  : concentration {}
                 ;
 
 concentration   : "name" ":=" "number" ";" {drv.Concentration[$1] = $3;}
-                ;
-
-reactions       : reaction {} 
-                | reactions reaction {}
                 ;
 
 reaction        : specie {}

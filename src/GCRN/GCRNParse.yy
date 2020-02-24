@@ -46,16 +46,22 @@
 %start program;
 
 program         : %empty {}
-                | concentration {}
-                | specie {}
-                | concentrations "->" reaction {}
+                | CRNS {}
+                ;
+
+CRNS            : CRN {}
+                | CRNS CRN
+                ;
+
+CRN             : concentrations "->" reaction {}
+                | concentrations "<->" reaction {}
                 ;
 
 concentrations  : concentration {}
                 | concentrations concentration {}
                 ;
 
-concentration   : "name" ":=" "number" ";" {drv.Concentration[$1] = $3;}
+concentration   : "name" ":=" "number" {drv.Concentration[$1] = $3;}
                 ;
 
 reaction        : specie {}

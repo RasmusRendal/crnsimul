@@ -5,3 +5,5 @@ chem.tab.h
 lex.yy.c
 test
 file
+crnparser
+*.o

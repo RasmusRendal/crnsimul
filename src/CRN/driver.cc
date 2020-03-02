@@ -1,5 +1,5 @@
 #include "driver.hh"
-#include "GCRNParse.hh"
+#include "CRNParse.hh"
 
 driver::driver ()
   : trace_parsing (false), trace_scanning (false)

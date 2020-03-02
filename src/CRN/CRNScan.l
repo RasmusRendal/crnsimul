@@ -5,7 +5,7 @@
 # include <cstring> // strerror
 # include <string>
 # include "driver.hh"
-# include "GCRNParse.hh"
+# include "CRNParse.hh"
 %}
 
 %{

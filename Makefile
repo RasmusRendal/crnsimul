@@ -1,7 +1,7 @@
 # This Makefile is designed to be simple and readable.  It does not
 # aim at portability.  It requires GNU Make.
 
-BASE = main
+BASE = crnparser
 BISON = bison
 CXX = g++
 FLEX = flex
@@ -18,24 +18,12 @@ all: $(BASE)
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c -o$@ $<
 
-$(BASE): $(BASE).o driver.o GCRNParse.o GCRNScan.o
+$(BASE): src/CRN/main.o src/CRN/driver.o src/CRN/CRNParse.o src/CRN/CRNScan.o
 	$(CXX) -o $@ $^
 
-$(BASE).o: GCRNParse.hh
-GCRNParse.o: GCRNParse.hh
-GCRNScan.o: GCRNParse.hh
+$(BASE).o: src/CRN/CRNParse.hh
+CRNParse.o: src/CRN/CRNParse.hh
+CRNScan.o: src/CRN/CRNParse.hh
 
-run: $(BASE)
-	@echo "Type arithmetic expressions.  Quit with ctrl-d."
-	./$< -
-
-html: GCRNParse.html
-%.html: %.xml
-	$(XSLTPROC) $(XSLTPROCFLAGS) -o $@ $$($(BISON) --print-datadir)/xslt/xml2xhtml.xsl $<
-
-CLEANFILES =										\
-  $(BASE) *.o										\
-  GCRNParse.hh GCRNParse.cc GCRNParse.output GCRNParse.xml GCRNParse.html GCRNParse.gv location.hh	\
-  GCRNScan.cc
 clean:
-	rm -f $(CLEANFILES)
+	git clean -fXd

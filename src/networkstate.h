@@ -3,7 +3,7 @@
 using namespace std;
 
 class NetworkState {
-	public:
-		NetworkState(vector<int> state) : state(state) {}
-		vector<int> state;
+public:
+	NetworkState(vector<int> state) : state(state) {}
+	vector<int> state;
 };

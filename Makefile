@@ -10,16 +10,16 @@ XSLTPROC = xsltproc
 all: $(BASE)
 
 %.cc %.hh %.xml %.gv: %.yy
-	$(BISON) $(BISONFLAGS) --xml --graph=$*.gv -o $*.cc $<
+	$(BISON) $(BISONFLAGS) -o $*.cc $<
 
 %.cc: %.l
 	$(FLEX) $(FLEXFLAGS) -o$@ $<
 
-%.o: %.cc
-	$(CXX) $(CXXFLAGS) -c -o$@ $<
-
-$(BASE): src/CRN/main.o src/CRN/driver.o src/CRN/CRNParse.o src/CRN/CRNScan.o
+$(BASE): src/CRN/main.o src/CRN/driver.o src/CRN/CRNParse.o src/CRN/CRNScan.o src/CRN/CRNParse.hh
 	$(CXX) -o $@ $^
+
+%.o: %.cc src/CRN/CRNParse.hh
+	$(CXX) $(CXXFLAGS) -c -o$@ $<
 
 $(BASE).o: src/CRN/CRNParse.hh
 CRNParse.o: src/CRN/CRNParse.hh

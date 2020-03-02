@@ -134,19 +134,12 @@ make_T_NUMBER (const std::string &s, const yy::parser::location_type& loc)
   return yy::parser::make_T_NUMBER ((int) n, loc);
 }
 
-void driver::scan_begin ()
+void driver::scan_begin (const std::string &instream)
 {
   yy_flex_debug = trace_scanning;
-  if (file.empty() || file == "-")
-    yyin = stdin;
-  else if (!(yyin = fopen (file.c_str (), "r")))
-    {
-      std::cerr << "cannot open " << file << ": " << strerror(errno) << '\n';
-      exit (EXIT_FAILURE);
-    }
+  yy_scan_string(instream.c_str());
 }
 
 void driver::scan_end ()
 {
-  fclose (yyin);
 }

@@ -37,7 +37,6 @@
 
 %token <std::string>    T_NAME      "name"
 %token <int>            T_NUMBER    "number"
-%nterm <int>            concentration
 
 %printer {yyo << $$;} <*>;
 

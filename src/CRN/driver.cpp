@@ -1,5 +1,5 @@
-#include "driver.hh"
-#include "CRNParse.hh"
+#include "driver.h"
+#include "CRNParse.hpp"
 
 #include <fstream>
 #include <iostream>

@@ -1,5 +1,5 @@
 #pragma once
-#include "CRNParse.hh"
+#include "CRNParse.hpp"
 #include <map>
 #include <string>
 

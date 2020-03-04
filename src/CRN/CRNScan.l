@@ -4,8 +4,8 @@
 # include <cstdlib>
 # include <cstring> // strerror
 # include <string>
-# include "driver.hh"
-# include "CRNParse.hh"
+# include "driver.h"
+# include "CRNParse.hpp"
 %}
 
 %{

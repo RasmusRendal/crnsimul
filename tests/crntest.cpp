@@ -1,4 +1,4 @@
-#include "CRN/driver.hh"
+#include "CRN/driver.h"
 #include <gtest/gtest.h>
 
 class CrnTest : public ::testing::Test {

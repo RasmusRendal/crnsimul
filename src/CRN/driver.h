@@ -1,5 +1,6 @@
 #pragma once
 #include "CRNParse.hpp"
+#include "reaction.h"
 #include <map>
 #include <string>
 
@@ -14,7 +15,7 @@ public:
 	driver();
 
 	std::map<std::string, int> Concentration;
-	std::map<std::string, int> Specie;
+	std::vector<Reaction> reactions;
 
 	int result;
 

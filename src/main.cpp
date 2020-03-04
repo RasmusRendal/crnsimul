@@ -5,9 +5,6 @@
 void PrintConcen(driver drv) {
 	for (auto &conc : drv.Concentration)
 		std::cout << "Value of " << conc.first << " is " << conc.second << '\n';
-
-	for (auto &Spec : drv.Specie)
-		std::cout << "Specie " << Spec.second << Spec.first << '\n';
 }
 
 int main(int argc, char *argv[]) {

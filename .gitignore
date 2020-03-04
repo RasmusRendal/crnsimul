@@ -14,3 +14,4 @@ CMakeCache.txt
 CMakeFiles
 bin
 cmake_install.cmake
+CTestTestfile.cmake

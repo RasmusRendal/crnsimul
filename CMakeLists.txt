@@ -23,11 +23,21 @@ file(GLOB TEST_SOURCES "tests/*.cpp")
 
 # add the executable
 add_executable(chemilang
+	src/main.cpp
 	${SOURCES}
 	${BISON_CRNParse_OUTPUTS}
 	${FLEX_CRNScan_OUTPUTS}
-	)
+)
 
-#add_executable(tests
-#${TEST_SOURCES}
-#)
+enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+
+add_executable(tests
+	${TEST_SOURCES}
+	${SOURCES}
+	${BISON_CRNParse_OUTPUTS}
+	${FLEX_CRNScan_OUTPUTS}
+)
+target_link_libraries(tests ${GTEST_BOTH_LIBRARIES})

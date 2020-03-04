@@ -1,11 +1,15 @@
 #pragma once
 
+#include <map>
+
+using namespace std;
+
 class Reaction {
 public:
-	Reaction(vector<int> reactants, vector<int> products, int reactionConstant)
+	Reaction(map<string, int> reactants, map<string, int> products, int reactionConstant)
 			: reactants(reactants), products(products),
 				reactionConstant(reactionConstant) {}
-	vector<int> reactants;
-	vector<int> products;
+	map<string, int> reactants;
+	map<string, int> products;
 	int reactionConstant;
 };

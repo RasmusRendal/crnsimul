@@ -68,8 +68,8 @@ species         : specie {}
                 | species "+" specie {}
                 ;
 
-specie          : "number" "name" {drv.Specie[$2] = $1;}
-                | "name" {drv.Specie[$1] = 1;}
+specie          : "number" "name" {}
+                | "name" {}
                 ;
 
 %%

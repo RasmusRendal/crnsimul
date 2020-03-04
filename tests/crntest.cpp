@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "CRN/driver.hh"
+#include <gtest/gtest.h>
 
 class CrnTest : public ::testing::Test {
 protected:

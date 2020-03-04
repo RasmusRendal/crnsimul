@@ -45,10 +45,14 @@
 %nterm <Reaction> reaction
 %nterm <std::map<std::string, int>> species
 %nterm <std::pair<std::string, int>> specie
-%printer { printf("lol"); } <std::vector<Reaction>>
-%printer { printf("lol"); } <Reaction>
-%printer { printf("lol"); } <std::map<std::string, int>>
-%printer { printf("lol"); } <std::pair<std::string, int>>
+
+// Bison enforces that all datatypes used in terms are printable
+// with the << operator, or have a custom printer defined.
+// We bypass this by doing nothing.
+%printer {} <std::vector<Reaction>>
+%printer {} <Reaction>
+%printer {} <std::map<std::string, int>>
+%printer {} <std::pair<std::string, int>>
 
 %printer {yyo << $$;} <*>;
 

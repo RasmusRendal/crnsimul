@@ -9,3 +9,8 @@ crnparser
 src/CRN/location.hh
 src/CRN/CRNParse.cc
 src/CRN/CRNParse.hh
+Makefile
+CMakeCache.txt
+CMakeFiles
+bin
+cmake_install.cmake

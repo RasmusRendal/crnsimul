@@ -1,5 +1,4 @@
-#ifndef DRIVER_HH
-#define DRIVER_HH
+#pragma once
 #include "CRNParse.hh"
 #include <map>
 #include <string>
@@ -36,4 +35,3 @@ public:
 	// The token's location used by the scanner.
 	yy::location location;
 };
-#endif // ! DRIVER_HH

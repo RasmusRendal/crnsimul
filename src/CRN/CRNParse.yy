@@ -8,6 +8,10 @@
 
 %code requires {
   # include <string>
+  # include <map>
+  # include <vector>
+  # include <exception>
+  # include "reaction.h"
   class driver;
 }
 
@@ -37,6 +41,14 @@
 
 %token <std::string>    T_NAME      "name"
 %token <int>            T_NUMBER    "number"
+%nterm <std::vector<Reaction>> reactions
+%nterm <Reaction> reaction
+%nterm <std::map<std::string, int>> species
+%nterm <std::pair<std::string, int>> specie
+%printer { printf("lol"); } <std::vector<Reaction>>
+%printer { printf("lol"); } <Reaction>
+%printer { printf("lol"); } <std::map<std::string, int>>
+%printer { printf("lol"); } <std::pair<std::string, int>>
 
 %printer {yyo << $$;} <*>;
 
@@ -46,7 +58,7 @@
 
 program         : %empty {}
                 | concentrations {}
-                | concentrations reactions {}
+                | concentrations reactions { drv.reactions = $2; }
                 ;
 
 concentrations  : concentration {}
@@ -56,25 +68,25 @@ concentrations  : concentration {}
 concentration   : "name" ":=" "number" ";" {drv.Concentration[$1] = $3;}
                 ;
 
-reactions       : reaction {}
-                | reactions reaction {}
+reactions       : reaction { auto r = std::vector<Reaction>(); r.push_back(std::move($1)); $$ = r; }
+                | reactions reaction { auto r = $1; r.push_back($2); $$ = r; }
                 ;
 
-reaction        : species "->" species ";" {}
-                | species "<->" species ";" {}
+reaction        : species "->" species ";" { $$ = Reaction($1, $3, 1); }
                 ;
 
-species         : specie {}
-                | species "+" specie {}
+species         : specie { auto map = std::map<std::string, int>(); map.insert(std::move($1)); $$ = map; }
+                | species "+" specie { auto map = std::move($1); map.insert(std::move($3)); $$ = $1; }
+                | "number" { if ($1 != 0) throw std::runtime_error("Parser error"); $$ = std::map<std::string, int>(); }
                 ;
 
-specie          : "number" "name" {}
-                | "name" {}
+specie          : "number" "name" { $$ = std::make_pair<std::string,int>(std::move($2), std::move($1)); }
+                | "name" { $$ = std::make_pair<std::string,int>(std::move($1), 1); }
                 ;
 
 %%
 
 void yy::parser::error (const location_type& l, const std::string& m)
 {
-  std::cerr << l << ": " << m << '\n';
+  //std::cerr << l << ": " << m << '\n';
 }

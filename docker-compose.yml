@@ -3,7 +3,7 @@ services:
   chem:
     build:
       context: .
-    command: bash -c './crnparser src/CRN/input'
+    command: bash -c './bin/chemilang src/CRN/input'
     volumes:
         - ./:/target
 

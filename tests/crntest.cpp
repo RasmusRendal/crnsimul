@@ -1,6 +1,6 @@
 #include "CRN/driver.h"
-#include <gtest/gtest.h>
 #include "reaction.h"
+#include <gtest/gtest.h>
 
 class CrnTest : public ::testing::Test {
 protected:
@@ -66,7 +66,6 @@ TEST_F(CrnTest, doesNotParseINvalid) {
 	driver drv;
 	ASSERT_ANY_THROW(drv.parse_string("a:=3; a->b; b->7;"));
 }
-
 
 TEST_F(CrnTest, goNuts) {
 	driver drv;

@@ -11,4 +11,4 @@ COPY src ./src/
 RUN mkdir tests
 COPY tests/* ./tests/
 
-RUN sh -c "ls && cmake . && make"
+RUN sh -c "ls && cmake . && make && ./bin/tests"

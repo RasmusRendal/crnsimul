@@ -61,7 +61,9 @@ void EulerEvaluator::PrintEquations() {
 		for (auto &term : equation.second) {
 			std::cout << term.first << "*";
 			for (auto &specie : term.second) {
-				std::cout << specie.second << specie.first;
+				if (specie.second != 1)
+					std::cout << specie.second;
+				std::cout << specie.first;
 			}
 			std::cout << " + ";
 		}

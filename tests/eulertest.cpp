@@ -60,6 +60,7 @@ TEST_F(EulerTest, multiplication) {
 
 	ReactionNetwork network(initNetworkState, reactions);
 	EulerEvaluator evaluator(network);
+	evaluator.PrintEquations();
 
 	for (int i = 0; i < 100000; i++)
 		evaluator.GetNextNetworkState();

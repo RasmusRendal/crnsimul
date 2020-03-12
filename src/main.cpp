@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 				if (run) {
 					EulerEvaluator e(drv.network);
 					drv.network.initNetworkState.PrintCsvHeader();
-					for (int i = 0; i < 1000; i++) {
+					for (int i = 0; i < 1000000; i++) {
 						e.GetNextNetworkState().PrintCsvRow();
 					}
 				} else {

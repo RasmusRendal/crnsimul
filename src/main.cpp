@@ -39,8 +39,9 @@ int main(int argc, char *argv[]) {
 			if (res == 0) {
 				if (run) {
 					EulerEvaluator e(drv.network);
+					drv.network.initNetworkState.PrintCsvHeader();
 					for (int i = 0; i < 1000; i++) {
-						e.GetNextNetworkState().Print();
+						e.GetNextNetworkState().PrintCsvRow();
 					}
 				} else {
 					PrintConcen(drv.network);

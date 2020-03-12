@@ -21,4 +21,16 @@ public:
 			std::cout << specie.first << ": " << specie.second << std::endl;
 		}
 	}
+	void PrintCsvHeader() {
+		for (auto &specie : *this) {
+			std::cout << specie.first << ",";
+		}
+		std::cout << std::endl;
+	}
+	void PrintCsvRow() {
+		for (auto specie : *this) {
+			std::cout << specie.second << ",";
+		}
+		std::cout << std::endl;
+	}
 };

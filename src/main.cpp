@@ -1,4 +1,4 @@
-#include "driver.h"
+#include "CRN/driver.h"
 #include "reaction.h"
 #include <iostream>
 #include <string>

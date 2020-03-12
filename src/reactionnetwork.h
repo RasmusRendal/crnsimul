@@ -1,5 +1,9 @@
 #pragma once
 
+#include "networkstate.h"
+#include "reaction.h"
+#include <vector>
+
 class ReactionNetwork {
 public:
 	ReactionNetwork(NetworkState initNetworkState,

@@ -93,3 +93,41 @@ TEST_F(CrnTest, goNuts) {
 	EXPECT_EQ(reaction3.products.size(), 1);
 	EXPECT_EQ(reaction3.products["a"], 77);
 }
+
+TEST_F(CrnTest, multipleSpecies) {
+	driver drv;
+	int res = drv.parse_string("a:=5; b:=6; 2a+3b->5x; 4f+z->2a+3b;");
+	EXPECT_EQ(res, 0);
+
+	EXPECT_EQ(drv.Concentration.size(), 2);
+	EXPECT_EQ(drv.Concentration["a"], 5);
+	EXPECT_EQ(drv.Concentration["b"], 6);
+
+	EXPECT_EQ(drv.reactions.size(), 2);
+	auto reaction1 = drv.reactions[0];
+	EXPECT_EQ(reaction1.reactants.size(), 2);
+	EXPECT_EQ(reaction1.products.size(), 1);
+
+	auto reaction2 = drv.reactions[1];
+	EXPECT_EQ(reaction2.reactants.size(), 2);
+	EXPECT_EQ(reaction2.products.size(), 2);
+}
+
+TEST_F(CrnTest, withNewlines) {
+	driver drv;
+	int res = drv.parse_string("a:=5;\nb:=6;\n2a+3b->5x;\n4f+z->2a+3b;");
+	EXPECT_EQ(res, 0);
+
+	EXPECT_EQ(drv.Concentration.size(), 2);
+	EXPECT_EQ(drv.Concentration["a"], 5);
+	EXPECT_EQ(drv.Concentration["b"], 6);
+
+	EXPECT_EQ(drv.reactions.size(), 2);
+	auto reaction1 = drv.reactions[0];
+	EXPECT_EQ(reaction1.reactants.size(), 2);
+	EXPECT_EQ(reaction1.products.size(), 1);
+
+	auto reaction2 = drv.reactions[1];
+	EXPECT_EQ(reaction2.reactants.size(), 2);
+	EXPECT_EQ(reaction2.products.size(), 2);
+}

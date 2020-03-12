@@ -80,7 +80,7 @@ reaction        : species "->" species ";" { $$ = Reaction($1, $3, 1); }
                 ;
 
 species         : specie { auto map = std::map<std::string, int>(); map.insert(std::move($1)); $$ = map; }
-                | species "+" specie { auto map = std::move($1); map.insert(std::move($3)); $$ = $1; }
+                | species "+" specie { auto map = std::move($1); map.insert(std::move($3)); $$ = map; }
                 | "number" { if ($1 != 0) throw std::runtime_error("Parser error"); $$ = std::map<std::string, int>(); }
                 ;
 

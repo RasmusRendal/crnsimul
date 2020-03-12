@@ -125,7 +125,7 @@ TEST_F(CrnTest, withNewlines) {
 	auto &network = drv.network;
 	EXPECT_EQ(res, 0);
 
-	//EXPECT_EQ(network.initNetworkState.size(), 2);
+	// EXPECT_EQ(network.initNetworkState.size(), 2);
 	EXPECT_EQ(network.initNetworkState["a"], 5);
 	EXPECT_EQ(network.initNetworkState["b"], 6);
 

@@ -1,3 +1,4 @@
+#include "CRN/driver.h"
 #include "eulerevaluator.h"
 #include <gtest/gtest.h>
 
@@ -25,7 +26,7 @@ TEST_F(EulerTest, twoValues) {
 	ReactionNetwork network(initNetworkState, reactions);
 	EulerEvaluator evaluator(network);
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 100000; i++) {
 		evaluator.GetNextNetworkState();
 	}
 	auto nextState = evaluator.GetNextNetworkState();
@@ -60,8 +61,39 @@ TEST_F(EulerTest, multiplication) {
 	ReactionNetwork network(initNetworkState, reactions);
 	EulerEvaluator evaluator(network);
 
+	for (int i = 0; i < 100000; i++)
+		evaluator.GetNextNetworkState();
+
 	auto nextState = evaluator.GetNextNetworkState();
 	EXPECT_CLOSE(nextState["a"], 5);
 	EXPECT_CLOSE(nextState["b"], 3);
 	EXPECT_CLOSE(nextState["c"], 15);
+}
+
+TEST_F(EulerTest, NoChange) {
+	driver drv;
+	int res = drv.parse_string("a:=5;\nb:=6;\n2c+3b->5x;\n4f+z->2a+3b;");
+	auto &network = drv.network;
+	EXPECT_EQ(res, 0);
+
+	EulerEvaluator e(network);
+	NetworkState state = e.GetNextNetworkState();
+
+	EXPECT_CLOSE(state["a"], 5);
+	EXPECT_CLOSE(state["b"], 6);
+}
+
+TEST_F(EulerTest, SanityCheck) {
+	driver drv;
+	int res = drv.parse_string("a:=5;\nb:=6;\n2a+3b->5x;\n4f+z->2a+3b;");
+	auto &network = drv.network;
+	EXPECT_EQ(res, 0);
+
+	EulerEvaluator e(network);
+	for (int i = 0; i < 100000; i++)
+		e.GetNextNetworkState();
+
+	NetworkState state = e.GetNextNetworkState();
+
+	EXPECT_LT(state["x"], 11);
 }

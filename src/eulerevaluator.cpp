@@ -54,3 +54,17 @@ NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
 	}
 	return mState;
 }
+
+void EulerEvaluator::PrintEquations() {
+	for (auto equation : equationParts) {
+		std::cout << equation.first << " = ";
+		for (auto &term : equation.second) {
+			std::cout << term.first << "*";
+			for (auto &specie : term.second) {
+				std::cout << specie.second << specie.first;
+			}
+			std::cout << " + ";
+		}
+		std::cout << std::endl;
+	}
+}

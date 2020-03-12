@@ -18,10 +18,11 @@ public:
 	EulerEvaluator(ReactionNetwork network) : Evaluator(network) {
 		InitializeEquationParts();
 	}
+	void PrintEquations();
 
 private:
 	void InitializeEquationParts();
-	double step = 1;
+	double step = 0.0001;
 
 	NetworkState GetNextNetworkStateInternal() override;
 	// The differential equations are stored here

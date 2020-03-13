@@ -29,5 +29,6 @@ int driver::parse() {
 	parse.set_debug_level(trace_parsing);
 	int res = parse();
 	scan_end();
+	network.AddEmptyStates();
 	return res;
 }

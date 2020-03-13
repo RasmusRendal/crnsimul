@@ -1,6 +1,7 @@
 #pragma once
 #include "CRNParse.hpp"
 #include "reaction.h"
+#include "reactionnetwork.h"
 #include <map>
 #include <string>
 
@@ -14,9 +15,7 @@ class driver {
 public:
 	driver();
 
-	std::map<std::string, int> Concentration;
-	std::vector<Reaction> reactions;
-
+	ReactionNetwork network;
 	int result;
 
 	// Run the parser on file F.  Return 0 on success.

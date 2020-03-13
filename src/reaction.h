@@ -13,5 +13,5 @@ public:
 	Reaction() {}
 	map<string, int> reactants;
 	map<string, int> products;
-	int reactionConstant;
+	int reactionConstant = 1;
 };

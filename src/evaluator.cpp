@@ -1,5 +1,6 @@
 #include "evaluator.h"
 
-State Evaluator::GetNextState() {
-	State s = GetNextStateInternal(mNetwork);
+NetworkState Evaluator::GetNextNetworkState() {
+	NetworkState s = GetNextNetworkStateInternal();
+	return s;
 }

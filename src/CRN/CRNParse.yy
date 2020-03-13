@@ -62,14 +62,14 @@
 
 program         : %empty {}
                 | concentrations {}
-                | concentrations reactions { drv.reactions = $2; }
+                | concentrations reactions { drv.network.reactionList = $2; }
                 ;
 
 concentrations  : concentration {}
                 | concentrations concentration {}
                 ;
 
-concentration   : "name" ":=" "number" ";" {drv.Concentration[$1] = $3;}
+concentration   : "name" ":=" "number" ";" {drv.network.initNetworkState[$1] = $3;}
                 ;
 
 reactions       : reaction { auto r = std::vector<Reaction>(); r.push_back(std::move($1)); $$ = r; }

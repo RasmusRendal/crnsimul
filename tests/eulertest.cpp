@@ -26,12 +26,12 @@ TEST_F(EulerTest, twoValues) {
 	ReactionNetwork network(initNetworkState, reactions);
 	EulerEvaluator evaluator(network);
 
-	for (int i = 0; i < 100000; i++) {
+	while (!evaluator.IsFinished()) {
 		evaluator.GetNextNetworkState();
 	}
 	auto nextState = evaluator.GetNextNetworkState();
-	EXPECT_LT(nextState["a"], 0.1);
-	EXPECT_GT(nextState["b"], 0.9);
+	EXPECT_CLOSE(nextState["a"], 0);
+	EXPECT_CLOSE(nextState["b"], 1);
 }
 
 TEST_F(EulerTest, multiplication) {
@@ -60,9 +60,8 @@ TEST_F(EulerTest, multiplication) {
 
 	ReactionNetwork network(initNetworkState, reactions);
 	EulerEvaluator evaluator(network);
-	evaluator.PrintEquations();
 
-	for (int i = 0; i < 100000; i++)
+	while (!evaluator.IsFinished())
 		evaluator.GetNextNetworkState();
 
 	auto nextState = evaluator.GetNextNetworkState();
@@ -91,7 +90,7 @@ TEST_F(EulerTest, SanityCheck) {
 	EXPECT_EQ(res, 0);
 
 	EulerEvaluator e(network);
-	for (int i = 0; i < 100000; i++)
+	while (!e.IsFinished())
 		e.GetNextNetworkState();
 
 	NetworkState state = e.GetNextNetworkState();

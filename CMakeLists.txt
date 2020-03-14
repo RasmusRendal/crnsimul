@@ -19,7 +19,7 @@ include_directories(src)
 include_directories(src/CRN)
 
 file(GLOB SOURCES "src/CRN/*.cpp")
-list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp")
+list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp")
 file(GLOB TEST_SOURCES "tests/*.cpp")
 
 # add the executable

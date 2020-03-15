@@ -5,23 +5,6 @@
 #include <iostream>
 #include <string>
 
-void PrintConcen(ReactionNetwork network) {
-	std::cout << "Printing CRN" << std::endl;
-	for (auto &conc : network.initNetworkState)
-		std::cout << "Value of " << conc.first << " is " << conc.second << '\n';
-
-	for (Reaction &r : network.reactionList) {
-		for (auto &reactant : r.reactants) {
-			std::cout << reactant.second << reactant.first << " ";
-		}
-		std::cout << "-> ";
-		for (auto &product : r.products) {
-			std::cout << product.second << product.first << " ";
-		}
-		std::cout << std::endl;
-	}
-}
-
 int main(int argc, char *argv[]) {
 	int res = 0;
 	driver drv;
@@ -45,7 +28,7 @@ int main(int argc, char *argv[]) {
 						e.GetNextNetworkState().PrintCsvRow();
 					}
 				} else {
-					PrintConcen(drv.network);
+					drv.network.Print();
 				}
 			} else {
 				std::cout << "Error while parsing" << std::endl;

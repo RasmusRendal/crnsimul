@@ -25,6 +25,16 @@
 
 %code {
 # include "driver.h"
+using SpeciesPair = std::pair<std::string, int>;
+using SpeciesList = std::map<std::string, int>;
+
+void InsertToSpecieMap(SpeciesList &list, SpeciesPair &toInsert) {
+	if (list.find(toInsert.first) == list.end()) {
+		list.insert(toInsert);
+	} else {
+		list[toInsert.first] += toInsert.second;
+	}
+  }
 }
 
 %define api.token.prefix {TOK_}
@@ -79,8 +89,8 @@ reactions       : reaction { auto r = std::vector<Reaction>(); r.push_back(std::
 reaction        : species "->" species ";" { $$ = Reaction($1, $3, 1); }
                 ;
 
-species         : specie { auto map = std::map<std::string, int>(); map.insert(std::move($1)); $$ = map; }
-                | species "+" specie { auto map = std::move($1); map.insert(std::move($3)); $$ = map; }
+species         : specie { auto map = std::map<std::string, int>(); InsertToSpecieMap(map, $1); $$ = map; }
+                | species "+" specie { auto map = std::move($1); InsertToSpecieMap(map, $3); $$ = map; }
                 | "number" { if ($1 != 0) throw std::runtime_error("Parser error"); $$ = std::map<std::string, int>(); }
                 ;
 

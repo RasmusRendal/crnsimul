@@ -1,6 +1,7 @@
 #include "eulerevaluator.h"
 #include <iostream>
 #include <map>
+#include <math.h>
 #include <utility>
 
 void AddIfNotExists(map<string, int> &map, string toAdd) {
@@ -46,7 +47,7 @@ NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
 		for (equation_term &term : specie.second) {
 			double change = term.first;
 			for (auto &reactant : term.second) {
-				change *= oldState[reactant.first];
+				change *= pow(oldState[reactant.first], reactant.second);
 			}
 			diff += change;
 		}

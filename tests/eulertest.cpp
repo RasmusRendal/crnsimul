@@ -97,3 +97,24 @@ TEST_F(EulerTest, SanityCheck) {
 
 	EXPECT_LT(state["x"], 11);
 }
+
+TEST_F(EulerTest, MultipleSame) {
+	driver drv;
+	driver drv2;
+	// This should be the square root function. However, due to the
+	// reaction constant not being included, it's actually sqrt(x/2)
+	// instead of sqrt(x)
+	EXPECT_EQ(drv.parse_string("x:=128; x -> x + z; 2z    -> 0;"), 0);
+	EXPECT_EQ(drv2.parse_string("x:=128; x -> x + z; z + z -> 0;"), 0);
+
+	EulerEvaluator e(drv.network);
+	EulerEvaluator e2(drv2.network);
+	while (!e.IsFinished())
+		e.GetNextNetworkState();
+	while (!e2.IsFinished())
+		e2.GetNextNetworkState();
+
+	EXPECT_CLOSE(e.GetNextNetworkState()["z"], e2.GetNextNetworkState()["z"]);
+	EXPECT_CLOSE(e2.GetNextNetworkState()["z"], 8);
+	EXPECT_CLOSE(e.GetNextNetworkState()["z"], 8);
+}

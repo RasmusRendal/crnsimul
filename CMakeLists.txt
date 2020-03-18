@@ -17,11 +17,10 @@ ADD_FLEX_BISON_DEPENDENCY(CRNScan CRNParse)
 include_directories(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 include_directories(src)
 include_directories(src/CRN)
-include_directories(gnuplot-iostream)
+include_directories(submodules/gnuplot-iostream)
 
 file(GLOB SOURCES "src/CRN/*.cpp")
 list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp")
-list(APPEND SOURCES "gnuplot-iostream/")
 file(GLOB TEST_SOURCES "tests/*.cpp")
 
 find_package(Boost 1.56 REQUIRED COMPONENTS iostreams)

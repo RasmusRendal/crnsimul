@@ -10,6 +10,6 @@ jobs:
     - uses: actions/checkout@v1
     - uses: DoozyX/clang-format-lint-action@v0.5
       with:
-        source: '.'
+        source: 'src'
         extensions: 'h,cpp,hh,cc'
         clangFormatVersion: 9

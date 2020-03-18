@@ -15,6 +15,7 @@ using equation_set = map<string, equation>;
 
 class EulerEvaluator : public Evaluator {
 public:
+	double step = 0.0001;
 	EulerEvaluator(ReactionNetwork network) : Evaluator(network) {
 		InitializeEquationParts();
 	}
@@ -22,7 +23,6 @@ public:
 
 private:
 	void InitializeEquationParts();
-	double step = 0.0001;
 
 	NetworkState GetNextNetworkStateInternal() override;
 	// The differential equations are stored here

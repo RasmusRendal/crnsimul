@@ -10,9 +10,9 @@ jobs:
 
     steps:
     - name: Checkout submodules
-    uses: textbook/git-checkout-submodule-action@master
-    with:
-      remote: true
-    - uses: actions/checkout@v2
+      uses: textbook/git-checkout-submodule-action@master
+      with:
+        remote: true
     - name: Build the Docker image
+      uses: actions/checkout@v2
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

@@ -14,9 +14,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    needs: pull_modules
 
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      needs: pull_modules
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

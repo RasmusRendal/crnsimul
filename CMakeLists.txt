@@ -17,10 +17,13 @@ ADD_FLEX_BISON_DEPENDENCY(CRNScan CRNParse)
 include_directories(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 include_directories(src)
 include_directories(src/CRN)
+include_directories(submodules/gnuplot-iostream)
 
 file(GLOB SOURCES "src/CRN/*.cpp")
 list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp")
 file(GLOB TEST_SOURCES "tests/*.cpp")
+
+find_package(Boost 1.56 REQUIRED COMPONENTS iostreams)
 
 # add the executable
 add_executable(chemilang
@@ -29,6 +32,8 @@ add_executable(chemilang
 	${BISON_CRNParse_OUTPUTS}
 	${FLEX_CRNScan_OUTPUTS}
 )
+
+TARGET_LINK_LIBRARIES(chemilang LINK_PUBLIC Boost::iostreams)
 
 enable_testing()
 find_package(GTest REQUIRED)

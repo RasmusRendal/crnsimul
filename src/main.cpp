@@ -17,6 +17,12 @@ int main(int argc, char *argv[]) {
 
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
+		} else if (argv[i] == std::string("-S") && std::atoi(argv[++i]) != 0){
+			EulerEvaluator::step = argv[i + 1];
+			i++;
+		} else if (argv[i] == std::string("-T") && std::atoi(argv[++i]) != 0){
+			EulerEvaluator::threshold = argv[i + 1];
+			i++;
 		} else {
 			res = drv.parse_file(argv[i]);
 			if (res == 0) {

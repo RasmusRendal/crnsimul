@@ -15,11 +15,11 @@ using equation_set = map<string, equation>;
 
 class EulerEvaluator : public Evaluator {
 public:
-	double step = 0.0001;
 	EulerEvaluator(ReactionNetwork network) : Evaluator(network) {
 		InitializeEquationParts();
 	}
 	void PrintEquations();
+	double step = 0.0001;
 
 private:
 	void InitializeEquationParts();

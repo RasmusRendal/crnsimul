@@ -6,6 +6,11 @@ The project uses cmake. To compile a project using cmake, the following commands
 cmake .
 make
 ```
+Besides that, there currently is also one submodule. Run
+```
+git submodule update --init --recursive
+```
+to download it
 Afterwards, you should be able to find the executable in the ./bin folder
 ## Dependencies
 The dependencies can be found in the dockerfile. For Arch Linux, they can be installed by running

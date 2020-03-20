@@ -18,13 +18,9 @@ int main(int argc, char *argv[]) {
 	EulerEvaluator e(network);
 	bool file = false;
 	std::string filename;
-
 	filename = std::string(argv[argc - 1]);
-	if (file_included(filename) == true) {
-		file = true;
-	}
-	if (file == false) {
-		std::cout << "Error: No file included for parsing." << std::endl;
+	if (!file_included(filename)) {
+		std::cout << "Error: No file for parsing" << std::endl;
 		return 0;
 	}
 	for (int i = 1; i < argc; ++i) {

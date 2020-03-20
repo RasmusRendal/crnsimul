@@ -19,10 +19,10 @@ public:
 		InitializeEquationParts();
 	}
 	void PrintEquations();
+	double step = 0.0001;
 
 private:
 	void InitializeEquationParts();
-	double step = 0.0001;
 
 	NetworkState GetNextNetworkStateInternal() override;
 	// The differential equations are stored here

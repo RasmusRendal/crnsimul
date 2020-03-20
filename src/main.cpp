@@ -14,9 +14,8 @@ int main(int argc, char *argv[]) {
 	int res = 0;
 	driver drv;
 	bool run = false;
-	ReactionNetwork network;
-	EulerEvaluator e(network);
-	bool file = false;
+	double estep;
+	double ethreshold;
 	std::string filename;
 	filename = std::string(argv[argc - 1]);
 	if (!file_included(filename)) {
@@ -31,12 +30,10 @@ int main(int argc, char *argv[]) {
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
 		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {
-			e.step = std::atoi(argv[i + 1]);
-			std::cout << "e.step value is " << e.step << std::endl;
+			estep = std::stod(argv[i + 1]);
 			i++;
 		} else if (argv[i] == std::string("-T") && std::stod(argv[i + 1]) != 0) {
-			e.threshold = std::atoi(argv[i + 1]);
-			std::cout << "e.threshold value is " << e.threshold << std::endl;
+			ethreshold = std::stod(argv[i + 1]);
 			i++;
 		} else {
 			res = drv.parse_file(argv[i]);
@@ -44,7 +41,8 @@ int main(int argc, char *argv[]) {
 				if (run) {
 					EulerEvaluator e(drv.network);
 					drv.network.initNetworkState.PrintCsvHeader();
-					e.threshold = 0.000001;
+					e.threshold = ethreshold;
+					e.step = estep;
 					while (!e.IsFinished()) {
 						e.GetNextNetworkState().PrintCsvRow();
 					}

@@ -87,6 +87,7 @@ reactions       : reaction { auto r = std::vector<Reaction>(); r.push_back(std::
                 ;
 
 reaction        : species "->" species ";" { $$ = Reaction($1, $3, 1); }
+                | species "->" "(" "number" ")" species ";" { $$ = Reaction($1, $6, $4); }
                 ;
 
 species         : specie { auto map = std::map<std::string, int>(); InsertToSpecieMap(map, $1); $$ = map; }

@@ -14,8 +14,8 @@ int main(int argc, char *argv[]) {
 	int res = 0;
 	driver drv;
 	bool run = false;
-	double estep;
-	double ethreshold;
+	double estep = 0.00001;
+	double ethreshold = 0.00001;
 	std::string filename;
 	filename = std::string(argv[argc - 1]);
 	if (!file_included(filename)) {

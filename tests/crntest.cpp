@@ -138,3 +138,18 @@ TEST_F(CrnTest, withNewlines) {
 	EXPECT_EQ(reaction2.reactants.size(), 2);
 	EXPECT_EQ(reaction2.products.size(), 2);
 }
+
+TEST_F(CrnTest, parseReactConst) {
+	driver drv;
+	drv.parse_string("a:=3;a->(2)b;");
+
+	auto &network = drv.network;
+
+	EXPECT_EQ(network.initNetworkState["a"], 3);
+
+	EXPECT_EQ(network.reactionList.size(), 1);
+	auto reaction1 = network.reactionList[0];
+	EXPECT_EQ(reaction1.reactants["a"], 1);
+	EXPECT_EQ(reaction1.products["b"], 1);
+	EXPECT_EQ(reaction1.reactionConstant, 2);
+}

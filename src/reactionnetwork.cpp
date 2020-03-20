@@ -25,7 +25,13 @@ void ReactionNetwork::Print() {
 		for (auto &reactant : r.reactants) {
 			std::cout << reactant.second << reactant.first << " ";
 		}
-		std::cout << "-> ";
+		if (r.reactionConstant != 1) {
+			std::cout << "->";
+			std::cout << "(" << r.reactionConstant << ") ";
+		} else {
+			std::cout << "-> ";
+		}
+
 		for (auto &product : r.products) {
 			std::cout << product.second << product.first << " ";
 		}

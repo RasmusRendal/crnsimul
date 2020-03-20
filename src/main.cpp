@@ -1,5 +1,6 @@
 #include "CRN/driver.h"
 #include "eulerevaluator.h"
+#include "gnuplot-iostream.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
 #include <fstream>
@@ -43,8 +44,32 @@ int main(int argc, char *argv[]) {
 					drv.network.initNetworkState.PrintCsvHeader();
 					e.threshold = ethreshold;
 					e.step = estep;
+					std::vector<NetworkState> states;
 					while (!e.IsFinished()) {
-						e.GetNextNetworkState().PrintCsvRow();
+						states.push_back(e.GetNextNetworkState());
+					}
+					Gnuplot gp;
+					std::vector<std::string> plotStrings;
+					for (auto &species : drv.network.initNetworkState) {
+						plotStrings.push_back(species.first);
+					}
+					gp << "plot";
+					for (int i = 0; i < plotStrings.size(); i++) {
+						std::string title = plotStrings[i];
+						gp << " '-' with lines title '" << title << "'";
+						if (i != plotStrings.size() - 1)
+							gp << ", ";
+					}
+					gp << "\n";
+					for (std::string &toPlot : plotStrings) {
+						int i = 0;
+						cout.precision(17);
+						for (auto &state : states) {
+							gp << i << " " << state[toPlot] << "\n";
+							i++;
+						}
+						// gp.sendBinary1d(plotData);
+						gp << "e";
 					}
 				} else {
 					drv.network.Print();

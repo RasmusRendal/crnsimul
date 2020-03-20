@@ -2,12 +2,12 @@
 #include "eulerevaluator.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
 
 bool file_included(const std::string &filename) {
-    return std::ifstream(filename).good();
+	return std::ifstream(filename).good();
 }
 
 int main(int argc, char *argv[]) {
@@ -20,12 +20,12 @@ int main(int argc, char *argv[]) {
 	std::string filename;
 
 	filename = std::string(argv[argc - 1]);
-    if (file_included(filename) == true) {
+	if (file_included(filename) == true) {
 		file = true;
 	}
-	if(file == false) {
-	    std::cout << "Error: No file included for parsing." << std::endl;
-	 	return 0; 
+	if (file == false) {
+		std::cout << "Error: No file included for parsing." << std::endl;
+		return 0;
 	}
 	for (int i = 1; i < argc; ++i) {
 		if (argv[i] == std::string("-p")) {
@@ -34,11 +34,11 @@ int main(int argc, char *argv[]) {
 			drv.trace_scanning = true;
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
-		} else if (argv[i] == std::string("-S") && std::atoi(argv[i + 1]) != 0){
+		} else if (argv[i] == std::string("-S") && std::atoi(argv[i + 1]) != 0) {
 			e.step = std::atoi(argv[i + 1]);
 			std::cout << "e.step value is " << e.step << std::endl;
 			i++;
-		} else if (argv[i] == std::string("-T") && std::atoi(argv[i + 1]) != 0){
+		} else if (argv[i] == std::string("-T") && std::atoi(argv[i + 1]) != 0) {
 			e.threshold = std::atoi(argv[i + 1]);
 			std::cout << "e.threshold value is " << e.threshold << std::endl;
 			i++;

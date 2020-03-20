@@ -30,11 +30,11 @@ int main(int argc, char *argv[]) {
 			drv.trace_scanning = true;
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
-		} else if (argv[i] == std::string("-S") && std::atoi(argv[i + 1]) != 0) {
+		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {
 			e.step = std::atoi(argv[i + 1]);
 			std::cout << "e.step value is " << e.step << std::endl;
 			i++;
-		} else if (argv[i] == std::string("-T") && std::atoi(argv[i + 1]) != 0) {
+		} else if (argv[i] == std::string("-T") && std::stod(argv[i + 1]) != 0) {
 			e.threshold = std::atoi(argv[i + 1]);
 			std::cout << "e.threshold value is " << e.threshold << std::endl;
 			i++;

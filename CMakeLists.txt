@@ -33,6 +33,8 @@ add_executable(chemilang
 	${FLEX_CRNScan_OUTPUTS}
 )
 
+target_compile_options(chemilang PRIVATE -Werror -Wall -Wextra)
+
 TARGET_LINK_LIBRARIES(chemilang LINK_PUBLIC Boost::iostreams)
 
 enable_testing()

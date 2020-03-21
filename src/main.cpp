@@ -54,10 +54,11 @@ int main(int argc, char *argv[]) {
 						plotStrings.push_back(species.first);
 					}
 					gp << "plot";
-					for (int i = 0; i < plotStrings.size(); i++) {
+					int plotStringsSize = static_cast<int>(plotStrings.size());
+					for (int i = 0; i < plotStringsSize; i++) {
 						std::string title = plotStrings[i];
 						gp << " '-' with lines title '" << title << "'";
-						if (i != plotStrings.size() - 1)
+						if (i != plotStringsSize - 1)
 							gp << ", ";
 					}
 					gp << "\n";

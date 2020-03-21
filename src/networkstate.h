@@ -11,7 +11,8 @@ public:
 	NetworkState() : map<string, double>() {}
 	NetworkState DeepCopy();
 	void Print();
-	void PrintCsvHeader();
-	void PrintCsvRow();
+	string PrintCsvHeader();
+	string PrintCsvRow(int iterations, double stepSize);
+	int memberCount;
 	double Diff(const NetworkState &other);
 };

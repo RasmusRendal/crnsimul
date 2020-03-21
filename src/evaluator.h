@@ -14,7 +14,7 @@ public:
 	// Is set to true when the change between the two last state
 	// is less than threshold
 	bool IsFinished();
-	double threshold = 0.0001;
+	double threshold = 0.00001;
 
 protected:
 	virtual NetworkState GetNextNetworkStateInternal() = 0;

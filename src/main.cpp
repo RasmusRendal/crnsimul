@@ -41,13 +41,25 @@ int main(int argc, char *argv[]) {
 			if (res == 0) {
 				if (run) {
 					EulerEvaluator e(drv.network);
-					drv.network.initNetworkState.PrintCsvHeader();
 					e.threshold = ethreshold;
 					e.step = estep;
 					std::vector<NetworkState> states;
+					states.push_back(e.GetNextNetworkState());
+					states.push_back(e.GetNextNetworkState());
+					states.push_back(e.GetNextNetworkState());
 					while (!e.IsFinished()) {
 						states.push_back(e.GetNextNetworkState());
 					}
+					std::ofstream evaluatedCsv;
+					evaluatedCsv.open ("results.csv");
+					evaluatedCsv << drv.network.initNetworkState.PrintCsvHeader();
+					evaluatedCsv << drv.network.initNetworkState.PrintCsvRow(0, estep);
+					int iterations = 1;
+					for(auto &state : states) {
+						evaluatedCsv << state.PrintCsvRow(iterations, estep);
+						iterations++;
+					}
+					evaluatedCsv.close();
 					Gnuplot gp;
 					std::vector<std::string> plotStrings;
 					for (auto &species : drv.network.initNetworkState) {

@@ -6,3 +6,7 @@ NetworkState Evaluator::GetNextNetworkState() {
 	oldState = s.DeepCopy();
 	return s;
 }
+
+bool Evaluator::IsFinished() {
+	return finished;
+}

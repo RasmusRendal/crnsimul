@@ -12,7 +12,7 @@ public:
 	NetworkState DeepCopy();
 	void Print();
 	string PrintCsvHeader();
-	string PrintCsvRow(int iterations, double stepSize);
-	int memberCount;
+	string PrintCsvRow(int iterations);
+	double stepSize;
 	double Diff(const NetworkState &other);
 };

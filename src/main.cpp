@@ -15,9 +15,11 @@ int main(int argc, char *argv[]) {
 	int res = 0;
 	driver drv;
 	bool run = false;
+	bool printCsv = false;
 	double estep = 0.00001;
-	double ethreshold = 0.00001;
+	double ethreshold = 0.0001;
 	std::string filename;
+	std::string csvFilename;
 	filename = std::string(argv[argc - 1]);
 	if (!file_included(filename)) {
 		std::cout << "Error: No file for parsing" << std::endl;
@@ -30,6 +32,10 @@ int main(int argc, char *argv[]) {
 			drv.trace_scanning = true;
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
+		} else if (argv[i] == std::string("-O") && std::string(argv[i + 1]) != "") {
+			printCsv = true;
+			csvFilename = std::string(argv[i + 1]);
+			i++;
 		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {
 			estep = std::stod(argv[i + 1]);
 			i++;
@@ -44,22 +50,9 @@ int main(int argc, char *argv[]) {
 					e.threshold = ethreshold;
 					e.step = estep;
 					std::vector<NetworkState> states;
-					states.push_back(e.GetNextNetworkState());
-					states.push_back(e.GetNextNetworkState());
-					states.push_back(e.GetNextNetworkState());
 					while (!e.IsFinished()) {
 						states.push_back(e.GetNextNetworkState());
 					}
-					std::ofstream evaluatedCsv;
-					evaluatedCsv.open ("results.csv");
-					evaluatedCsv << drv.network.initNetworkState.PrintCsvHeader();
-					evaluatedCsv << drv.network.initNetworkState.PrintCsvRow(0, estep);
-					int iterations = 1;
-					for(auto &state : states) {
-						evaluatedCsv << state.PrintCsvRow(iterations, estep);
-						iterations++;
-					}
-					evaluatedCsv.close();
 					Gnuplot gp;
 					std::vector<std::string> plotStrings;
 					for (auto &species : drv.network.initNetworkState) {
@@ -83,6 +76,18 @@ int main(int argc, char *argv[]) {
 						}
 						// gp.sendBinary1d(plotData);
 						gp << "e";
+					}
+					if (printCsv) {
+						int iterations = 0;
+						std::ofstream evaluatedCsv;
+						evaluatedCsv.open(csvFilename + ".csv");
+						evaluatedCsv << drv.network.initNetworkState.PrintCsvHeader();
+						evaluatedCsv << drv.network.initNetworkState.PrintCsvRow(
+								iterations);
+						for (auto &state : states) {
+							evaluatedCsv << state.PrintCsvRow(++iterations);
+						}
+						evaluatedCsv.close();
 					}
 				} else {
 					drv.network.Print();

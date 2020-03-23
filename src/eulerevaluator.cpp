@@ -53,6 +53,7 @@ NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
 		}
 		mState[specie.first] += diff * step;
 	}
+	mState.stepSize = step;
 	return mState;
 }
 

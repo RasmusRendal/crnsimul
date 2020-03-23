@@ -17,27 +17,27 @@ void NetworkState::Print() {
 string NetworkState::PrintCsvHeader() {
 	string last = rbegin()->first;
 	string result;
+	result += "t,";
 	for (auto &specie : *this) {
-		if(specie.first == last) {
-			result += specie.first+"_x,"+specie.first+"_y\n";
-		}
-		else {
-			result += specie.first+"_x,"+specie.first+"_y,";
+		if (specie.first == last) {
+			result += specie.first + "\n";
+		} else {
+			result += specie.first + ",";
 		}
 	}
 	return result;
 }
 
-string NetworkState::PrintCsvRow(int iterations, double stepSize) {
+string NetworkState::PrintCsvRow(int iterations) {
 	string last = rbegin()->first;
 	string result;
-	double xValue = iterations*stepSize;
+	double tValue = iterations * stepSize;
+	result += to_string(tValue) + ",";
 	for (auto specie : *this) {
-		if(specie.first == last) {
-			result += to_string(xValue)+","+to_string(specie.second)+"\n";
-		}
-		else {
-			result += to_string(xValue)+","+to_string(specie.second)+",";
+		if (specie.first == last) {
+			result += to_string(specie.second) + "\n";
+		} else {
+			result += to_string(specie.second) + ",";
 		}
 	}
 	return result;

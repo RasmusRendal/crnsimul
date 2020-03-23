@@ -14,18 +14,32 @@ void NetworkState::Print() {
 	}
 }
 
-void NetworkState::PrintCsvHeader() {
+string NetworkState::PrintCsvHeader() {
+	string last = rbegin()->first;
+	string result;
+	result += "t,";
 	for (auto &specie : *this) {
-		std::cout << specie.first << ",";
+		if (specie.first == last) {
+			result += specie.first + "\n";
+		} else {
+			result += specie.first + ",";
+		}
 	}
-	std::cout << std::endl;
+	return result;
 }
 
-void NetworkState::PrintCsvRow() {
+string NetworkState::PrintCsvRow() {
+	string last = rbegin()->first;
+	string result;
+	result += to_string(time) + ",";
 	for (auto specie : *this) {
-		std::cout << specie.second << ",";
+		if (specie.first == last) {
+			result += to_string(specie.second) + "\n";
+		} else {
+			result += to_string(specie.second) + ",";
+		}
 	}
-	std::cout << std::endl;
+	return result;
 }
 
 double NetworkState::Diff(const NetworkState &other) {

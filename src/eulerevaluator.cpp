@@ -41,6 +41,7 @@ void EulerEvaluator::InitializeEquationParts() {
 }
 
 NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
+	iterations++;
 	auto oldState = mState.DeepCopy();
 	for (auto &specie : equationParts) {
 		double diff = 0;
@@ -53,6 +54,7 @@ NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
 		}
 		mState[specie.first] += diff * step;
 	}
+	mState.time = step * iterations;
 	return mState;
 }
 

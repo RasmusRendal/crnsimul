@@ -17,3 +17,6 @@ cmake_install.cmake
 CTestTestfile.cmake
 .clangd
 compile_commands.json
+.vscode
+settings.json
+*.csv

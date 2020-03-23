@@ -18,6 +18,7 @@ public:
 	EulerEvaluator(ReactionNetwork network) : Evaluator(network) {
 		InitializeEquationParts();
 	}
+	int iterations = 0;
 	void PrintEquations();
 	double step = 0.0001;
 

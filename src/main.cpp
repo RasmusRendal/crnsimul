@@ -15,9 +15,11 @@ int main(int argc, char *argv[]) {
 	int res = 0;
 	driver drv;
 	bool run = false;
+	bool printCsv = false;
 	double estep = 0.00001;
 	double ethreshold = 0.00001;
 	std::string filename;
+	std::string csvFilename;
 	filename = std::string(argv[argc - 1]);
 	if (!file_included(filename)) {
 		std::cout << "Error: No file for parsing" << std::endl;
@@ -30,6 +32,10 @@ int main(int argc, char *argv[]) {
 			drv.trace_scanning = true;
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
+		} else if (argv[i] == std::string("-O") && std::string(argv[i + 1]) != "") {
+			printCsv = true;
+			csvFilename = std::string(argv[i + 1]);
+			i++;
 		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {
 			estep = std::stod(argv[i + 1]);
 			i++;
@@ -41,7 +47,6 @@ int main(int argc, char *argv[]) {
 			if (res == 0) {
 				if (run) {
 					EulerEvaluator e(drv.network);
-					drv.network.initNetworkState.PrintCsvHeader();
 					e.threshold = ethreshold;
 					e.step = estep;
 					std::vector<NetworkState> states;
@@ -71,6 +76,16 @@ int main(int argc, char *argv[]) {
 						}
 						// gp.sendBinary1d(plotData);
 						gp << "e";
+					}
+					if (printCsv) {
+						std::ofstream evaluatedCsv;
+						evaluatedCsv.open(csvFilename);
+						evaluatedCsv << drv.network.initNetworkState.PrintCsvHeader();
+						evaluatedCsv << drv.network.initNetworkState.PrintCsvRow();
+						for (auto &state : states) {
+							evaluatedCsv << state.PrintCsvRow();
+						}
+						evaluatedCsv.close();
 					}
 				} else {
 					drv.network.Print();

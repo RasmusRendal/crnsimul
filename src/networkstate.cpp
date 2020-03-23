@@ -28,11 +28,10 @@ string NetworkState::PrintCsvHeader() {
 	return result;
 }
 
-string NetworkState::PrintCsvRow(int iterations) {
+string NetworkState::PrintCsvRow() {
 	string last = rbegin()->first;
 	string result;
-	double tValue = iterations * stepSize;
-	result += to_string(tValue) + ",";
+	result += to_string(time) + ",";
 	for (auto specie : *this) {
 		if (specie.first == last) {
 			result += to_string(specie.second) + "\n";

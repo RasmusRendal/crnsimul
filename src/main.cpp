@@ -78,14 +78,12 @@ int main(int argc, char *argv[]) {
 						gp << "e";
 					}
 					if (printCsv) {
-						int iterations = 0;
 						std::ofstream evaluatedCsv;
-						evaluatedCsv.open(csvFilename + ".csv");
+						evaluatedCsv.open(csvFilename);
 						evaluatedCsv << drv.network.initNetworkState.PrintCsvHeader();
-						evaluatedCsv << drv.network.initNetworkState.PrintCsvRow(
-								iterations);
+						evaluatedCsv << drv.network.initNetworkState.PrintCsvRow();
 						for (auto &state : states) {
-							evaluatedCsv << state.PrintCsvRow(++iterations);
+							evaluatedCsv << state.PrintCsvRow();
 						}
 						evaluatedCsv.close();
 					}

@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 	bool run = false;
 	bool printCsv = false;
 	double estep = 0.00001;
-	double ethreshold = 0.0001;
+	double ethreshold = 0.00001;
 	std::string filename;
 	std::string csvFilename;
 	filename = std::string(argv[argc - 1]);

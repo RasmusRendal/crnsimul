@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
 	driver drv;
 	bool run = false;
 	bool printCsv = false;
+	bool plot = false;
 	double estep = 0.00001;
 	double ethreshold = 0.00001;
 	std::string filename;
@@ -32,6 +33,8 @@ int main(int argc, char *argv[]) {
 			drv.trace_scanning = true;
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
+		} else if (argv[i] == std::string("-P")) {
+			plot = true;
 		} else if (argv[i] == std::string("-O") && std::string(argv[i + 1]) != "") {
 			printCsv = true;
 			csvFilename = std::string(argv[i + 1]);
@@ -53,26 +56,30 @@ int main(int argc, char *argv[]) {
 					while (!e.IsFinished()) {
 						states.push_back(e.GetNextNetworkState());
 					}
-					Gnuplot gp;
-					std::vector<std::string> plotStrings;
-					for (auto &species : drv.network.initNetworkState) {
-						plotStrings.push_back(species.first);
-					}
-					gp << "plot";
-					int plotStringsSize = static_cast<int>(plotStrings.size());
-					for (int i = 0; i < plotStringsSize; i++) {
-						std::string title = plotStrings[i];
-						gp << " '-' with lines title '" << title << "'";
-						if (i != plotStringsSize - 1)
-							gp << ", ";
-					}
-					gp << "\n";
-					for (std::string &toPlot : plotStrings) {
-						cout.precision(17);
-						for (auto &state : states) {
-							gp << state.time << " " << state[toPlot] << "\n";
+					if (plot) {
+						Gnuplot gp;
+						std::vector<std::string> plotStrings;
+						for (auto &species : drv.network.initNetworkState) {
+							plotStrings.push_back(species.first);
 						}
-						gp << "e";
+						gp << "plot";
+						int plotStringsSize = static_cast<int>(plotStrings.size());
+						for (int i = 0; i < plotStringsSize; i++) {
+							std::string title = plotStrings[i];
+							gp << " '-' with lines title '" << title << "'";
+							if (i != plotStringsSize - 1)
+								gp << ", ";
+						}
+						gp << "\n";
+						for (std::string &toPlot : plotStrings) {
+							int i = 0;
+							cout.precision(17);
+							for (auto &state : states) {
+								gp << i << " " << state[toPlot] << "\n";
+								i++;
+							}
+							gp << "e";
+						}
 					}
 					if (printCsv) {
 						std::ofstream evaluatedCsv;

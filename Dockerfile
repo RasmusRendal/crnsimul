@@ -7,6 +7,7 @@ RUN mkdir /chem
 WORKDIR /chem
 
 COPY CMakeLists.txt ./
+COPY gencov.sh ./
 COPY src ./src/
 COPY submodules ./submodules/
 RUN mkdir tests

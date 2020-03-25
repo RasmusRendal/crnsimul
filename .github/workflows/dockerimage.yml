@@ -21,4 +21,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: coverage_short
-        path: htmloutput/coverage.html
+        path: htmloutput/coverage_short.html

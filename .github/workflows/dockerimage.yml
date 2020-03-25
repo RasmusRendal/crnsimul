@@ -17,3 +17,8 @@ jobs:
       with:
         name: coverage
         path: htmloutput
+    - name: Copy the short artefact
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage_short
+        path: htmloutput/coverage.html

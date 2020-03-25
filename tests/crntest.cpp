@@ -153,3 +153,45 @@ TEST_F(CrnTest, parseReactConst) {
 	EXPECT_EQ(reaction1.products["b"], 1);
 	EXPECT_EQ(reaction1.reactionConstant, 2);
 }
+
+TEST_F(CrnTest, testComment) {
+	driver drv;
+	int res = drv.parse_string("#lol\n"
+														 "a := 5;\n"
+														 "b := 3;\n"
+														 "#lolagain \n"
+														 "a + b -> a + b + c;\n"
+														 "c -> 0;\n"
+														 "#loln");
+	EXPECT_EQ(res, 0);
+	auto &network = drv.network;
+	network.Print();
+
+	EXPECT_EQ(network.initNetworkState.size(), 3);
+
+	EXPECT_EQ(network.initNetworkState["a"], 5);
+	EXPECT_EQ(network.initNetworkState["b"], 3);
+	EXPECT_EQ(network.initNetworkState["c"], 0);
+
+	EXPECT_EQ(network.reactionList.size(), 2);
+	{
+		auto reaction = &network.reactionList[0];
+		auto reactants = reaction->reactants;
+		auto products = reaction->products;
+		EXPECT_EQ(reactants.size(), 2);
+		EXPECT_EQ(reactants["a"], 1);
+		EXPECT_EQ(reactants["b"], 1);
+		EXPECT_EQ(products.size(), 3);
+		EXPECT_EQ(products["a"], 1);
+		EXPECT_EQ(products["b"], 1);
+		EXPECT_EQ(products["c"], 1);
+	}
+	{
+		auto reaction = &network.reactionList[1];
+		auto reactants = reaction->reactants;
+		auto products = reaction->products;
+		EXPECT_EQ(reactants.size(), 1);
+		EXPECT_EQ(reactants["c"], 1);
+		EXPECT_EQ(products.size(), 0);
+	}
+}

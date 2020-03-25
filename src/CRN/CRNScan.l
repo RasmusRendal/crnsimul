@@ -103,6 +103,7 @@ blank           [ \t\r]
   // Code run each time yylex is called.
   loc.step ();
 %}
+"#".* loc.step();
 {blank}+    loc.step();
 \n+         loc.lines(yyleng); loc.step();
 

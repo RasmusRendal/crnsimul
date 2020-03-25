@@ -3,7 +3,7 @@ services:
   chem:
     build:
       context: .
-    command: bash -c './bin/chemilang src/CRN/input'
+    command: bash -c 'rm -rf /target/htmloutput; mkdir /target/htmloutput && cd /target/htmloutput && gcovr -e bin/* -r /chem/ --html --html-details -o output.html'
     volumes:
         - ./:/target
 

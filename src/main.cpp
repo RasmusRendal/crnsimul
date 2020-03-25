@@ -27,7 +27,7 @@ void help(int errorCode) {
 	} else if (errorCode == pError) {
 		std::cout << "Error while parsing" << std::endl;
 	}
-	string helperstring =
+	std::string helperstring =
 			"argument list\n"
 			"	-r to run evaluator (euler)\n"
 			"	-p trace parsing\n"

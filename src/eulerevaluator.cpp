@@ -1,22 +1,22 @@
 #include "eulerevaluator.h"
+#include <cmath>
 #include <iostream>
 #include <map>
-#include <math.h>
 #include <utility>
 
-void AddIfNotExists(map<string, int> &map, string toAdd) {
+void AddIfNotExists(std::map<std::string, int> &map, const std::string &toAdd) {
 	if (map.find(toAdd) == map.end()) {
-		map.insert(make_pair(toAdd, 0));
+		map.insert(std::make_pair(toAdd, 0));
 	}
 }
 
 void EulerEvaluator::InitializeEquationParts() {
 	for (auto &reaction : mNetwork.reactionList) {
-		map<string, int> &changeRate = reaction.reactants;
+		std::map<std::string, int> &changeRate = reaction.reactants;
 
 		// For each reaction occurence, this map contains the net change
 		// for each species
-		std::map<string, int> changePerReaction;
+		std::map<std::string, int> changePerReaction;
 
 		for (auto &reactant : reaction.reactants) {
 			AddIfNotExists(changePerReaction, reactant.first);
@@ -59,7 +59,7 @@ NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
 }
 
 void EulerEvaluator::PrintEquations() {
-	for (auto equation : equationParts) {
+	for (const auto &equation : equationParts) {
 		std::cout << equation.first << " = ";
 		for (auto &term : equation.second) {
 			std::cout << term.first << "*";

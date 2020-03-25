@@ -4,15 +4,13 @@
 #include <map>
 #include <string>
 
-using namespace std;
-
-class NetworkState : public map<string, double> {
+class NetworkState : public std::map<std::string, double> {
 public:
-	NetworkState() : map<string, double>() {}
+	NetworkState() = default;
 	NetworkState DeepCopy();
 	void Print();
-	string PrintCsvHeader();
-	string PrintCsvRow();
-	double time;
+	std::string PrintCsvHeader();
+	std::string PrintCsvRow();
+	double time = 0;
 	double Diff(const NetworkState &other);
 };

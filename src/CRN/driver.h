@@ -16,7 +16,7 @@ public:
 	driver();
 
 	ReactionNetwork network;
-	int result;
+	int result = 0;
 
 	// Run the parser on file F.  Return 0 on success.
 	int parse_file(char *f);

@@ -2,9 +2,9 @@
 
 class BasicTest : public ::testing::Test {
 protected:
-	virtual void SetUp() {}
+	void SetUp() override {}
 
-	virtual void TearDown() {
+	void TearDown() override {
 		// Code here will be called immediately after each test
 		// (right before the destructor).
 	}

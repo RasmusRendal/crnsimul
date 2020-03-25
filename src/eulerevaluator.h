@@ -4,18 +4,16 @@
 #include <map>
 #include <vector>
 
-using namespace std;
-
 // A term of e differential equation for a single specie
-using equation_term = pair<int, map<string, int>>;
+using equation_term = std::pair<int, std::map<std::string, int>>;
 // The differential equation for a single specie
-using equation = vector<equation_term>;
+using equation = std::vector<equation_term>;
 // A set of differential equations representing a CRN
-using equation_set = map<string, equation>;
+using equation_set = std::map<std::string, equation>;
 
 class EulerEvaluator : public Evaluator {
 public:
-	EulerEvaluator(ReactionNetwork network) : Evaluator(network) {
+	EulerEvaluator(ReactionNetwork network) : Evaluator(std::move(network)) {
 		InitializeEquationParts();
 	}
 	int iterations = 0;

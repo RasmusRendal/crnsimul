@@ -2,21 +2,21 @@
 
 NetworkState NetworkState::DeepCopy() {
 	NetworkState copy;
-	for (auto &specie : *this) {
+	for (const auto &specie : *this) {
 		copy.insert(specie);
 	}
 	return copy;
 }
 
 void NetworkState::Print() {
-	for (auto &specie : *this) {
+	for (const auto &specie : *this) {
 		std::cout << specie.first << ": " << specie.second << std::endl;
 	}
 }
 
-string NetworkState::PrintCsvHeader() {
-	string last = rbegin()->first;
-	string result;
+std::string NetworkState::PrintCsvHeader() {
+	std::string last = rbegin()->first;
+	std::string result;
 	result += "t,";
 	for (auto &specie : *this) {
 		if (specie.first == last) {
@@ -28,15 +28,15 @@ string NetworkState::PrintCsvHeader() {
 	return result;
 }
 
-string NetworkState::PrintCsvRow() {
-	string last = rbegin()->first;
-	string result;
-	result += to_string(time) + ",";
-	for (auto specie : *this) {
+std::string NetworkState::PrintCsvRow() {
+	std::string last = rbegin()->first;
+	std::string result;
+	result += std::to_string(time) + ",";
+	for (const auto &specie : *this) {
 		if (specie.first == last) {
-			result += to_string(specie.second) + "\n";
+			result += std::to_string(specie.second) + "\n";
 		} else {
-			result += to_string(specie.second) + ",";
+			result += std::to_string(specie.second) + ",";
 		}
 	}
 	return result;

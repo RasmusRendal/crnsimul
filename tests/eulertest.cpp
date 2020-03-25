@@ -2,13 +2,13 @@
 #include "eulerevaluator.h"
 #include <gtest/gtest.h>
 
-#define EXPECT_CLOSE(a, b) EXPECT_LT(abs(b - a), 1)
+#define EXPECT_CLOSE(a, b) EXPECT_LT(abs((b) - (a)), 1)
 
 class EulerTest : public ::testing::Test {
 protected:
-	virtual void SetUp() {}
+	void SetUp() override {}
 
-	virtual void TearDown() {
+	void TearDown() override {
 		// Code here will be called immediately after each test
 		// (right before the destructor).
 	}

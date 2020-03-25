@@ -2,16 +2,14 @@
 
 #include <map>
 
-using namespace std;
-
 class Reaction {
 public:
-	Reaction(map<string, int> reactants, map<string, int> products,
-					 int reactionConstant)
-			: reactants(reactants), products(products),
+	Reaction(std::map<std::string, int> reactants,
+					 std::map<std::string, int> products, int reactionConstant)
+			: reactants(std::move(reactants)), products(std::move(products)),
 				reactionConstant(reactionConstant) {}
-	Reaction() {}
-	map<string, int> reactants;
-	map<string, int> products;
+	Reaction() = default;
+	std::map<std::string, int> reactants;
+	std::map<std::string, int> products;
 	int reactionConstant = 1;
 };

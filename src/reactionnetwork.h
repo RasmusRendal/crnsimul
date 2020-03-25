@@ -8,8 +8,9 @@ class ReactionNetwork {
 public:
 	ReactionNetwork(NetworkState initNetworkState,
 									std::vector<Reaction> reactionList)
-			: initNetworkState(initNetworkState), reactionList(reactionList) {}
-	ReactionNetwork() {}
+			: initNetworkState(std::move(initNetworkState)),
+				reactionList(std::move(reactionList)) {}
+	ReactionNetwork() = default;
 	NetworkState initNetworkState;
 	std::vector<Reaction> reactionList;
 	void AddEmptyStates();

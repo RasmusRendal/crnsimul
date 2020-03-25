@@ -19,14 +19,15 @@ int driver::parse_file(char *f) {
 	return parse_string(buffer.str());
 }
 
-int driver::parse_string(const std::string &f) {
-	scan_begin(f);
+int driver::parse_string(const std::string &s) {
+	scan_begin(s);
 	return parse();
 }
 
 int driver::parse() {
 	yy::parser parse(*this);
-	parse.set_debug_level(trace_parsing);
+	parse.set_debug_level(
+			static_cast<yy::parser::debug_level_type>(trace_parsing));
 	int res = parse();
 	scan_end();
 	network.AddEmptyStates();

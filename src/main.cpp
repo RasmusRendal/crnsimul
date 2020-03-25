@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
 			run = true;
 		} else if (argv[i] == std::string("-P")) {
 			plot = true;
-		} else if (argv[i] == std::string("-O") && std::string(argv[i + 1]) != "") {
+		} else if (argv[i] == std::string("-O") &&
+							 !std::string(argv[i + 1]).empty()) {
 			printCsv = true;
 			csvFilename = std::string(argv[i + 1]);
 			i++;
@@ -72,7 +73,7 @@ int main(int argc, char *argv[]) {
 						}
 						gp << "\n";
 						for (std::string &toPlot : plotStrings) {
-							cout.precision(17);
+							std::cout.precision(17);
 							for (auto &state : states) {
 								gp << state.time << " " << state[toPlot] << "\n";
 							}

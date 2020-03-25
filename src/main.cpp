@@ -72,11 +72,9 @@ int main(int argc, char *argv[]) {
 						}
 						gp << "\n";
 						for (std::string &toPlot : plotStrings) {
-							int i = 0;
 							cout.precision(17);
 							for (auto &state : states) {
-								gp << i << " " << state[toPlot] << "\n";
-								i++;
+								gp << state.time << " " << state[toPlot] << "\n";
 							}
 							gp << "e";
 						}

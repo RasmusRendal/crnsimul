@@ -3,7 +3,7 @@ services:
   chem:
     build:
       context: .
-    command: bash -c './bin/chemilang src/CRN/input'
+    command: bash gencov.sh
     volumes:
         - ./:/target
 

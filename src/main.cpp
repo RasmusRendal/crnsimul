@@ -17,12 +17,9 @@ int main(int argc, char *argv[]) {
 	driver drv;
 	ResultDisplay display;
 	bool run = false;
-	bool printCsv = false;
-	bool plot = false;
 	double estep = 0.00001;
 	double ethreshold = 0.00001;
 	std::string filename;
-	std::string csvFilename;
 	filename = std::string(argv[argc - 1]);
 	if (argv[argc - 1] == std::string("-h") ||
 			argv[argc - 1] == std::string("--help")) {

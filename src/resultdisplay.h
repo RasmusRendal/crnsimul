@@ -22,8 +22,8 @@ enum ErrorCode {
 
 class ResultDisplay {
 public:
-	bool plot;
-	bool print;
+	bool plot = false;
+	bool print = false;
 	std::string csvFilename;
 	NetworkState initNetworkState;
 	void FuncRunner();

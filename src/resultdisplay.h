@@ -12,6 +12,14 @@
 #include "reaction.h"
 #include "reactionnetwork.h"
 
+enum ErrorCode {
+	helpargument = 0,
+	rError = 1,
+	fileError = 2,
+	otherError = 3,
+	pError = 4
+};
+
 class ResultDisplay {
 public:
 	bool plot;
@@ -19,6 +27,7 @@ public:
 	std::string csvFilename;
 	NetworkState initNetworkState;
 	void FuncRunner();
+    void Help(int errorCode);
     std::vector<NetworkState> states;
 private:
 	void Plot();

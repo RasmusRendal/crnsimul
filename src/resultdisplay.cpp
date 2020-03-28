@@ -4,11 +4,12 @@ void ResultDisplay::PrintCsv() {
 	std::ofstream evaluatedCsv;
 	evaluatedCsv.open(csvFilename);
 	evaluatedCsv << initNetworkState.PrintCsvHeader();
-	//evaluatedCsv << initNetworkState.PrintCsvRow();
-	/*for (auto &state : states) {
+	evaluatedCsv << initNetworkState.PrintCsvRow();
+	for (auto &state : states) {
 		evaluatedCsv << state.PrintCsvRow();
-	} */
+	}
 	evaluatedCsv.close();
+	std::cout << "Printed to file " << csvFilename << std::endl;
 }
 
 void ResultDisplay::Plot() {
@@ -36,9 +37,10 @@ void ResultDisplay::Plot() {
 }
 
 void ResultDisplay::FuncRunner() {
-	if(print == true) {
+	if(print)
 		PrintCsv();
-	}
+	else if(plot)
+		Plot();
 }
 
 void ResultDisplay::RunEulerEvaluator() {

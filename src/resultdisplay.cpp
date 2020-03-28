@@ -13,7 +13,6 @@ void ResultDisplay::PrintCsv() {
 }
 
 void ResultDisplay::Plot() {
-	/*Gnuplot gp;
 	std::vector<std::string> plotStrings;
 	for (auto &species : initNetworkState) {
 		plotStrings.push_back(species.first);
@@ -33,7 +32,7 @@ void ResultDisplay::Plot() {
 			gp << state.time << " " << state[toPlot] << "\n";
 		}
 		gp << "e";
-	} */
+	}
 }
 
 void ResultDisplay::FuncRunner() {

@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "reaction.h"
+#include "reactionnetwork.h"
 
 class ResultDisplay {
 public:
@@ -22,4 +24,5 @@ private:
 	void Plot();
 	void PrintCsv();
 	void RunEulerEvaluator();
+    Gnuplot gp;
 };

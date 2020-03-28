@@ -3,6 +3,7 @@
 #include "gnuplot-iostream.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
+#include "resultdisplay.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -47,6 +48,7 @@ void help(int errorCode) {
 int main(int argc, char *argv[]) {
 	int res = 0;
 	driver drv;
+	ResultDisplay display;
 	bool run = false;
 	bool printCsv = false;
 	bool plot = false;
@@ -72,11 +74,13 @@ int main(int argc, char *argv[]) {
 		} else if (argv[i] == std::string("-r")) {
 			run = true;
 		} else if (argv[i] == std::string("-P")) {
-			plot = true;
+			display.plot = true;
 		} else if (argv[i] == std::string("-O") &&
 							 !std::string(argv[i + 1]).empty()) {
+			display.print = true;
 			printCsv = true;
 			csvFilename = std::string(argv[i + 1]);
+			display.csvFilename = std::string(argv[i + 1]);
 			i++;
 		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {
 			estep = std::stod(argv[i + 1]);
@@ -91,10 +95,16 @@ int main(int argc, char *argv[]) {
 					EulerEvaluator e(drv.network);
 					e.threshold = ethreshold;
 					e.step = estep;
+					//display.eval = e;
+					//display.FuncRunner();
 					std::vector<NetworkState> states;
 					while (!e.IsFinished()) {
 						states.push_back(e.GetNextNetworkState());
 					}
+					display.initNetworkState = drv.network.initNetworkState;
+					display.states = states;
+					display.FuncRunner();
+					 /*
 					if (plot) {
 						Gnuplot gp;
 						std::vector<std::string> plotStrings;
@@ -127,7 +137,7 @@ int main(int argc, char *argv[]) {
 							evaluatedCsv << state.PrintCsvRow();
 						}
 						evaluatedCsv.close();
-					}
+					} */
 				} else {
 					drv.network.Print();
 					help(rError);

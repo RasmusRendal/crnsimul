@@ -1,16 +1,16 @@
 #pragma once
 
-#include "networkstate.h"
-#include <map>
 #include "eulerevaluator.h"
 #include "evaluator.h"
 #include "gnuplot-iostream.h"
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
+#include "networkstate.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
 enum ErrorCode {
 	helpargument = 0,
@@ -25,13 +25,15 @@ public:
 	bool plot = false;
 	bool print = false;
 	std::string csvFilename;
-	NetworkState initNetworkState;
+	NetworkState *initNetworkState;
+	EulerEvaluator *eval;
 	void FuncRunner();
-    void Help(int errorCode);
-    std::vector<NetworkState> states;
+	void Help(int errorCode);
+
 private:
 	void Plot();
 	void PrintCsv();
 	void RunEulerEvaluator();
-    Gnuplot gp;
+	Gnuplot gp;
+	std::vector<NetworkState> states;
 };

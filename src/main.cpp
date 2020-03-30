@@ -57,12 +57,8 @@ int main(int argc, char *argv[]) {
 					EulerEvaluator e(drv.network);
 					e.threshold = ethreshold;
 					e.step = estep;
-					std::vector<NetworkState> states;
-					while (!e.IsFinished()) {
-						states.push_back(e.GetNextNetworkState());
-					}
-					display.initNetworkState = drv.network.initNetworkState;
-					display.states = states;
+					display.eval = &e;
+					display.initNetworkState = &drv.network.initNetworkState;
 					display.FuncRunner();
 				} else {
 					drv.network.Print();

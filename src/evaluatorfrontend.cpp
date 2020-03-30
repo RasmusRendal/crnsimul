@@ -1,6 +1,6 @@
-#include "resultdisplay.h"
+#include "evaluatorfrontend.h"
 
-void ResultDisplay::PrintCsv() {
+void EvaluatorFrontend::PrintCsv() {
 	std::ofstream evaluatedCsv;
 	evaluatedCsv.open(csvFilename);
 	evaluatedCsv << initNetworkState.PrintCsvHeader();
@@ -12,7 +12,7 @@ void ResultDisplay::PrintCsv() {
 	std::cout << "Printed to file " << csvFilename << std::endl;
 }
 
-void ResultDisplay::Plot() {
+void EvaluatorFrontend::Plot() {
 	std::vector<std::string> plotStrings;
 	for (auto &species : initNetworkState) {
 		plotStrings.push_back(species.first);
@@ -35,18 +35,18 @@ void ResultDisplay::Plot() {
 	}
 }
 
-void ResultDisplay::FuncRunner(double ethreshold, double estep) {
+void EvaluatorFrontend::FuncRunner(double ethreshold, double estep) {
 	initNetworkState = drv->network.initNetworkState;
 	internalEtreshold = ethreshold;
 	internalEstep = estep;
 	RunEulerEvaluator();
 	if (print)
 		PrintCsv();
-	else if (plot)
+	if (plot)
 		Plot();
 }
 
-void ResultDisplay::RunEulerEvaluator() {
+void EvaluatorFrontend::RunEulerEvaluator() {
 	EulerEvaluator eval(drv->network);
 	eval.threshold = internalEtreshold;
 	eval.step = internalEstep;
@@ -55,7 +55,7 @@ void ResultDisplay::RunEulerEvaluator() {
 	}
 }
 
-void ResultDisplay::Help(int errorCode) {
+void EvaluatorFrontend::Help(int errorCode) {
 	if (errorCode == fileError) {
 		std::cout << "Error: No file for parsing" << std::endl;
 	} else if (errorCode == rError) {

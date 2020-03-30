@@ -21,7 +21,7 @@ enum ErrorCode {
 	pError = 4
 };
 
-class ResultDisplay {
+class EvaluatorFrontend {
 public:
 	bool plot = false;
 	bool print = false;

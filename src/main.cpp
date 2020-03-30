@@ -54,12 +54,8 @@ int main(int argc, char *argv[]) {
 			res = drv.parse_file(argv[i]);
 			if (res == 0) {
 				if (run) {
-					EulerEvaluator e(drv.network);
-					e.threshold = ethreshold;
-					e.step = estep;
-					display.eval = &e;
-					display.initNetworkState = &drv.network.initNetworkState;
-					display.FuncRunner();
+					display.drv = &drv;
+					display.FuncRunner(ethreshold, estep);
 				} else {
 					drv.network.Print();
 					display.Help(rError);

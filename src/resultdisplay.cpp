@@ -3,8 +3,8 @@
 void ResultDisplay::PrintCsv() {
 	std::ofstream evaluatedCsv;
 	evaluatedCsv.open(csvFilename);
-	evaluatedCsv << initNetworkState->PrintCsvHeader();
-	evaluatedCsv << initNetworkState->PrintCsvRow();
+	evaluatedCsv << initNetworkState.PrintCsvHeader();
+	evaluatedCsv << initNetworkState.PrintCsvRow();
 	for (auto &state : states) {
 		evaluatedCsv << state.PrintCsvRow();
 	}
@@ -14,7 +14,7 @@ void ResultDisplay::PrintCsv() {
 
 void ResultDisplay::Plot() {
 	std::vector<std::string> plotStrings;
-	for (auto &species : *initNetworkState) {
+	for (auto &species : initNetworkState) {
 		plotStrings.push_back(species.first);
 	}
 	gp << "plot";
@@ -35,7 +35,10 @@ void ResultDisplay::Plot() {
 	}
 }
 
-void ResultDisplay::FuncRunner() {
+void ResultDisplay::FuncRunner(double ethreshold, double estep) {
+	initNetworkState = drv->network.initNetworkState;
+	internalEtreshold = ethreshold;
+	internalEstep = estep;
 	RunEulerEvaluator();
 	if (print)
 		PrintCsv();
@@ -44,8 +47,11 @@ void ResultDisplay::FuncRunner() {
 }
 
 void ResultDisplay::RunEulerEvaluator() {
-	while (!eval->IsFinished()) {
-		states.push_back(eval->GetNextNetworkState());
+	EulerEvaluator eval(drv->network);
+	eval.threshold = internalEtreshold;
+	eval.step = internalEstep;
+	while (!eval.IsFinished()) {
+		states.push_back(eval.GetNextNetworkState());
 	}
 }
 

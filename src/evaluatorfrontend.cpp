@@ -1,14 +1,13 @@
 #include "evaluatorfrontend.h"
 
 void EvaluatorFrontend::PrintCsv() {
-	std::ofstream evaluatedCsv;
-	evaluatedCsv.open(csvFilename);
-	evaluatedCsv << initNetworkState.PrintCsvHeader();
-	evaluatedCsv << initNetworkState.PrintCsvRow();
+	csvStream->open(csvFilename);
+	*csvStream << initNetworkState.PrintCsvHeader();
+	*csvStream << initNetworkState.PrintCsvRow();
 	for (auto &state : states) {
-		evaluatedCsv << state.PrintCsvRow();
+		*csvStream << state.PrintCsvRow();
 	}
-	evaluatedCsv.close();
+	csvStream->close();
 	std::cout << "Printed to file " << csvFilename << std::endl;
 }
 
@@ -35,23 +34,22 @@ void EvaluatorFrontend::Plot() {
 	}
 }
 
-void EvaluatorFrontend::FuncRunner(double ethreshold, double estep) {
+void EvaluatorFrontend::FuncRunner() {
 	initNetworkState = drv->network.initNetworkState;
-	internalEtreshold = ethreshold;
-	internalEstep = estep;
 	RunEulerEvaluator();
-	if (print)
-		PrintCsv();
+	if (print) {
+		if (csvStream != nullptr)
+			PrintCsv();
+		else
+			Help(streamNullPtr);
+	}
 	if (plot)
 		Plot();
 }
 
 void EvaluatorFrontend::RunEulerEvaluator() {
-	EulerEvaluator eval(drv->network);
-	eval.threshold = internalEtreshold;
-	eval.step = internalEstep;
-	while (!eval.IsFinished()) {
-		states.push_back(eval.GetNextNetworkState());
+	while (!eulerEval->IsFinished()) {
+		states.push_back(eulerEval->GetNextNetworkState());
 	}
 }
 
@@ -62,10 +60,11 @@ void EvaluatorFrontend::Help(int errorCode) {
 		std::cout << "Warning: Perhaps -r flag was forgotten?" << std::endl;
 	} else if (errorCode == pError) {
 		std::cout << "Error while parsing" << std::endl;
-	}
+	} else if (errorCode == streamNullPtr)
+		std::cout << "filestreampointer was nullptr. Please try again" << std::endl;
 	std::string helperstring =
 			"argument list\n"
-			"	-r to run evaluator (euler)\n"
+			"	-e to to enable eulerevaluator\n"
 			"	-p trace parsing\n"
 			"	-s trace scanning\n"
 			"	-P enable plotting in gnuplot\n"
@@ -74,8 +73,8 @@ void EvaluatorFrontend::Help(int errorCode) {
 			"	-T <threshold size> set the euler evaluator threshold\n"
 			"When using this compiler an input file is required.\n"
 			"This should be passed as the last argument to the compiler.\n"
-			"It is also a requirement to pass the -r argument.\n"
+			"At this moment -e is required.\n"
 			"If this argument is not passed no evaluation will happen\n"
-			"Example input: ./chemilang -r -P <filename>";
+			"Example input: ./chemilang -e -P <filename>";
 	std::cout << helperstring << std::endl;
 }

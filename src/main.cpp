@@ -1,9 +1,9 @@
 #include "CRN/driver.h"
 #include "eulerevaluator.h"
+#include "evaluatorfrontend.h"
 #include "gnuplot-iostream.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
-#include "evaluatorfrontend.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -14,9 +14,10 @@ bool file_included(const std::string &filename) {
 
 int main(int argc, char *argv[]) {
 	int res = 0;
+	std::ofstream *csvStream = nullptr;
 	driver drv;
 	EvaluatorFrontend frontEnd;
-	bool run = false;
+	bool evaluateEuler = false;
 	double estep = 0.00001;
 	double ethreshold = 0.00001;
 	std::string filename;
@@ -41,6 +42,8 @@ int main(int argc, char *argv[]) {
 							 !std::string(argv[i + 1]).empty()) {
 			frontEnd.print = true;
 			frontEnd.csvFilename = std::string(argv[i + 1]);
+			csvStream = new std::ofstream();
+			frontEnd.csvStream = csvStream;
 			i++;
 		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {
 			estep = std::stod(argv[i + 1]);
@@ -48,11 +51,19 @@ int main(int argc, char *argv[]) {
 		} else if (argv[i] == std::string("-T") && std::stod(argv[i + 1]) != 0) {
 			ethreshold = std::stod(argv[i + 1]);
 			i++;
+		} else if (argv[i] == std::string("-e")) {
+			evaluateEuler = true;
 		} else {
 			res = drv.parse_file(argv[i]);
 			if (res == 0) {
-				frontEnd.drv = &drv;
-				frontEnd.FuncRunner(ethreshold, estep);
+				if (evaluateEuler) {
+					frontEnd.drv = &drv;
+					EulerEvaluator e(drv.network);
+					e.step = estep;
+					e.threshold = ethreshold;
+					frontEnd.eulerEval = &e;
+					frontEnd.FuncRunner();
+				}
 			} else {
 				frontEnd.Help(pError);
 			}

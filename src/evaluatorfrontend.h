@@ -18,7 +18,8 @@ enum ErrorCode {
 	rError = 1,
 	fileError = 2,
 	otherError = 3,
-	pError = 4
+	pError = 4,
+	streamNullPtr = 5
 };
 
 class EvaluatorFrontend {
@@ -27,8 +28,10 @@ public:
 	bool print = false;
 	std::string csvFilename;
 	driver *drv;
-	void FuncRunner(double ethreshold, double estep);
-	void Help(int errorCode);
+	EulerEvaluator *eulerEval;
+	void FuncRunner();
+	static void Help(int errorCode);
+	std::ofstream *csvStream;
 
 private:
 	NetworkState initNetworkState;
@@ -37,6 +40,4 @@ private:
 	void RunEulerEvaluator();
 	Gnuplot gp;
 	std::vector<NetworkState> states;
-	double internalEtreshold;
-	double internalEstep;
 };

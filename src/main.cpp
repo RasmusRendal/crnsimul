@@ -14,7 +14,7 @@ bool file_included(const std::string &filename) {
 
 int main(int argc, char *argv[]) {
 	int res = 0;
-	std::ofstream *csvStream = nullptr;
+	std::stringstream *csvStream = nullptr;
 	driver drv;
 	EvaluatorFrontend frontEnd;
 	bool evaluateEuler = false;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 							 !std::string(argv[i + 1]).empty()) {
 			frontEnd.print = true;
 			frontEnd.csvFilename = std::string(argv[i + 1]);
-			csvStream = new std::ofstream();
+			csvStream = new std::stringstream();
 			frontEnd.csvStream = csvStream;
 			i++;
 		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {

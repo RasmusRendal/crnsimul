@@ -1,13 +1,18 @@
 #include "evaluatorfrontend.h"
 
-void EvaluatorFrontend::PrintCsv() {
-	csvStream->open(csvFilename);
+void EvaluatorFrontend::PrintCsvString() {
 	*csvStream << initNetworkState.PrintCsvHeader();
 	*csvStream << initNetworkState.PrintCsvRow();
 	for (auto &state : states) {
 		*csvStream << state.PrintCsvRow();
 	}
-	csvStream->close();
+}
+
+void EvaluatorFrontend::PrintCsv() {
+	PrintCsvString();
+	csvFileStream.open(csvFilename);
+	csvFileStream << csvStream->rdbuf();
+	csvFileStream.close();
 	std::cout << "Printed to file " << csvFilename << std::endl;
 }
 

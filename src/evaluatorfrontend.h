@@ -31,13 +31,14 @@ public:
 	EulerEvaluator *eulerEval;
 	void FuncRunner();
 	static void Help(int errorCode);
-	std::ofstream *csvStream;
-
+	void PrintCsvString();
+	std::stringstream *csvStream;
 private:
-	NetworkState initNetworkState;
-	void Plot();
-	void PrintCsv();
-	void RunEulerEvaluator();
 	Gnuplot gp;
 	std::vector<NetworkState> states;
+	std::ofstream csvFileStream;
+	NetworkState initNetworkState;
+	void PrintCsv();
+	void Plot();
+	void RunEulerEvaluator();
 };

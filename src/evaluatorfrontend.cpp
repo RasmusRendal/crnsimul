@@ -58,7 +58,7 @@ void EvaluatorFrontend::RunEulerEvaluator() {
 	}
 }
 
-void EvaluatorFrontend::Help(int errorCode) {
+void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	if (errorCode == fileError) {
 		std::cout << "Error: No file for parsing" << std::endl;
 	} else if (errorCode == rError) {

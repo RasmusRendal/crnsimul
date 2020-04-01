@@ -165,7 +165,6 @@ TEST_F(CrnTest, testComment) {
 														 "#loln");
 	EXPECT_EQ(res, 0);
 	auto &network = drv.network;
-	network.Print();
 
 	EXPECT_EQ(network.initNetworkState.size(), 3);
 

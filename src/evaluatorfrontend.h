@@ -33,6 +33,7 @@ public:
 	static void Help(int errorCode);
 	void PrintCsvString();
 	std::stringstream *csvStream;
+
 private:
 	Gnuplot gp;
 	std::vector<NetworkState> states;

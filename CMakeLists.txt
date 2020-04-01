@@ -23,7 +23,7 @@ include_directories(src/CRN)
 include_directories(submodules/gnuplot-iostream)
 
 file(GLOB SOURCES "src/CRN/*.cpp")
-list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp")
+list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp" "src/evaluatorfrontend.cpp")
 file(GLOB TEST_SOURCES "tests/*.cpp")
 
 find_package(Boost 1.56 REQUIRED COMPONENTS iostreams)
@@ -42,11 +42,10 @@ enable_testing()
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-
 add_executable(tests
 	${TEST_SOURCES}
 	${SOURCES}
 	${BISON_CRNParse_OUTPUTS}
 	${FLEX_CRNScan_OUTPUTS}
 )
-target_link_libraries(tests ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams)

@@ -23,9 +23,9 @@ TEST_F(FrontendTest, PrintEvaluatedCSV) {
     frontend.eulerEval = &e;
     frontend.FuncRunner();
     frontend.PrintCsvString();
-    std::string test1 = test.str();
-    std::string test2 = frontend.csvStream->str();
-    EXPECT_EQ(test1, test2);
+    std::string expected = test.str();
+    std::string result = frontend.csvStream->str();
+    EXPECT_EQ(expected, result);
 }
 
 /*TEST_F(FrontendTest, PrintCSV) {

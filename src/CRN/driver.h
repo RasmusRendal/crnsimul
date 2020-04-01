@@ -19,7 +19,7 @@ public:
 	int result = 0;
 
 	// Run the parser on file F.  Return 0 on success.
-	int parse_file(char *f);
+	int parse_file(const std::string &filename);
 	int parse_string(const std::string &s);
 	int parse();
 	// The name of the file being parsed.

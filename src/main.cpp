@@ -13,24 +13,20 @@ bool file_included(const std::string &filename) {
 }
 
 int main(int argc, char *argv[]) {
-	int res = 0;
 	std::stringstream *csvStream = nullptr;
 	driver drv;
 	EvaluatorFrontend frontEnd;
 	bool evaluateEuler = false;
-	double estep = 0.00001;
+	double estep = 0.01;
 	double ethreshold = 0.00001;
 	std::string filename;
-	filename = std::string(argv[argc - 1]);
+
 	if (argv[argc - 1] == std::string("-h") ||
 			argv[argc - 1] == std::string("--help")) {
-		frontEnd.Help(helpargument);
+		EvaluatorFrontend::Help(helpargument);
 		return 0;
 	}
-	if (!file_included(filename)) {
-		frontEnd.Help(fileError);
-		return 0;
-	}
+
 	for (int i = 1; i < argc; ++i) {
 		if (argv[i] == std::string("-p")) {
 			drv.trace_parsing = true;
@@ -38,36 +34,54 @@ int main(int argc, char *argv[]) {
 			drv.trace_scanning = true;
 		} else if (argv[i] == std::string("-P")) {
 			frontEnd.plot = true;
-		} else if (argv[i] == std::string("-O") &&
-							 !std::string(argv[i + 1]).empty()) {
+		} else if (argv[i] == std::string("-O")) {
 			frontEnd.print = true;
-			frontEnd.csvFilename = std::string(argv[i + 1]);
+			frontEnd.csvFilename = std::string(argv[++i]);
 			csvStream = new std::stringstream();
 			frontEnd.csvStream = csvStream;
-			i++;
-		} else if (argv[i] == std::string("-S") && std::stod(argv[i + 1]) != 0) {
-			estep = std::stod(argv[i + 1]);
-			i++;
-		} else if (argv[i] == std::string("-T") && std::stod(argv[i + 1]) != 0) {
-			ethreshold = std::stod(argv[i + 1]);
-			i++;
+		} else if (argv[i] == std::string("-S")) {
+			estep = std::stod(argv[++i]);
+		} else if (argv[i] == std::string("-T")) {
+			ethreshold = std::stod(argv[++i]);
 		} else if (argv[i] == std::string("-e")) {
 			evaluateEuler = true;
+		} else if (file_included(argv[i])) {
+			filename = argv[i];
 		} else {
-			res = drv.parse_file(argv[i]);
-			if (res == 0) {
-				if (evaluateEuler) {
-					frontEnd.drv = &drv;
-					EulerEvaluator e(drv.network);
-					e.step = estep;
-					e.threshold = ethreshold;
-					frontEnd.eulerEval = &e;
-					frontEnd.FuncRunner();
-				}
-			} else {
-				frontEnd.Help(pError);
-			}
+			std::cout << "Unknown argument " << argv[i] << std::endl;
+			EvaluatorFrontend::Help();
+			return 1;
 		}
 	}
-	return res;
+
+	if (filename.empty()) {
+		std::cout << "No filename supplied" << std::endl;
+		return 1;
+	}
+
+	if (estep < 0) {
+		std::cout << "The step value must be more than zero" << std::endl;
+		return 1;
+	}
+
+	if (ethreshold < 0) {
+		std::cout << "The threshold value must be more than zero" << std::endl;
+		return 1;
+	}
+
+	if (drv.parse_file(filename) == 0) {
+		if (evaluateEuler) {
+			frontEnd.drv = &drv;
+			EulerEvaluator e(drv.network);
+			e.step = estep;
+			e.threshold = ethreshold;
+			frontEnd.eulerEval = &e;
+			frontEnd.FuncRunner();
+		}
+	} else {
+		EvaluatorFrontend::Help(pError);
+		return 1;
+	}
+
+	return 0;
 }

@@ -58,7 +58,7 @@ void EvaluatorFrontend::RunEulerEvaluator() {
 	}
 }
 
-void EvaluatorFrontend::Help(int errorCode) {
+void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	if (errorCode == fileError) {
 		std::cout << "Error: No file for parsing" << std::endl;
 	} else if (errorCode == rError) {
@@ -68,18 +68,15 @@ void EvaluatorFrontend::Help(int errorCode) {
 	} else if (errorCode == streamNullPtr)
 		std::cout << "filestreampointer was nullptr. Please try again" << std::endl;
 	std::string helperstring =
-			"argument list\n"
-			"	-e to to enable eulerevaluator\n"
+			"Usage: chemilang [OPTIONS] filename"
+			"Option types:\n"
+			"	-e to to enable eulerevaluator (Required)\n"
 			"	-p trace parsing\n"
 			"	-s trace scanning\n"
 			"	-P enable plotting in gnuplot\n"
 			"	-O <filename> output result to file, -r required\n"
 			"	-S <step size> set stepsize for eulerevaluator\n"
 			"	-T <threshold size> set the euler evaluator threshold\n"
-			"When using this compiler an input file is required.\n"
-			"This should be passed as the last argument to the compiler.\n"
-			"At this moment -e is required.\n"
-			"If this argument is not passed no evaluation will happen\n"
-			"Example input: ./chemilang -e -P <filename>";
+			"   -h Display help options";
 	std::cout << helperstring << std::endl;
 }

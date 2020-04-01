@@ -30,7 +30,7 @@ public:
 	driver *drv;
 	EulerEvaluator *eulerEval;
 	void FuncRunner();
-	static void Help(int errorCode);
+	static void Help(ErrorCode errorCode = helpargument);
 	void PrintCsvString();
 	std::stringstream *csvStream;
 

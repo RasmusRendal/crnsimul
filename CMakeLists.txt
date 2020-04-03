@@ -23,7 +23,7 @@ include_directories(src/CRN)
 include_directories(submodules/gnuplot-iostream)
 
 file(GLOB SOURCES "src/CRN/*.cpp")
-list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp" "src/evaluatorfrontend.cpp")
+list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp" "src/evaluatorfrontend.cpp" "src/markovevaluator.cpp")
 file(GLOB TEST_SOURCES "tests/*.cpp")
 
 find_package(Boost 1.56 REQUIRED COMPONENTS iostreams)

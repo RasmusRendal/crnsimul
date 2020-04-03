@@ -6,22 +6,16 @@
 
 class Evaluator {
 public:
-	Evaluator(ReactionNetwork network)
-			: mNetwork(network), mState(network.initNetworkState),
-				oldState(network.initNetworkState.DeepCopy()) {}
+	Evaluator(const ReactionNetwork &network)
+			: mNetwork(network), mState(network.initNetworkState) {}
 
-	NetworkState GetNextNetworkState();
+	virtual NetworkState GetNextNetworkState() = 0;
 	// Is set to true when the change between the two last state
 	// is less than threshold
 	bool IsFinished();
-	double threshold = 0.0001;
 
 protected:
-	virtual NetworkState GetNextNetworkStateInternal() = 0;
+	bool finished = false;
 	ReactionNetwork mNetwork;
 	NetworkState mState;
-
-private:
-	bool finished = false;
-	NetworkState oldState;
 };

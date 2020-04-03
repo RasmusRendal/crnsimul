@@ -58,3 +58,44 @@ double NetworkState::Diff(const NetworkState &other) {
 	}
 	return diff;
 }
+
+NetworkState NetworkState::operator+(const NetworkState &other) {
+	NetworkState state;
+	for (const auto &specie : *this) {
+		std::string name = specie.first;
+		auto otherVal = other.find(specie.first);
+		double value = specie.second + otherVal->second;
+		auto pair = std::pair<std::string, double>(name, value);
+		state.insert(pair);
+	}
+
+	for (const auto &specie : other) {
+		if (find(specie.first) == end()) {
+			state.insert(specie);
+		}
+	}
+	return state;
+}
+NetworkState NetworkState::operator-(const NetworkState &other) {
+	NetworkState state;
+	for (const auto &specie : *this) {
+		std::string name = specie.first;
+		double value = specie.second - other.find(specie.first)->second;
+		if (value < 0) {
+			if (value > -ZERO_TOLERANCE) {
+				value = 0;
+			} else {
+				throw NetworkStateOutOfRange();
+			}
+		}
+		auto pair = std::pair<std::string, double>(name, value);
+		state.insert(pair);
+	}
+
+	for (const auto &specie : other) {
+		if (specie.second != 0 && find(specie.first) == end()) {
+			throw NetworkStateOutOfRange();
+		}
+	}
+	return state;
+}

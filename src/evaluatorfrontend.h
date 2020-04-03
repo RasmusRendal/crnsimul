@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CRN/driver.h"
-#include "eulerevaluator.h"
 #include "evaluator.h"
 #include "gnuplot-iostream.h"
 #include "networkstate.h"
@@ -28,7 +27,7 @@ public:
 	bool print = false;
 	std::string csvFilename;
 	driver *drv;
-	EulerEvaluator *eulerEval;
+	Evaluator *evaluator = nullptr;
 	void FuncRunner();
 	static void Help(ErrorCode errorCode = helpargument);
 	void PrintCsvString();
@@ -41,5 +40,5 @@ private:
 	NetworkState initNetworkState;
 	void PrintCsv();
 	void Plot();
-	void RunEulerEvaluator();
+	void RunEvaluator();
 };

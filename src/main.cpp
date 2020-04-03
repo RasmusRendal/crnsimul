@@ -2,6 +2,7 @@
 #include "eulerevaluator.h"
 #include "evaluatorfrontend.h"
 #include "gnuplot-iostream.h"
+#include "markovevaluator.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
 #include <fstream>
@@ -16,7 +17,7 @@ int main(int argc, char *argv[]) {
 	std::stringstream *csvStream = nullptr;
 	driver drv;
 	EvaluatorFrontend frontEnd;
-	bool evaluateEuler = false;
+	bool evaluateEuler = true;
 	double estep = 0.01;
 	double ethreshold = 0.00001;
 	std::string filename;
@@ -45,6 +46,8 @@ int main(int argc, char *argv[]) {
 			ethreshold = std::stod(argv[++i]);
 		} else if (argv[i] == std::string("-e")) {
 			evaluateEuler = true;
+		} else if (argv[i] == std::string("-m")) {
+			evaluateEuler = false;
 		} else if (file_included(argv[i])) {
 			filename = argv[i];
 		} else {
@@ -70,14 +73,18 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (drv.parse_file(filename) == 0) {
+		frontEnd.drv = &drv;
+		Evaluator *evaluator;
 		if (evaluateEuler) {
-			frontEnd.drv = &drv;
-			EulerEvaluator e(drv.network);
-			e.step = estep;
-			e.threshold = ethreshold;
-			frontEnd.eulerEval = &e;
-			frontEnd.FuncRunner();
+			auto eulerEvaluator = new EulerEvaluator(drv.network);
+			eulerEvaluator->step = estep;
+			eulerEvaluator->threshold = ethreshold;
+			evaluator = eulerEvaluator;
+		} else {
+			evaluator = new MarkovEvaluator(drv.network);
 		}
+		frontEnd.evaluator = evaluator;
+		frontEnd.FuncRunner();
 	} else {
 		EvaluatorFrontend::Help(pError);
 		return 1;

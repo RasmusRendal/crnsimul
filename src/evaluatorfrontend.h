@@ -24,6 +24,7 @@ enum ErrorCode {
 class EvaluatorFrontend {
 public:
 	bool plot = false;
+	bool specificPlotting = false;
 	bool print = false;
 	std::string csvFilename;
 	driver *drv;
@@ -32,6 +33,7 @@ public:
 	static void Help(ErrorCode errorCode = helpargument);
 	void PrintCsvString();
 	std::stringstream *csvStream;
+	std::vector<std::string> desiredChemicals;
 
 private:
 	Gnuplot gp;

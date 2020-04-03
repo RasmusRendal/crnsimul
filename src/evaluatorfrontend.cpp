@@ -18,8 +18,18 @@ void EvaluatorFrontend::PrintCsv() {
 
 void EvaluatorFrontend::Plot() {
 	std::vector<std::string> plotStrings;
-	for (auto &species : initNetworkState) {
-		plotStrings.push_back(species.first);
+	if (specificPlotting) {
+		for (auto &species : initNetworkState) {
+			for (auto &chemicals : desiredChemicals) {
+				if (chemicals.compare(species.first) == 0) {
+					plotStrings.push_back(species.first);
+				}
+			}
+		}
+	} else {
+		for (auto &species : initNetworkState) {
+			plotStrings.push_back(species.first);
+		}
 	}
 	gp << "plot";
 	int plotStringsSize = static_cast<int>(plotStrings.size());
@@ -53,6 +63,8 @@ void EvaluatorFrontend::FuncRunner() {
 }
 
 void EvaluatorFrontend::RunEvaluator() {
+	states.push_back(evaluator->GetNextNetworkState());
+	states.push_back(evaluator->GetNextNetworkState());
 	while (!evaluator->IsFinished()) {
 		states.push_back(evaluator->GetNextNetworkState());
 	}

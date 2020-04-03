@@ -44,12 +44,3 @@ TEST_F(MarkovTest, twoValues) {
 	EXPECT_CLOSE(finalState["b"], startValue);
 	EXPECT_EQ(evaluator.IsFinished(), true);
 }
-
-TEST_F(MarkovTest, FrontendLocator) {
-	driver drv;
-	drv.parse_string("a:=1; b:=0; a -> b;");
-	MarkovEvaluator e(drv.network);
-	while (!e.IsFinished()) {
-		e.GetNextNetworkState();
-	}
-}

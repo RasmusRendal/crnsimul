@@ -5,7 +5,7 @@
 #include <vector>
 
 // A term of e differential equation for a single specie
-using equation_term = std::pair<int, std::map<std::string, int>>;
+using equation_term = std::pair<int, NetworkState>;
 // The differential equation for a single specie
 using equation = std::vector<equation_term>;
 // A set of differential equations representing a CRN
@@ -13,17 +13,18 @@ using equation_set = std::map<std::string, equation>;
 
 class EulerEvaluator : public Evaluator {
 public:
-	EulerEvaluator(ReactionNetwork network) : Evaluator(std::move(network)) {
+	EulerEvaluator(const ReactionNetwork &network) : Evaluator(network) {
 		InitializeEquationParts();
 	}
 	int iterations = 0;
 	void PrintEquations();
 	double step = 0.0001;
+	double threshold = 0.0001;
+	NetworkState GetNextNetworkState() override;
 
 private:
 	void InitializeEquationParts();
 
-	NetworkState GetNextNetworkStateInternal() override;
 	// The differential equations are stored here
 	equation_set equationParts;
 };

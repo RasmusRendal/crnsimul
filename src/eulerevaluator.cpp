@@ -12,8 +12,6 @@ void AddIfNotExists(std::map<std::string, int> &map, const std::string &toAdd) {
 
 void EulerEvaluator::InitializeEquationParts() {
 	for (auto &reaction : mNetwork.reactionList) {
-		std::map<std::string, int> &changeRate = reaction.reactants;
-
 		// For each reaction occurence, this map contains the net change
 		// for each species
 		std::map<std::string, int> changePerReaction;
@@ -34,13 +32,13 @@ void EulerEvaluator::InitializeEquationParts() {
 			if (equationParts.find(specie.first) == equationParts.end())
 				equationParts.insert(make_pair(specie.first, equation()));
 
-			equationParts[specie.first].push_back(
-					make_pair(specie.second * reaction.reactionConstant, changeRate));
+			equationParts[specie.first].push_back(make_pair(
+					specie.second * reaction.reactionConstant, reaction.reactants));
 		}
 	}
 }
 
-NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
+NetworkState EulerEvaluator::GetNextNetworkState() {
 	iterations++;
 	auto oldState = mState.DeepCopy();
 	for (auto &specie : equationParts) {
@@ -55,6 +53,7 @@ NetworkState EulerEvaluator::GetNextNetworkStateInternal() {
 		mState[specie.first] += diff * step;
 	}
 	mState.time = step * iterations;
+	finished = (oldState.Diff(mState) < threshold);
 	return mState;
 }
 

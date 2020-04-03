@@ -1,15 +1,25 @@
 #pragma once
 
+#include "networkstate.h"
 #include <map>
 
 class Reaction {
 public:
-	Reaction(std::map<std::string, int> reactants,
-					 std::map<std::string, int> products, int reactionConstant)
+	Reaction(NetworkState reactants, NetworkState products, int reactionConstant)
 			: reactants(std::move(reactants)), products(std::move(products)),
 				reactionConstant(reactionConstant) {}
+	Reaction(const std::map<std::string, int> &reactants,
+					 const std::map<std::string, int> &products, int reactionConstant)
+			: reactionConstant(reactionConstant) {
+		for (auto &specie : reactants) {
+			this->reactants[specie.first] = specie.second;
+		}
+		for (auto &specie : products) {
+			this->products[specie.first] = specie.second;
+		}
+	}
 	Reaction() = default;
-	std::map<std::string, int> reactants;
-	std::map<std::string, int> products;
+	NetworkState reactants;
+	NetworkState products;
 	int reactionConstant = 1;
 };

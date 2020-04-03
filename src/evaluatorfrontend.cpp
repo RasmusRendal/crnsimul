@@ -41,7 +41,7 @@ void EvaluatorFrontend::Plot() {
 
 void EvaluatorFrontend::FuncRunner() {
 	initNetworkState = drv->network.initNetworkState;
-	RunEulerEvaluator();
+	RunEvaluator();
 	if (print) {
 		if (csvStream != nullptr)
 			PrintCsv();
@@ -52,9 +52,9 @@ void EvaluatorFrontend::FuncRunner() {
 		Plot();
 }
 
-void EvaluatorFrontend::RunEulerEvaluator() {
-	while (!eulerEval->IsFinished()) {
-		states.push_back(eulerEval->GetNextNetworkState());
+void EvaluatorFrontend::RunEvaluator() {
+	while (!evaluator->IsFinished()) {
+		states.push_back(evaluator->GetNextNetworkState());
 	}
 }
 

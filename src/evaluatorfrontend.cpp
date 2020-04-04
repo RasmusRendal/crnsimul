@@ -87,6 +87,8 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 			"	-O <filename> output result to file, -r required\n"
 			"	-S <step size> set stepsize for eulerevaluator\n"
 			"	-T <threshold size> set the euler evaluator threshold\n"
+			"	-C to select desired chemicals to plot\n"
+			"	These are seperated with the commaseperator\n";
 			"   -h Display help options";
 	std::cout << helperstring << std::endl;
 }

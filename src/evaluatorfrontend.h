@@ -32,12 +32,14 @@ public:
 	static void Help(ErrorCode errorCode = helpargument);
 	void PrintCsvString();
 	std::stringstream *csvStream;
+	std::vector<std::string> desiredChemicals;
+	std::vector<std::string> GeneratePlotString();
+	NetworkState initNetworkState;
 
 private:
 	Gnuplot gp;
 	std::vector<NetworkState> states;
 	std::ofstream csvFileStream;
-	NetworkState initNetworkState;
 	void PrintCsv();
 	void Plot();
 	void RunEvaluator();

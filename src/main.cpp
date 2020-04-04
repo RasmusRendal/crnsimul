@@ -5,8 +5,10 @@
 #include "markovevaluator.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
+#include <ctype.h>
 #include <fstream>
 #include <iostream>
+#include <stdio.h>
 #include <string>
 
 bool file_included(const std::string &filename) {
@@ -48,6 +50,13 @@ int main(int argc, char *argv[]) {
 			evaluateEuler = true;
 		} else if (argv[i] == std::string("-m")) {
 			evaluateEuler = false;
+		} else if (argv[i] == std::string("-C")) {
+			std::stringstream chemArg(argv[++i]);
+			while (chemArg.good()) {
+				std::string substr;
+				getline(chemArg, substr, ',');
+				frontEnd.desiredChemicals.push_back(substr);
+			}
 		} else if (file_included(argv[i])) {
 			filename = argv[i];
 		} else {

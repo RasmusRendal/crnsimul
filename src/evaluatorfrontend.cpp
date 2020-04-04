@@ -16,11 +16,27 @@ void EvaluatorFrontend::PrintCsv() {
 	std::cout << "Printed to file " << csvFilename << std::endl;
 }
 
-void EvaluatorFrontend::Plot() {
+std::vector<std::string> EvaluatorFrontend::GeneratePlotString() {
 	std::vector<std::string> plotStrings;
-	for (auto &species : initNetworkState) {
-		plotStrings.push_back(species.first);
+	if (!desiredChemicals.empty()) {
+		for (const auto &specieName : desiredChemicals) {
+			auto toPlot = initNetworkState.find(specieName);
+			std::cout << toPlot->first << std::endl;
+			if (toPlot == initNetworkState.end()) {
+				throw std::runtime_error("Tried to plot chemical not in CRN");
+			}
+			plotStrings.push_back(toPlot->first);
+		}
+	} else {
+		for (auto &species : initNetworkState) {
+			plotStrings.push_back(species.first);
+		}
 	}
+	return plotStrings;
+}
+
+void EvaluatorFrontend::Plot() {
+	std::vector<std::string> plotStrings = GeneratePlotString();
 	gp << "plot";
 	int plotStringsSize = static_cast<int>(plotStrings.size());
 	for (int i = 0; i < plotStringsSize; i++) {
@@ -77,6 +93,8 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 			"	-O <filename> output result to file, -r required\n"
 			"	-S <step size> set stepsize for eulerevaluator\n"
 			"	-T <threshold size> set the euler evaluator threshold\n"
-			"   -h Display help options";
+			"	-C to select desired chemicals to plot\n"
+			"	These are seperated with the commaseperator\n";
+	"   -h Display help options";
 	std::cout << helperstring << std::endl;
 }

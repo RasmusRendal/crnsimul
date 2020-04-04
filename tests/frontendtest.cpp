@@ -58,3 +58,17 @@ TEST_F(FrontendTest, SpecificPlottingNotEqual) {
 	std::vector<std::string> actual = frontend.GeneratePlotString();
 	EXPECT_NE(expected, actual);
 }
+
+TEST_F(FrontendTest, SpecificPlottingNotInSystem) {
+	driver drv;
+	drv.parse_string("z:=30; b:=50; aa:=3;");
+	EvaluatorFrontend frontend;
+	frontend.drv = &drv;
+	frontend.initNetworkState = drv.network.initNetworkState;
+	std::vector<std::string> expected;
+	expected.push_back("z");
+	expected.push_back("aa");
+	frontend.desiredChemicals.push_back("z");
+	frontend.desiredChemicals.push_back("aaaaaaa");
+	ASSERT_THROW(frontend.GeneratePlotString(), std::runtime_error);
+}

@@ -16,11 +16,12 @@ void EvaluatorFrontend::PrintCsv() {
 	std::cout << "Printed to file " << csvFilename << std::endl;
 }
 
-void EvaluatorFrontend::Plot() {
+std::vector<std::string> EvaluatorFrontend::GeneratePlotString() {
 	std::vector<std::string> plotStrings;
 	if (!desiredChemicals.empty()) {
 		for (const auto &specieName : desiredChemicals) {
 			auto toPlot = initNetworkState.find(specieName);
+			std::cout << toPlot->first << std::endl;
 			if (toPlot == initNetworkState.end()) {
 				throw std::runtime_error("Tried to plot chemical not in CRN");
 			}
@@ -31,6 +32,11 @@ void EvaluatorFrontend::Plot() {
 			plotStrings.push_back(species.first);
 		}
 	}
+	return plotStrings;
+}
+
+void EvaluatorFrontend::Plot() {
+	std::vector<std::string> plotStrings = GeneratePlotString();
 	gp << "plot";
 	int plotStringsSize = static_cast<int>(plotStrings.size());
 	for (int i = 0; i < plotStringsSize; i++) {

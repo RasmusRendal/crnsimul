@@ -26,7 +26,7 @@ file(GLOB SOURCES "src/CRN/*.cpp")
 list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp" "src/evaluatorfrontend.cpp" "src/markovevaluator.cpp")
 file(GLOB TEST_SOURCES "tests/*.cpp")
 
-find_package(Boost 1.56 REQUIRED COMPONENTS iostreams)
+find_package(Boost 1.56 REQUIRED COMPONENTS iostreams system)
 
 # add the executable
 add_executable(chemilang
@@ -36,7 +36,7 @@ add_executable(chemilang
 	${FLEX_CRNScan_OUTPUTS}
 )
 
-TARGET_LINK_LIBRARIES(chemilang LINK_PUBLIC Boost::iostreams)
+TARGET_LINK_LIBRARIES(chemilang LINK_PUBLIC Boost::iostreams Boost::system)
 
 enable_testing()
 find_package(GTest REQUIRED)
@@ -48,4 +48,4 @@ add_executable(tests
 	${BISON_CRNParse_OUTPUTS}
 	${FLEX_CRNScan_OUTPUTS}
 )
-target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams)
+target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system)

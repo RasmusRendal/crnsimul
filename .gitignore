@@ -19,5 +19,6 @@ CTestTestfile.cmake
 compile_commands.json
 .vscode
 settings.json
+result
 *.csv
 htmloutput/*

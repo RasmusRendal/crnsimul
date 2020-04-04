@@ -63,8 +63,6 @@ void EvaluatorFrontend::FuncRunner() {
 }
 
 void EvaluatorFrontend::RunEvaluator() {
-	states.push_back(evaluator->GetNextNetworkState());
-	states.push_back(evaluator->GetNextNetworkState());
 	while (!evaluator->IsFinished()) {
 		states.push_back(evaluator->GetNextNetworkState());
 	}

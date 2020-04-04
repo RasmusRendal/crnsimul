@@ -18,13 +18,13 @@ void EvaluatorFrontend::PrintCsv() {
 
 void EvaluatorFrontend::Plot() {
 	std::vector<std::string> plotStrings;
-	if (specificPlotting) {
-		for (auto &species : initNetworkState) {
-			for (auto &chemicals : desiredChemicals) {
-				if (chemicals.compare(species.first) == 0) {
-					plotStrings.push_back(species.first);
-				}
+	if (!desiredChemicals.empty()) {
+		for (const auto &specieName : desiredChemicals) {
+			auto toPlot = initNetworkState.find(specieName);
+			if (toPlot == initNetworkState.end()) {
+				throw std::runtime_error("Tried to plot chemical not in CRN");
 			}
+			plotStrings.push_back(toPlot->first);
 		}
 	} else {
 		for (auto &species : initNetworkState) {

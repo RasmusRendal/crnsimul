@@ -28,3 +28,7 @@ TEST_F(FrontendTest, PrintEvaluatedCSV) {
 	std::string result = frontend.csvStream->str();
 	EXPECT_EQ(expected, result);
 }
+
+TEST_F(FrontendTest, SpecificPlotting) {
+	
+}

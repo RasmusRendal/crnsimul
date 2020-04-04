@@ -51,7 +51,6 @@ int main(int argc, char *argv[]) {
 		} else if (argv[i] == std::string("-m")) {
 			evaluateEuler = false;
 		} else if (argv[i] == std::string("-C")) {
-			frontEnd.specificPlotting = true;
 			std::stringstream chemArg(argv[++i]);
 			while (chemArg.good()) {
 				std::string substr;

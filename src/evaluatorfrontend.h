@@ -24,7 +24,6 @@ enum ErrorCode {
 class EvaluatorFrontend {
 public:
 	bool plot = false;
-	bool specificPlotting = false;
 	bool print = false;
 	std::string csvFilename;
 	driver *drv;

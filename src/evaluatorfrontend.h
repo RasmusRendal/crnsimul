@@ -35,6 +35,7 @@ public:
 	std::vector<std::string> desiredChemicals;
 	std::vector<std::string> GeneratePlotString();
 	NetworkState initNetworkState;
+
 private:
 	Gnuplot gp;
 	std::vector<NetworkState> states;

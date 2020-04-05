@@ -121,18 +121,20 @@ TEST_F(EulerTest, MultipleSame) {
 
 TEST_F(EulerTest, KahanSummationEqual) {
 	driver drv;
+	double c = 0;
 	double a = 0.0000000000005;
 	double b = 0.0000000000006;
 	double expected = 0.0000000000011;
 	EulerEvaluator e(drv.network);
-	EXPECT_EQ(expected, e.KahanSummation({a,b}));
+	EXPECT_EQ(expected, e.KahanSummation({a,b}, c));
 }
 
 TEST_F(EulerTest, KahanSummationNotEqual) {
 	driver drv;
+	double c = 0;
 	EulerEvaluator e (drv.network);
 	double a = 0.0000000000005;
 	double b = 0.0000000000006;
 	double expected = 0.000000000011;
-	EXPECT_NE(expected, e.KahanSummation({a,b}));
+	EXPECT_NE(expected, e.KahanSummation({a,b},c));
 }

@@ -21,11 +21,10 @@ public:
 	double step = 0.0001;
 	double threshold = 0.0001;
 	NetworkState GetNextNetworkState() override;
-	double KahanSummation(std::initializer_list<double> numbers);
+	double KahanSummation(std::initializer_list<double> numbers, double &c);
 
 private:
 	void InitializeEquationParts();
-
 	// The differential equations are stored here
 	equation_set equationParts;
 };

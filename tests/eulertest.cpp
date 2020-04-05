@@ -120,21 +120,16 @@ TEST_F(EulerTest, MultipleSame) {
 }
 
 TEST_F(EulerTest, KahanSummationEqual) {
+	// ran with stepsize 0.0000001
 	driver drv;
-	double c = 0;
-	double a = 0.0000000000005;
-	double b = 0.0000000000006;
-	double expected = 0.0000000000011;
+	NetworkState final;
+	drv.parse_string("a:=600; b:=750; a + b -> a + b + c; c -> 0;");
+	double expected = 1797.3017995500002;
 	EulerEvaluator e(drv.network);
-	EXPECT_EQ(expected, e.KahanSummation({a,b}, c));
-}
-
-TEST_F(EulerTest, KahanSummationNotEqual) {
-	driver drv;
-	double c = 0;
-	EulerEvaluator e (drv.network);
-	double a = 0.0000000000005;
-	double b = 0.0000000000006;
-	double expected = 0.000000000011;
-	EXPECT_NE(expected, e.KahanSummation({a,b},c));
+	e.step = 0.001;
+	for(int i = 0; i < 4; i++) {
+		final = e.GetNextNetworkState();
+	}
+	double actual = final.find("c")->second;
+	EXPECT_DOUBLE_EQ(expected, actual);
 }

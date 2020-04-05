@@ -42,18 +42,21 @@ NetworkState EulerEvaluator::GetNextNetworkState() {
 	iterations++;
 	auto oldState = mState.DeepCopy();
 	for (auto &specie : equationParts) {
-		double c1 = 0;
-		double c2 = 0;
+		double c = 0;
 		double diff = 0;
 		for (equation_term &term : specie.second) {
 			double change = term.first;
 			for (auto &reactant : term.second) {
 				change *= pow(oldState[reactant.first], reactant.second);
 			}
-			diff = KahanSummation({diff, change}, c1);
+			diff = KahanSummation({diff, change}, c);
+			if (!kahan && c != 0)
+				std::cout << "Erors: " << c << std::endl;
 		}
-		mState[specie.first] =
-				KahanSummation({mState[specie.first], diff * step}, c2);
+		mState[specie.first] = KahanSummation({mState[specie.first], diff * step},
+																					errors[specie.first]);
+		if (errors[specie.first] != 0)
+			std::cout << "Specie Error: " << errors[specie.first] << std::endl;
 	}
 	mState.time = step * iterations;
 	finished = (oldState.Diff(mState) < threshold);
@@ -64,10 +67,14 @@ double EulerEvaluator::KahanSummation(std::initializer_list<double> numbers,
 																			double &c) {
 	double sum = 0.0;
 	for (auto number : numbers) {
-		double y = number - c;
-		double t = sum + y;
-		c = (t - sum) - y;
-		sum = t;
+		if (kahan) {
+			sum += number;
+		} else {
+			double y = number - c;
+			double t = sum + y;
+			c = (t - sum) - y;
+			sum = t;
+		}
 	}
 	return sum;
 }

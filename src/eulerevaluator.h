@@ -15,6 +15,9 @@ class EulerEvaluator : public Evaluator {
 public:
 	EulerEvaluator(const ReactionNetwork &network) : Evaluator(network) {
 		InitializeEquationParts();
+		for (const auto &specie : network.initNetworkState) {
+			errors.insert(std::make_pair(specie.first, 0));
+		}
 	}
 	int iterations = 0;
 	void PrintEquations();
@@ -22,9 +25,11 @@ public:
 	double threshold = 0.0001;
 	NetworkState GetNextNetworkState() override;
 	double KahanSummation(std::initializer_list<double> numbers, double &c);
+	bool kahan = true;
 
 private:
 	void InitializeEquationParts();
 	// The differential equations are stored here
 	equation_set equationParts;
+	std::map<std::string, double> errors;
 };

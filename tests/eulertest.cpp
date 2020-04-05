@@ -1,6 +1,7 @@
 #include "CRN/driver.h"
 #include "eulerevaluator.h"
 #include <gtest/gtest.h>
+#include <math.h>
 
 #define EXPECT_CLOSE(a, b) EXPECT_LT(abs((b) - (a)), 1)
 
@@ -119,22 +120,74 @@ TEST_F(EulerTest, MultipleSame) {
 	EXPECT_CLOSE(e.GetNextNetworkState()["z"], 8);
 }
 
-TEST_F(EulerTest, KahanSummationEqual) {
+TEST_F(EulerTest, SanityTest) {
 	driver drv;
-	double c = 0;
-	double a = 0.0000000000005;
-	double b = 0.0000000000006;
-	double expected = 0.0000000000011;
+	EXPECT_EQ(
+			drv.parse_string(
+					"a := 5000; b := 3000; a + b -> c; 2a + 2b -> 2c; 3a + 3b -> 3c;"),
+			0);
 	EulerEvaluator e(drv.network);
-	EXPECT_EQ(expected, e.KahanSummation({a,b}, c));
+	e.step = 0.01;
+	for (int i = 0; i < 100; i++) {
+		e.GetNextNetworkState();
+		if (e.IsFinished())
+			break;
+	}
+	auto state = e.GetNextNetworkState();
+	EXPECT_FALSE(isinf(state["a"]));
+	EXPECT_FALSE(isinf(state["b"]));
+	EXPECT_FALSE(isinf(state["c"]));
+	// Comparing two NaN's to each other will result in false on most
+	// architectures
+	EXPECT_DOUBLE_EQ(state["a"], state["a"]);
+	EXPECT_DOUBLE_EQ(state["b"], state["b"]);
+	EXPECT_DOUBLE_EQ(state["c"], state["c"]);
+
+	// We should maybe create a limitation that disallows negative
+	// concentrations. But you could also argue that we should just
+	// use a clean Euler Evaluator
+	EXPECT_GT(state["a"], 0);
+	EXPECT_GT(state["b"], 0);
+	EXPECT_GT(state["c"], 0);
+	EXPECT_LT(state["c"], 3000);
+	state.Print();
 }
 
-TEST_F(EulerTest, KahanSummationNotEqual) {
-	driver drv;
-	double c = 0;
-	EulerEvaluator e (drv.network);
-	double a = 0.0000000000005;
-	double b = 0.0000000000006;
-	double expected = 0.000000000011;
-	EXPECT_NE(expected, e.KahanSummation({a,b},c));
+TEST_F(EulerTest, KahanTest) {
+	auto crn = "a := 500; b := 300;"
+						 "1a + 1b -> c;"
+						 "2a + 2b -> c;";
+	int iters = 100;
+	double step = 0.00000000001;
+	double state1;
+	double state2;
+	{
+		driver drv;
+		ASSERT_EQ(drv.parse_string(crn), 0);
+		EulerEvaluator e(drv.network);
+		e.step = step;
+		for (int i = 0; i < iters; i++) {
+			e.GetNextNetworkState();
+		}
+
+		auto state = e.GetNextNetworkState();
+		state1 = state["c"];
+		state.Print();
+	}
+	std::cout << "Now for the second test" << std::endl;
+	{
+		driver drv;
+		ASSERT_EQ(drv.parse_string(crn), 0);
+		EulerEvaluator e(drv.network);
+		e.kahan = true;
+		e.step = step;
+		for (int i = 0; i < iters; i++) {
+			e.GetNextNetworkState();
+		}
+
+		auto state = e.GetNextNetworkState();
+		state2 = state["c"];
+		state.Print();
+	}
+	EXPECT_NE(state1, state2);
 }

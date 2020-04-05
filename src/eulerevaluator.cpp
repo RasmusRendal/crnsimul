@@ -41,9 +41,9 @@ void EulerEvaluator::InitializeEquationParts() {
 NetworkState EulerEvaluator::GetNextNetworkState() {
 	iterations++;
 	auto oldState = mState.DeepCopy();
-	double c1 = 0;
-	double c2 = 0;
 	for (auto &specie : equationParts) {
+		double c1 = 0;
+		double c2 = 0;
 		double diff = 0;
 		for (equation_term &term : specie.second) {
 			double change = term.first;

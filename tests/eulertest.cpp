@@ -191,3 +191,18 @@ TEST_F(EulerTest, KahanTest) {
 	}
 	EXPECT_NE(state1, state2);
 }
+
+TEST_F(EulerTest, KahanSummationEqual) {
+	// ran with stepsize 0.0000001
+	driver drv;
+	NetworkState final;
+	drv.parse_string("a:=600; b:=750; a + b -> a + b + c; c -> 0;");
+	double expected = 1797.3017995500002;
+	EulerEvaluator e(drv.network);
+	e.step = 0.001;
+	for (int i = 0; i < 4; i++) {
+		final = e.GetNextNetworkState();
+	}
+	double actual = final.find("c")->second;
+	EXPECT_DOUBLE_EQ(expected, actual);
+}

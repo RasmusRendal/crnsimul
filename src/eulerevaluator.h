@@ -21,6 +21,7 @@ public:
 	double step = 0.0001;
 	double threshold = 0.0001;
 	NetworkState GetNextNetworkState() override;
+	double KahanSummation(std::initializer_list<double> numbers);
 
 private:
 	void InitializeEquationParts();

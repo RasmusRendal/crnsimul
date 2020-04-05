@@ -118,3 +118,21 @@ TEST_F(EulerTest, MultipleSame) {
 	EXPECT_CLOSE(e2.GetNextNetworkState()["z"], 8);
 	EXPECT_CLOSE(e.GetNextNetworkState()["z"], 8);
 }
+
+TEST_F(EulerTest, KahanSummationEqual) {
+	driver drv;
+	double a = 0.0000000000005;
+	double b = 0.0000000000006;
+	double expected = 0.0000000000011;
+	EulerEvaluator e(drv.network);
+	EXPECT_EQ(expected, e.KahanSummation({a,b}));
+}
+
+TEST_F(EulerTest, KahanSummationNotEqual) {
+	driver drv;
+	EulerEvaluator e (drv.network);
+	double a = 0.0000000000005;
+	double b = 0.0000000000006;
+	double expected = 0.000000000011;
+	EXPECT_NE(expected, e.KahanSummation({a,b}));
+}

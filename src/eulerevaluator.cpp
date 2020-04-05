@@ -48,13 +48,25 @@ NetworkState EulerEvaluator::GetNextNetworkState() {
 			for (auto &reactant : term.second) {
 				change *= pow(oldState[reactant.first], reactant.second);
 			}
-			diff += change;
+			diff = KahanSummation({diff, change});
 		}
-		mState[specie.first] += diff * step;
+		mState[specie.first] = KahanSummation({mState[specie.first], diff * step});
 	}
 	mState.time = step * iterations;
 	finished = (oldState.Diff(mState) < threshold);
 	return mState;
+}
+
+double EulerEvaluator::KahanSummation(std::initializer_list<double> numbers) {
+	double sum = 0.0;
+	double c = 0.0;
+	for (auto number : numbers) {
+		double y = number - c;
+		double t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+	}
+	return sum;
 }
 
 void EulerEvaluator::PrintEquations() {

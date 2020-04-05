@@ -52,14 +52,16 @@ NetworkState EulerEvaluator::GetNextNetworkState() {
 			}
 			diff = KahanSummation({diff, change}, c1);
 		}
-		mState[specie.first] = KahanSummation({mState[specie.first], diff * step}, c2);
+		mState[specie.first] =
+				KahanSummation({mState[specie.first], diff * step}, c2);
 	}
 	mState.time = step * iterations;
 	finished = (oldState.Diff(mState) < threshold);
 	return mState;
 }
 
-double EulerEvaluator::KahanSummation(std::initializer_list<double> numbers, double &c) {
+double EulerEvaluator::KahanSummation(std::initializer_list<double> numbers,
+																			double &c) {
 	double sum = 0.0;
 	for (auto number : numbers) {
 		double y = number - c;

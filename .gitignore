@@ -23,5 +23,5 @@ result
 *.csv
 *.pch
 htmloutput/*
-Documentation/html
-Documentation/latex
+html
+latex

@@ -276,7 +276,7 @@ TEST_F(EulerTest, comparison) {
 		r.products.insert(std::make_pair("x", 1));
 		r.products.insert(std::make_pair("a", 1));
 		reactions.push_back(r);
-	}		
+	}
 	{
 		Reaction r;
 		r.reactionConstant = 1;
@@ -284,14 +284,14 @@ TEST_F(EulerTest, comparison) {
 		r.products.insert(std::make_pair("y", 1));
 		r.products.insert(std::make_pair("b", 1));
 		reactions.push_back(r);
-	}	
+	}
 	{
 		Reaction r;
 		r.reactionConstant = 1;
 		r.reactants.insert(std::make_pair("a", 1));
 		r.reactants.insert(std::make_pair("b", 1));
 		reactions.push_back(r);
-	}	
+	}
 	ReactionNetwork network(initNetworkState, reactions);
 	EulerEvaluator evaluator(network);
 
@@ -299,9 +299,9 @@ TEST_F(EulerTest, comparison) {
 		evaluator.GetNextNetworkState();
 
 	auto nextState = evaluator.GetNextNetworkState();
-	
+
 	EXPECT_GT(abs(nextState["a"]), 0);
-} 
+}
 
 TEST_F(EulerTest, MultipleSame) {
 	driver drv;

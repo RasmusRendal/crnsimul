@@ -38,6 +38,8 @@ void EulerEvaluator::InitializeEquationParts() {
 	}
 }
 
+//! \file
+// [flag]
 NetworkState EulerEvaluator::GetNextNetworkState() {
 	iterations++;
 	auto oldState = mState.DeepCopy();
@@ -62,6 +64,7 @@ NetworkState EulerEvaluator::GetNextNetworkState() {
 	finished = (oldState.Diff(mState) < threshold);
 	return mState;
 }
+// [flag]
 
 double EulerEvaluator::KahanSummation(std::initializer_list<double> numbers,
 																			double &c) {

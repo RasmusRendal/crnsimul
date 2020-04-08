@@ -22,5 +22,5 @@ settings.json
 result
 *.csv
 htmloutput/*
-Documentation/html
-Documentation/latex
+html
+latex

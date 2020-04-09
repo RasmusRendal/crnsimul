@@ -1,0 +1,106 @@
+\hypertarget{classMarkovEvaluator}{}\doxysection{Markov\+Evaluator Class Reference}
+\label{classMarkovEvaluator}\index{MarkovEvaluator@{MarkovEvaluator}}
+
+
+Class that implements and solves O\+DE using markov chains.  
+
+
+
+
+{\ttfamily \#include $<$markovevaluator.\+h$>$}
+
+Inheritance diagram for Markov\+Evaluator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classMarkovEvaluator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMarkovEvaluator_ac8842b308d268dc50b0a44d2db46a748}{Markov\+Evaluator}} (const \mbox{\hyperlink{classReactionNetwork}{Reaction\+Network}} \&network)
+\begin{DoxyCompactList}\small\item\em Constructor for markov evaluator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classNetworkState}{Network\+State}} \mbox{\hyperlink{classMarkovEvaluator_ae674d2af7ac2589eccfc59afd70b33df}{Get\+Next\+Network\+State}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMarkovEvaluator_a808f0c5a3e67e40c024ae7ac1d016154}\label{classMarkovEvaluator_a808f0c5a3e67e40c024ae7ac1d016154}} 
+double \mbox{\hyperlink{classMarkovEvaluator_a808f0c5a3e67e40c024ae7ac1d016154}{current\+Time}} = 0
+\begin{DoxyCompactList}\small\item\em current\+Time is used for keeping track of the result \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMarkovEvaluator_a7432b3e28b72b61d2dbac8b7520dc9f1}\label{classMarkovEvaluator_a7432b3e28b72b61d2dbac8b7520dc9f1}} 
+void {\bfseries Calculate\+Probs} ()
+\item 
+\mbox{\Hypertarget{classMarkovEvaluator_ae99dfff060e7278dacf92573ce2f7bee}\label{classMarkovEvaluator_ae99dfff060e7278dacf92573ce2f7bee}} 
+\mbox{\hyperlink{classReaction}{Reaction}} \& {\bfseries Get\+Next\+Reaction} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMarkovEvaluator_a8e9ce21f4597bb8665a9532521d34a4e}\label{classMarkovEvaluator_a8e9ce21f4597bb8665a9532521d34a4e}} 
+std\+::default\+\_\+random\+\_\+engine {\bfseries generator}
+\item 
+\mbox{\Hypertarget{classMarkovEvaluator_a5a9bc378059952fd946030da3cf35624}\label{classMarkovEvaluator_a5a9bc378059952fd946030da3cf35624}} 
+std\+::uniform\+\_\+real\+\_\+distribution$<$ double $>$ {\bfseries distribution}
+\item 
+\mbox{\Hypertarget{classMarkovEvaluator_a01e558552a55b0cf86cde9050c6175d1}\label{classMarkovEvaluator_a01e558552a55b0cf86cde9050c6175d1}} 
+std\+::vector$<$ std\+::tuple$<$ double, int $>$ $>$ {\bfseries reaction\+Probs}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class that implements and solves O\+DE using markov chains. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classMarkovEvaluator_ac8842b308d268dc50b0a44d2db46a748}\label{classMarkovEvaluator_ac8842b308d268dc50b0a44d2db46a748}} 
+\index{MarkovEvaluator@{MarkovEvaluator}!MarkovEvaluator@{MarkovEvaluator}}
+\index{MarkovEvaluator@{MarkovEvaluator}!MarkovEvaluator@{MarkovEvaluator}}
+\doxysubsubsection{\texorpdfstring{MarkovEvaluator()}{MarkovEvaluator()}}
+{\footnotesize\ttfamily Markov\+Evaluator\+::\+Markov\+Evaluator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classReactionNetwork}{Reaction\+Network}} \&}]{network }\end{DoxyParamCaption})}
+
+
+
+Constructor for markov evaluator. 
+
+The construtor for the markov evaluator takes the C\+RN to be evaluated as input 
+\begin{DoxyParams}{Parameters}
+{\em network} & a chemical reaction network \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMarkovEvaluator_ae674d2af7ac2589eccfc59afd70b33df}\label{classMarkovEvaluator_ae674d2af7ac2589eccfc59afd70b33df}} 
+\index{MarkovEvaluator@{MarkovEvaluator}!GetNextNetworkState@{GetNextNetworkState}}
+\index{GetNextNetworkState@{GetNextNetworkState}!MarkovEvaluator@{MarkovEvaluator}}
+\doxysubsubsection{\texorpdfstring{GetNextNetworkState()}{GetNextNetworkState()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classNetworkState}{Network\+State}} Markov\+Evaluator\+::\+Get\+Next\+Network\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Inherited function from the evaluator class 
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{53 \mbox{\hyperlink{classNetworkState}{NetworkState}} \mbox{\hyperlink{classMarkovEvaluator_ae674d2af7ac2589eccfc59afd70b33df}{MarkovEvaluator::GetNextNetworkState}}() \{}
+\DoxyCodeLine{54     CalculateProbs();}
+\DoxyCodeLine{55     \textcolor{keywordflow}{if} (finished) \{}
+\DoxyCodeLine{56         \textcolor{keywordflow}{return} mState;}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58     \mbox{\hyperlink{classReaction}{Reaction}} \&reaction = GetNextReaction();}
+\DoxyCodeLine{59     mState = mState -\/ reaction.reactants;}
+\DoxyCodeLine{60     mState = mState + reaction.products;}
+\DoxyCodeLine{61     mState.time = \mbox{\hyperlink{classMarkovEvaluator_a808f0c5a3e67e40c024ae7ac1d016154}{currentTime}};}
+\DoxyCodeLine{62     \textcolor{keywordflow}{return} mState;}
+\DoxyCodeLine{63 \}}
+\end{DoxyCodeInclude}
+Needs description 
+
+Implements \mbox{\hyperlink{classEvaluator}{Evaluator}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/markovevaluator.\+h\item 
+src/\mbox{\hyperlink{markovevaluator_8cpp}{markovevaluator.\+cpp}}\end{DoxyCompactItemize}

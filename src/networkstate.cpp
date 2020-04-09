@@ -76,6 +76,7 @@ NetworkState NetworkState::operator+(const NetworkState &other) {
 	}
 	return state;
 }
+
 NetworkState NetworkState::operator-(const NetworkState &other) {
 	NetworkState state;
 	for (const auto &specie : *this) {

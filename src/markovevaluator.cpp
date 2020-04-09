@@ -47,6 +47,8 @@ Reaction &MarkovEvaluator::GetNextReaction() {
 	throw std::runtime_error("Random variable outside range");
 }
 
+//! @file
+// [region]
 NetworkState MarkovEvaluator::GetNextNetworkState() {
 	CalculateProbs();
 	if (finished) {
@@ -58,3 +60,4 @@ NetworkState MarkovEvaluator::GetNextNetworkState() {
 	mState.time = currentTime;
 	return mState;
 }
+// [region]

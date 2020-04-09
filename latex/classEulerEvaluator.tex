@@ -1,0 +1,159 @@
+\hypertarget{classEulerEvaluator}{}\doxysection{Euler\+Evaluator Class Reference}
+\label{classEulerEvaluator}\index{EulerEvaluator@{EulerEvaluator}}
+
+
+Class that implements and approximates a solution to an O\+DE using the Euler method.  
+
+
+
+
+{\ttfamily \#include $<$eulerevaluator.\+h$>$}
+
+Inheritance diagram for Euler\+Evaluator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEulerEvaluator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classEulerEvaluator_aeb9d4cc841228f7b4f7130f4fee28446}{Euler\+Evaluator}} (const \mbox{\hyperlink{classReactionNetwork}{Reaction\+Network}} \&network)
+\begin{DoxyCompactList}\small\item\em Constructor for \mbox{\hyperlink{classEulerEvaluator}{Euler\+Evaluator}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEulerEvaluator_acb448e39f1825cbe356e6c4ca17c1206}\label{classEulerEvaluator_acb448e39f1825cbe356e6c4ca17c1206}} 
+void {\bfseries Print\+Equations} ()
+\item 
+\mbox{\hyperlink{classNetworkState}{Network\+State}} \mbox{\hyperlink{classEulerEvaluator_a27cbe250bcb51149366342f2f81d5aec}{Get\+Next\+Network\+State}} () override
+\begin{DoxyCompactList}\small\item\em Inherited function from the evaluator class. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classEulerEvaluator_a423ab63f1b9becc8afc452bb832727db}{Kahan\+Summation}} (std\+::initializer\+\_\+list$<$ double $>$ numbers, double \&c)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classEulerEvaluator_a06cced767315ae48d0b079fa3491d32b}{iterations}} = 0
+\begin{DoxyCompactList}\small\item\em Keeping track of iterations. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEulerEvaluator_a1cdbb0ca066892cf3df4f339036e0b53}\label{classEulerEvaluator_a1cdbb0ca066892cf3df4f339036e0b53}} 
+double \mbox{\hyperlink{classEulerEvaluator_a1cdbb0ca066892cf3df4f339036e0b53}{step}} = 0.\+0001
+\begin{DoxyCompactList}\small\item\em Stepsize in regards to Euler Method, can be changed when given as an argument. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEulerEvaluator_a777980e8b3951544ec18d5aaf373d2aa}\label{classEulerEvaluator_a777980e8b3951544ec18d5aaf373d2aa}} 
+double \mbox{\hyperlink{classEulerEvaluator_a777980e8b3951544ec18d5aaf373d2aa}{threshold}} = 0.\+0001
+\begin{DoxyCompactList}\small\item\em Threshold for when evaluation stops. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEulerEvaluator_a2b4393f2908bf34a98445b8fc58470ff}\label{classEulerEvaluator_a2b4393f2908bf34a98445b8fc58470ff}} 
+bool {\bfseries kahan} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEulerEvaluator_ad59c012fd395424db7dc19aa1aa1d658}\label{classEulerEvaluator_ad59c012fd395424db7dc19aa1aa1d658}} 
+void {\bfseries Initialize\+Equation\+Parts} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEulerEvaluator_ab7be9873cbe38077d13cfe71de9566a4}\label{classEulerEvaluator_ab7be9873cbe38077d13cfe71de9566a4}} 
+equation\+\_\+set {\bfseries equation\+Parts}
+\item 
+\mbox{\Hypertarget{classEulerEvaluator_a8a1b6ae49fd044ec2a7246814e36015e}\label{classEulerEvaluator_a8a1b6ae49fd044ec2a7246814e36015e}} 
+std\+::map$<$ std\+::string, double $>$ {\bfseries errors}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Class that implements and approximates a solution to an O\+DE using the Euler method. 
+
+Inherits the \mbox{\hyperlink{classEvaluator}{Evaluator}} class. This is used to generalize evaluation between the euler method and the Markov evaluator. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classEulerEvaluator_aeb9d4cc841228f7b4f7130f4fee28446}\label{classEulerEvaluator_aeb9d4cc841228f7b4f7130f4fee28446}} 
+\index{EulerEvaluator@{EulerEvaluator}!EulerEvaluator@{EulerEvaluator}}
+\index{EulerEvaluator@{EulerEvaluator}!EulerEvaluator@{EulerEvaluator}}
+\doxysubsubsection{\texorpdfstring{EulerEvaluator()}{EulerEvaluator()}}
+{\footnotesize\ttfamily Euler\+Evaluator\+::\+Euler\+Evaluator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classReactionNetwork}{Reaction\+Network}} \&}]{network }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor for \mbox{\hyperlink{classEulerEvaluator}{Euler\+Evaluator}}. 
+
+Takes a reaction network as a parameter. Also uses the constructor defined in the \mbox{\hyperlink{classEvaluator}{Evaluator}} class 
+\begin{DoxyParams}{Parameters}
+{\em network} & a chemical reaction network \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEulerEvaluator_a27cbe250bcb51149366342f2f81d5aec}\label{classEulerEvaluator_a27cbe250bcb51149366342f2f81d5aec}} 
+\index{EulerEvaluator@{EulerEvaluator}!GetNextNetworkState@{GetNextNetworkState}}
+\index{GetNextNetworkState@{GetNextNetworkState}!EulerEvaluator@{EulerEvaluator}}
+\doxysubsubsection{\texorpdfstring{GetNextNetworkState()}{GetNextNetworkState()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classNetworkState}{Network\+State}} Euler\+Evaluator\+::\+Get\+Next\+Network\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Inherited function from the evaluator class. 
+
+This function implements the Euler method and gets the next state of the network. Each state is a map with the specie name and concentration, respectively. 
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{43 \mbox{\hyperlink{classNetworkState}{NetworkState}} \mbox{\hyperlink{classEulerEvaluator_a27cbe250bcb51149366342f2f81d5aec}{EulerEvaluator::GetNextNetworkState}}() \{}
+\DoxyCodeLine{44     \mbox{\hyperlink{classEulerEvaluator_a06cced767315ae48d0b079fa3491d32b}{iterations}}++;}
+\DoxyCodeLine{45     \textcolor{keyword}{auto} oldState = mState.DeepCopy();}
+\DoxyCodeLine{46     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&specie : equationParts) \{}
+\DoxyCodeLine{47         \textcolor{keywordtype}{double} c = 0;}
+\DoxyCodeLine{48         \textcolor{keywordtype}{double} diff = 0;}
+\DoxyCodeLine{49         \textcolor{keywordflow}{for} (equation\_term \&term : specie.second) \{}
+\DoxyCodeLine{50             \textcolor{keywordtype}{double} change = term.first;}
+\DoxyCodeLine{51             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&reactant : term.second) \{}
+\DoxyCodeLine{52                 change *= pow(oldState[reactant.first], reactant.second);}
+\DoxyCodeLine{53             \}}
+\DoxyCodeLine{54             diff = \mbox{\hyperlink{classEulerEvaluator_a423ab63f1b9becc8afc452bb832727db}{KahanSummation}}(\{diff, change\}, c);}
+\DoxyCodeLine{55             \textcolor{keywordflow}{if} (!kahan \&\& c != 0)}
+\DoxyCodeLine{56                 std::cout << \textcolor{stringliteral}{"Erors: "} << c << std::endl;}
+\DoxyCodeLine{57         \}}
+\DoxyCodeLine{58         mState[specie.first] = \mbox{\hyperlink{classEulerEvaluator_a423ab63f1b9becc8afc452bb832727db}{KahanSummation}}(\{mState[specie.first], diff * \mbox{\hyperlink{classEulerEvaluator_a1cdbb0ca066892cf3df4f339036e0b53}{step}}\},}
+\DoxyCodeLine{59                                                                                     errors[specie.first]);}
+\DoxyCodeLine{60         \textcolor{keywordflow}{if} (errors[specie.first] != 0)}
+\DoxyCodeLine{61             std::cout << \textcolor{stringliteral}{"Specie Error: "} << errors[specie.first] << std::endl;}
+\DoxyCodeLine{62     \}}
+\DoxyCodeLine{63     mState.time = \mbox{\hyperlink{classEulerEvaluator_a1cdbb0ca066892cf3df4f339036e0b53}{step}} * \mbox{\hyperlink{classEulerEvaluator_a06cced767315ae48d0b079fa3491d32b}{iterations}};}
+\DoxyCodeLine{64     finished = (oldState.Diff(mState) < \mbox{\hyperlink{classEulerEvaluator_a777980e8b3951544ec18d5aaf373d2aa}{threshold}});}
+\DoxyCodeLine{65     \textcolor{keywordflow}{return} mState;}
+\DoxyCodeLine{66 \}}
+\end{DoxyCodeInclude}
+After each iteration the finished flag is evaluated in regards to the threshold. The m\+State.\+time property represents this mentioned t\+\_\+value 
+
+Implements \mbox{\hyperlink{classEvaluator}{Evaluator}}.
+
+\mbox{\Hypertarget{classEulerEvaluator_a423ab63f1b9becc8afc452bb832727db}\label{classEulerEvaluator_a423ab63f1b9becc8afc452bb832727db}} 
+\index{EulerEvaluator@{EulerEvaluator}!KahanSummation@{KahanSummation}}
+\index{KahanSummation@{KahanSummation}!EulerEvaluator@{EulerEvaluator}}
+\doxysubsubsection{\texorpdfstring{KahanSummation()}{KahanSummation()}}
+{\footnotesize\ttfamily double Euler\+Evaluator\+::\+Kahan\+Summation (\begin{DoxyParamCaption}\item[{std\+::initializer\+\_\+list$<$ double $>$}]{numbers,  }\item[{double \&}]{c }\end{DoxyParamCaption})}
+
+Kahan summation function to reduce numerical error of summation of floats. 
+\begin{DoxyParams}{Parameters}
+{\em numbers} & is a list of double which contain the numbers to be summed. \\
+\hline
+{\em c} & is a variable to compensate for the summation errors. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classEulerEvaluator_a06cced767315ae48d0b079fa3491d32b}\label{classEulerEvaluator_a06cced767315ae48d0b079fa3491d32b}} 
+\index{EulerEvaluator@{EulerEvaluator}!iterations@{iterations}}
+\index{iterations@{iterations}!EulerEvaluator@{EulerEvaluator}}
+\doxysubsubsection{\texorpdfstring{iterations}{iterations}}
+{\footnotesize\ttfamily int Euler\+Evaluator\+::iterations = 0}
+
+
+
+Keeping track of iterations. 
+
+Used for generating t\+\_\+values in combination with step. This is used when plotting the result and exporting the .csv file. ~\newline
+ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/eulerevaluator.\+h\item 
+src/\mbox{\hyperlink{eulerevaluator_8cpp}{eulerevaluator.\+cpp}}\end{DoxyCompactItemize}

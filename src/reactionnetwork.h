@@ -4,6 +4,8 @@
 #include "reaction.h"
 #include <vector>
 
+//! Class to encapsulate a reaction network
+/*! A reaction network is, as the name applies, a network of reactions. */
 class ReactionNetwork {
 public:
 	ReactionNetwork(NetworkState initNetworkState,

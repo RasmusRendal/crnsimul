@@ -1,0 +1,58 @@
+\hypertarget{classNetworkState}{}\doxysection{Network\+State Class Reference}
+\label{classNetworkState}\index{NetworkState@{NetworkState}}
+
+
+Class to represent a networkstate.  
+
+
+
+
+{\ttfamily \#include $<$networkstate.\+h$>$}
+
+Inheritance diagram for Network\+State\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classNetworkState}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classNetworkState_ae7a96ab8187d121526d839509a26efa8}\label{classNetworkState_ae7a96ab8187d121526d839509a26efa8}} 
+\mbox{\hyperlink{classNetworkState}{Network\+State}} {\bfseries Deep\+Copy} ()
+\item 
+\mbox{\Hypertarget{classNetworkState_a10db1b2d345318d831f97e34b95a4eaf}\label{classNetworkState_a10db1b2d345318d831f97e34b95a4eaf}} 
+std\+::string {\bfseries Print\+Csv\+Header} ()
+\item 
+\mbox{\Hypertarget{classNetworkState_ae8d95a891acd78cffbef80701be41afb}\label{classNetworkState_ae8d95a891acd78cffbef80701be41afb}} 
+std\+::string {\bfseries Print\+Csv\+Row} ()
+\item 
+\mbox{\Hypertarget{classNetworkState_ae5ae1e35cfa1cf47b78f08a0837b6523}\label{classNetworkState_ae5ae1e35cfa1cf47b78f08a0837b6523}} 
+void {\bfseries Print} ()
+\item 
+\mbox{\Hypertarget{classNetworkState_ac17e1717a5050e4a915c61393c4731fc}\label{classNetworkState_ac17e1717a5050e4a915c61393c4731fc}} 
+double {\bfseries Diff} (const \mbox{\hyperlink{classNetworkState}{Network\+State}} \&other)
+\item 
+\mbox{\Hypertarget{classNetworkState_a5cbfdebdcdeadde4d8c3aa7b60dcea2d}\label{classNetworkState_a5cbfdebdcdeadde4d8c3aa7b60dcea2d}} 
+\mbox{\hyperlink{classNetworkState}{Network\+State}} {\bfseries operator+} (const \mbox{\hyperlink{classNetworkState}{Network\+State}} \&)
+\item 
+\mbox{\Hypertarget{classNetworkState_a26c426f4e2ec38a8b3245cff012cc2f6}\label{classNetworkState_a26c426f4e2ec38a8b3245cff012cc2f6}} 
+\mbox{\hyperlink{classNetworkState}{Network\+State}} {\bfseries operator-\/} (const \mbox{\hyperlink{classNetworkState}{Network\+State}} \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classNetworkState_a85e32bc819c607ccffa1dda14acc155f}\label{classNetworkState_a85e32bc819c607ccffa1dda14acc155f}} 
+double {\bfseries time} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class to represent a networkstate. 
+
+The networkstate represents the current state of the network. This is represented through a map. This map contains a string, namely the speciename and a double, the concentration 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/networkstate.\+h\item 
+src/networkstate.\+cpp\end{DoxyCompactItemize}

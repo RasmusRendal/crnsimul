@@ -1,0 +1,61 @@
+\hypertarget{classEvaluator}{}\doxysection{Evaluator Class Reference}
+\label{classEvaluator}\index{Evaluator@{Evaluator}}
+
+
+\mbox{\hyperlink{classEvaluator}{Evaluator}} class, used as a kind of generalization class.  
+
+
+
+
+{\ttfamily \#include $<$evaluator.\+h$>$}
+
+Inheritance diagram for Evaluator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEvaluator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEvaluator_a1c2fd6008db6e87eb7b6d637fc4b0d77}\label{classEvaluator_a1c2fd6008db6e87eb7b6d637fc4b0d77}} 
+{\bfseries Evaluator} (const \mbox{\hyperlink{classReactionNetwork}{Reaction\+Network}} \&network)
+\item 
+\mbox{\Hypertarget{classEvaluator_acbdcd1bc0da34be1ca9578293d971014}\label{classEvaluator_acbdcd1bc0da34be1ca9578293d971014}} 
+virtual \mbox{\hyperlink{classNetworkState}{Network\+State}} {\bfseries Get\+Next\+Network\+State} ()=0
+\item 
+bool \mbox{\hyperlink{classEvaluator_ab515d2fd5374c2be4e180ec1a43c2190}{Is\+Finished}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEvaluator_a55c8f29bf94301e5df8a94072228a134}\label{classEvaluator_a55c8f29bf94301e5df8a94072228a134}} 
+bool {\bfseries finished} = false
+\item 
+\mbox{\Hypertarget{classEvaluator_adee73ed1e001156a76ecfd3bf6a0f173}\label{classEvaluator_adee73ed1e001156a76ecfd3bf6a0f173}} 
+\mbox{\hyperlink{classReactionNetwork}{Reaction\+Network}} {\bfseries m\+Network}
+\item 
+\mbox{\Hypertarget{classEvaluator_a9a1fec3748a1113f03a7295a6c246ce1}\label{classEvaluator_a9a1fec3748a1113f03a7295a6c246ce1}} 
+\mbox{\hyperlink{classNetworkState}{Network\+State}} {\bfseries m\+State}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classEvaluator}{Evaluator}} class, used as a kind of generalization class. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEvaluator_ab515d2fd5374c2be4e180ec1a43c2190}\label{classEvaluator_ab515d2fd5374c2be4e180ec1a43c2190}} 
+\index{Evaluator@{Evaluator}!IsFinished@{IsFinished}}
+\index{IsFinished@{IsFinished}!Evaluator@{Evaluator}}
+\doxysubsubsection{\texorpdfstring{IsFinished()}{IsFinished()}}
+{\footnotesize\ttfamily bool Evaluator\+::\+Is\+Finished (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Return the procted bool finished, which serves as the flag for when the threshold has been exceeded \begin{DoxyReturn}{Returns}
+finished 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/evaluator.\+h\item 
+src/evaluator.\+cpp\end{DoxyCompactItemize}

@@ -12,13 +12,17 @@ class NetworkStateOutOfRange : public std::exception {
 	}
 };
 
+//! Class to represent a networkstate.
+/*! The networkstate represents the current state of the network.
+This is represented through a map. This map contains a string, namely 
+the speciename and a double, the concentration */
 class NetworkState : public std::map<std::string, double> {
 public:
 	NetworkState() = default;
 	NetworkState DeepCopy();
-	void Print();
 	std::string PrintCsvHeader();
 	std::string PrintCsvRow();
+	void Print();
 	double time = 0;
 	double Diff(const NetworkState &other);
 	NetworkState operator+(const NetworkState &);

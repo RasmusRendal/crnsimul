@@ -3,11 +3,15 @@
 #include "networkstate.h"
 #include <map>
 
+//! Class for encapsulating reactions
 class Reaction {
 public:
+	// where is this used in relation to the other constructor?
+	//! Constructor 1
 	Reaction(NetworkState reactants, NetworkState products, int reactionConstant)
 			: reactants(std::move(reactants)), products(std::move(products)),
 				reactionConstant(reactionConstant) {}
+	//! Constructor 2
 	Reaction(const std::map<std::string, int> &reactants,
 					 const std::map<std::string, int> &products, int reactionConstant)
 			: reactionConstant(reactionConstant) {

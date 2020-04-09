@@ -10,6 +10,6 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp bin/chemilang $out/bin/
+    cp bin/crnsimul $out/bin/
   '';
 }

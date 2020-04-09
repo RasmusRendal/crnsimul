@@ -29,14 +29,14 @@ file(GLOB TEST_SOURCES "tests/*.cpp")
 find_package(Boost 1.56 REQUIRED COMPONENTS iostreams system)
 
 # add the executable
-add_executable(chemilang
+add_executable(crnsimul
 	src/main.cpp
 	${SOURCES}
 	${BISON_CRNParse_OUTPUTS}
 	${FLEX_CRNScan_OUTPUTS}
 )
 
-TARGET_LINK_LIBRARIES(chemilang LINK_PUBLIC Boost::iostreams Boost::system)
+TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system)
 
 enable_testing()
 find_package(GTest REQUIRED)

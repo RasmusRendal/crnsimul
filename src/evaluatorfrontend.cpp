@@ -87,7 +87,7 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	} else if (errorCode == streamNullPtr)
 		std::cout << "filestreampointer was nullptr. Please try again" << std::endl;
 	std::string helperstring =
-			"Usage: chemilang [OPTIONS] filename"
+			"Usage: crnsimul [OPTIONS] filename"
 			"Option types:\n"
 			"	-e to to enable eulerevaluator (Required)\n"
 			"	-p trace parsing\n"

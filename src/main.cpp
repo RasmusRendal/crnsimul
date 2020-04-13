@@ -103,11 +103,11 @@ int main(int argc, char *argv[]) {
 }
 
 /*! \mainpage Chemilang index page
-	This is the documentation for chemilang as of 
+	This is the documentation for chemilang as of
 	the 8th of april 2020.
-    This document contains documentation regaring
+		This document contains documentation regaring
 	the chemilang. \n
-	For usage of this compiler please go to 
-	https://github.com/RasmusRendal/Chemilang \n 
+	For usage of this compiler please go to
+	https://github.com/RasmusRendal/Chemilang \n
 	You may also consult the readme. \n
 	As a final alternative you can use the -h argument*/

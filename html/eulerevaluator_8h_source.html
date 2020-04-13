@@ -23,6 +23,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Chemilang
    </div>
+   <div id="projectbrief">Chemicalreactionnetworkcompiler</div>
   </td>
  </tr>
  </tbody>
@@ -88,33 +89,27 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classEulerEvaluator.html#aeb9d4cc841228f7b4f7130f4fee28446">   24</a></span>&#160;    <a class="code" href="classEulerEvaluator.html#aeb9d4cc841228f7b4f7130f4fee28446">EulerEvaluator</a>(<span class="keyword">const</span> <a class="code" href="classReactionNetwork.html">ReactionNetwork</a> &amp;network) : <a class="code" href="classEvaluator.html">Evaluator</a>(network) {</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        InitializeEquationParts();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;specie : network.initNetworkState) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            errors.insert(std::make_pair(specie.first, 0));</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        }</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classEulerEvaluator.html#a06cced767315ae48d0b079fa3491d32b">   33</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classEulerEvaluator.html#a06cced767315ae48d0b079fa3491d32b">iterations</a> = 0;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> PrintEquations();</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classEulerEvaluator.html#a1cdbb0ca066892cf3df4f339036e0b53">   36</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classEulerEvaluator.html#a1cdbb0ca066892cf3df4f339036e0b53">step</a> = 0.0001;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classEulerEvaluator.html#a777980e8b3951544ec18d5aaf373d2aa">   38</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classEulerEvaluator.html#a777980e8b3951544ec18d5aaf373d2aa">threshold</a> = 0.0001;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="classNetworkState.html">NetworkState</a> <a class="code" href="classEulerEvaluator.html#a27cbe250bcb51149366342f2f81d5aec">GetNextNetworkState</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classEulerEvaluator.html#a423ab63f1b9becc8afc452bb832727db">KahanSummation</a>(std::initializer_list&lt;double&gt; numbers, <span class="keywordtype">double</span> &amp;c);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">bool</span> kahan = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> InitializeEquationParts();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">// The differential equations are stored here</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    equation_set equationParts;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    std::map&lt;std::string, double&gt; errors;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    }</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classEulerEvaluator.html#a06cced767315ae48d0b079fa3491d32b">   30</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classEulerEvaluator.html#a06cced767315ae48d0b079fa3491d32b">iterations</a> = 0;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">void</span> PrintEquations();</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classEulerEvaluator.html#a1cdbb0ca066892cf3df4f339036e0b53">   33</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classEulerEvaluator.html#a1cdbb0ca066892cf3df4f339036e0b53">step</a> = 0.0001;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classEulerEvaluator.html#a777980e8b3951544ec18d5aaf373d2aa">   35</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classEulerEvaluator.html#a777980e8b3951544ec18d5aaf373d2aa">threshold</a> = 0.0001;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="classNetworkState.html">NetworkState</a> <a class="code" href="classEulerEvaluator.html#a27cbe250bcb51149366342f2f81d5aec">GetNextNetworkState</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> InitializeEquationParts();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">// The differential equations are stored here</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    equation_set equationParts;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassEvaluator_html"><div class="ttname"><a href="classEvaluator.html">Evaluator</a></div><div class="ttdoc">Evaluator class, used as a kind of generalization class.</div><div class="ttdef"><b>Definition:</b> evaluator.h:8</div></div>
 <div class="ttc" id="aclassReactionNetwork_html"><div class="ttname"><a href="classReactionNetwork.html">ReactionNetwork</a></div><div class="ttdoc">Class to encapsulate a reaction network.</div><div class="ttdef"><b>Definition:</b> reactionnetwork.h:9</div></div>
-<div class="ttc" id="aclassEulerEvaluator_html_a1cdbb0ca066892cf3df4f339036e0b53"><div class="ttname"><a href="classEulerEvaluator.html#a1cdbb0ca066892cf3df4f339036e0b53">EulerEvaluator::step</a></div><div class="ttdeci">double step</div><div class="ttdoc">Stepsize in regards to Euler Method, can be changed when given as an argument.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.h:36</div></div>
-<div class="ttc" id="aclassEulerEvaluator_html_a423ab63f1b9becc8afc452bb832727db"><div class="ttname"><a href="classEulerEvaluator.html#a423ab63f1b9becc8afc452bb832727db">EulerEvaluator::KahanSummation</a></div><div class="ttdeci">double KahanSummation(std::initializer_list&lt; double &gt; numbers, double &amp;c)</div><div class="ttdef"><b>Definition:</b> eulerevaluator.cpp:69</div></div>
-<div class="ttc" id="aclassEulerEvaluator_html_a777980e8b3951544ec18d5aaf373d2aa"><div class="ttname"><a href="classEulerEvaluator.html#a777980e8b3951544ec18d5aaf373d2aa">EulerEvaluator::threshold</a></div><div class="ttdeci">double threshold</div><div class="ttdoc">Threshold for when evaluation stops.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.h:38</div></div>
-<div class="ttc" id="aclassEulerEvaluator_html_a06cced767315ae48d0b079fa3491d32b"><div class="ttname"><a href="classEulerEvaluator.html#a06cced767315ae48d0b079fa3491d32b">EulerEvaluator::iterations</a></div><div class="ttdeci">int iterations</div><div class="ttdoc">Keeping track of iterations.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.h:33</div></div>
+<div class="ttc" id="aclassEulerEvaluator_html_a1cdbb0ca066892cf3df4f339036e0b53"><div class="ttname"><a href="classEulerEvaluator.html#a1cdbb0ca066892cf3df4f339036e0b53">EulerEvaluator::step</a></div><div class="ttdeci">double step</div><div class="ttdoc">Stepsize in regards to Euler Method, can be changed when given as an argument.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.h:33</div></div>
+<div class="ttc" id="aclassEulerEvaluator_html_a777980e8b3951544ec18d5aaf373d2aa"><div class="ttname"><a href="classEulerEvaluator.html#a777980e8b3951544ec18d5aaf373d2aa">EulerEvaluator::threshold</a></div><div class="ttdeci">double threshold</div><div class="ttdoc">Threshold for when evaluation stops.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.h:35</div></div>
+<div class="ttc" id="aclassEulerEvaluator_html_a06cced767315ae48d0b079fa3491d32b"><div class="ttname"><a href="classEulerEvaluator.html#a06cced767315ae48d0b079fa3491d32b">EulerEvaluator::iterations</a></div><div class="ttdeci">int iterations</div><div class="ttdoc">Keeping track of iterations.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.h:30</div></div>
 <div class="ttc" id="aclassEulerEvaluator_html_a27cbe250bcb51149366342f2f81d5aec"><div class="ttname"><a href="classEulerEvaluator.html#a27cbe250bcb51149366342f2f81d5aec">EulerEvaluator::GetNextNetworkState</a></div><div class="ttdeci">NetworkState GetNextNetworkState() override</div><div class="ttdoc">Inherited function from the evaluator class.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.cpp:43</div></div>
 <div class="ttc" id="aclassNetworkState_html"><div class="ttname"><a href="classNetworkState.html">NetworkState</a></div><div class="ttdoc">Class to represent a networkstate.</div><div class="ttdef"><b>Definition:</b> networkstate.h:19</div></div>
 <div class="ttc" id="aclassEulerEvaluator_html_aeb9d4cc841228f7b4f7130f4fee28446"><div class="ttname"><a href="classEulerEvaluator.html#aeb9d4cc841228f7b4f7130f4fee28446">EulerEvaluator::EulerEvaluator</a></div><div class="ttdeci">EulerEvaluator(const ReactionNetwork &amp;network)</div><div class="ttdoc">Constructor for EulerEvaluator.</div><div class="ttdef"><b>Definition:</b> eulerevaluator.h:24</div></div>

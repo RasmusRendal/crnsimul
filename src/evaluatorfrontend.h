@@ -30,7 +30,7 @@ public:
 	driver *drv;
 	Evaluator *evaluator = nullptr;
 	/*! This function is responsible for calling all the member functions
-	of this class. It evalutes different booleans as to whether or not these 
+	of this class. It evalutes different booleans as to whether or not these
 	should be called. It also calls both the EulerEvaluator and
 	the MarkovEvaluator */
 	void FuncRunner();
@@ -42,8 +42,8 @@ public:
 	NetworkState initNetworkState;
 
 private:
- 	/*! Gnu plot was our plotting software of choice 
-	 It is fed an input stream which it then plots, 
+	/*! Gnu plot was our plotting software of choice
+	 It is fed an input stream which it then plots,
 	 nothing exciting here*/
 	Gnuplot gp;
 	std::vector<NetworkState> states;
@@ -51,10 +51,10 @@ private:
 	void PrintCsv();
 	void Plot();
 	/*! This function runs the evaluator. Since both EulerEvaluator
-	and MarkovEvaluator inherits from Evaluator the call to perform 
-	evaluation is as simple as follows 
+	and MarkovEvaluator inherits from Evaluator the call to perform
+	evaluation is as simple as follows
 	@snippet{lineno} src/evaluatorfrontend.cpp runeval
-	The result is stored in the vector states, which can then 
+	The result is stored in the vector states, which can then
 	later be accessed by other functions */
 	void RunEvaluator();
 };

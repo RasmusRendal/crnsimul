@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kahansummation_37',['KahanSummation',['../classEulerEvaluator.html#a423ab63f1b9becc8afc452bb832727db',1,'EulerEvaluator']]]
+  ['markovevaluator_36',['MarkovEvaluator',['../classMarkovEvaluator.html#ac8842b308d268dc50b0a44d2db46a748',1,'MarkovEvaluator']]]
 ];

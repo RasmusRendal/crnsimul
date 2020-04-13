@@ -68,11 +68,14 @@ void EvaluatorFrontend::FuncRunner() {
 		Plot();
 }
 
+//! @file
+// [runeval]
 void EvaluatorFrontend::RunEvaluator() {
 	while (!evaluator->IsFinished()) {
 		states.push_back(evaluator->GetNextNetworkState());
 	}
 }
+// [runeval]
 
 void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	if (errorCode == fileError) {

@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-
 class BasicTest : public ::testing::Test {
 protected:
 	void SetUp() override {}

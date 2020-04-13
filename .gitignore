@@ -21,4 +21,7 @@ compile_commands.json
 settings.json
 result
 *.csv
+*.pch
 htmloutput/*
+html
+latex

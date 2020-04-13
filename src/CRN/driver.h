@@ -11,6 +11,7 @@
 YY_DECL;
 
 // Conducting the whole scanning and parsing of Calc++.
+//! driver class, wroom wroom.
 class driver {
 public:
 	driver();

@@ -38,6 +38,8 @@ void EulerEvaluator::InitializeEquationParts() {
 	}
 }
 
+//! \file
+// [flag]
 NetworkState EulerEvaluator::GetNextNetworkState() {
 	iterations++;
 	auto oldState = mState.DeepCopy();
@@ -56,6 +58,7 @@ NetworkState EulerEvaluator::GetNextNetworkState() {
 	finished = (oldState.Diff(mState) < threshold);
 	return mState;
 }
+// [flag]
 
 void EulerEvaluator::PrintEquations() {
 	for (const auto &equation : equationParts) {

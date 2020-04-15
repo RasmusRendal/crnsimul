@@ -1,5 +1,5 @@
 #include "networkstate.h"
-#include "CRN/driver.h"
+#include "parser/driver.h"
 #include "eulerevaluator.h"
 #include <gtest/gtest.h>
 #include <tgmath.h>

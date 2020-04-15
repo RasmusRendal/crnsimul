@@ -1,5 +1,5 @@
-# Chemilang codebase
-This is the codebase for chemilang. Have fun hacking
+# crnsimul
+crnsimul is an application that simulates Chemical Reaction Networks.
 ## Building
 The project uses cmake. To compile a project using cmake, the following commands should be used:
 ```sh

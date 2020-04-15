@@ -1,4 +1,4 @@
-#include "CRN/driver.h"
+#include "parser/driver.h"
 #include "eulerevaluator.h"
 #include "evaluatorfrontend.h"
 #include "gnuplot-iostream.h"

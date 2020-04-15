@@ -1,7 +1,7 @@
 with import <nixpkgs> {};
 
 stdenv.mkDerivation {
-  name = "chemilang";
+  name = "crnsimul";
   src = ./.;
 
   buildInputs = [ cmake clang boost flex bison gnuplot gtest ];

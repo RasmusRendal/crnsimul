@@ -1,5 +1,5 @@
 #pragma once
-#include "CRNParse.hpp"
+#include "parser.hpp"
 #include "reaction.h"
 #include "reactionnetwork.h"
 #include <map>

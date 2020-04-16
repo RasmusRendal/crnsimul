@@ -1,9 +1,9 @@
 #pragma once
 
-#include "CRN/driver.h"
 #include "evaluator.h"
 #include "gnuplot-iostream.h"
 #include "networkstate.h"
+#include "parser/driver.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
 #include <fstream>

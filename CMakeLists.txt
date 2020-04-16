@@ -8,21 +8,21 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # set the project name
-project(Chemilang VERSION 0.1)
+project(crnsimul VERSION 0.1)
 
 find_package(FLEX REQUIRED)
 find_package(BISON REQUIRED)
 
-BISON_TARGET(CRNParse src/CRN/CRNParse.yy ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/CRNParse.cpp)
-FLEX_TARGET(CRNScan src/CRN/CRNScan.l ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/CRNScan.cpp)
-ADD_FLEX_BISON_DEPENDENCY(CRNScan CRNParse)
+BISON_TARGET(parser src/parser/parser.yy ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/parser.cpp)
+FLEX_TARGET(scanner src/parser/scanner.l ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/scanner.cpp)
+ADD_FLEX_BISON_DEPENDENCY(scanner parser)
 
 include_directories(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 include_directories(src)
-include_directories(src/CRN)
+include_directories(src/parser)
 include_directories(submodules/gnuplot-iostream)
 
-file(GLOB SOURCES "src/CRN/*.cpp")
+file(GLOB SOURCES "src/parser/*.cpp")
 list(APPEND SOURCES "src/evaluator.cpp" "src/eulerevaluator.cpp" "src/networkstate.cpp" "src/reactionnetwork.cpp" "src/evaluatorfrontend.cpp" "src/markovevaluator.cpp")
 file(GLOB TEST_SOURCES "tests/*.cpp")
 
@@ -32,8 +32,8 @@ find_package(Boost 1.56 REQUIRED COMPONENTS iostreams system)
 add_executable(crnsimul
 	src/main.cpp
 	${SOURCES}
-	${BISON_CRNParse_OUTPUTS}
-	${FLEX_CRNScan_OUTPUTS}
+	${BISON_parser_OUTPUTS}
+	${FLEX_scanner_OUTPUTS}
 )
 
 TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system)
@@ -45,7 +45,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 add_executable(tests
 	${TEST_SOURCES}
 	${SOURCES}
-	${BISON_CRNParse_OUTPUTS}
-	${FLEX_CRNScan_OUTPUTS}
+	${BISON_parser_OUTPUTS}
+	${FLEX_scanner_OUTPUTS}
 )
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system)

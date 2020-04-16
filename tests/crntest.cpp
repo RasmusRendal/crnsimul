@@ -1,4 +1,4 @@
-#include "CRN/driver.h"
+#include "parser/driver.h"
 #include "reaction.h"
 #include <gtest/gtest.h>
 

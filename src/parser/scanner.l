@@ -80,7 +80,7 @@
 %}
 
 int             [0-9]+
-T_NAME          [a-zA-Z][a-zA-Z]*
+T_NAME          [a-zA-Z][a-zA-Z_0-9]*
 T_RIGHTARROW    "->"
 T_BIARROW       "<->"
 T_PARENSTART    "("

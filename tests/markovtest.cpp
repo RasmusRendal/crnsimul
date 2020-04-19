@@ -26,7 +26,7 @@ TEST_F(MarkovTest, twoValues) {
 	reactions.push_back(r);
 	ReactionNetwork network(initNetworkState, reactions);
 	MarkovEvaluator evaluator(network);
-
+	evaluator.timeThreshold = 0;
 	double oldTime = 0;
 	for (int i = 0; i < startValue * 2; i++) {
 		auto nextState = evaluator.GetNextNetworkState();
@@ -43,4 +43,18 @@ TEST_F(MarkovTest, twoValues) {
 	EXPECT_CLOSE(finalState["a"], 0);
 	EXPECT_CLOSE(finalState["b"], startValue);
 	EXPECT_EQ(evaluator.IsFinished(), true);
+}
+
+TEST_F(MarkovTest, threshold) {
+	double finalTime;
+	driver drv;
+	std::vector<NetworkState> states;
+	drv.parse_string("a := 10; b := 15; a -> a + b; b -> 0;");
+	MarkovEvaluator markov(drv.network);
+	markov.timeThreshold = 5.0;
+	while(!markov.IsFinished()) {
+		states.push_back(markov.GetNextNetworkState());
+	}
+	finalTime = states.back().time;
+	ASSERT_TRUE(finalTime >= 5 && finalTime < 5.1);
 }

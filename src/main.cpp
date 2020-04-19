@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
 	bool evaluateEuler = true;
 	double estep = 0.01;
 	double ethreshold = 0.00001;
+	double timeThreshold = 5.0;
 	std::string filename;
 
 	if (argv[argc - 1] == std::string("-h") ||
@@ -37,6 +38,8 @@ int main(int argc, char *argv[]) {
 			drv.trace_scanning = true;
 		} else if (argv[i] == std::string("-P")) {
 			frontEnd.plot = true;
+		} else if (argv[i] == std::string("-t")) {
+			timeThreshold = std::stod(argv[++i]);
 		} else if (argv[i] == std::string("-O")) {
 			frontEnd.print = true;
 			frontEnd.csvFilename = std::string(argv[++i]);
@@ -90,7 +93,9 @@ int main(int argc, char *argv[]) {
 			eulerEvaluator->threshold = ethreshold;
 			evaluator = eulerEvaluator;
 		} else {
-			evaluator = new MarkovEvaluator(drv.network);
+			auto markovEvaluator = new MarkovEvaluator(drv.network);
+			markovEvaluator->timeThreshold = timeThreshold;
+			evaluator = markovEvaluator;
 		}
 		frontEnd.evaluator = evaluator;
 		frontEnd.FuncRunner();

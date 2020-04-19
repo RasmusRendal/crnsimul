@@ -51,6 +51,9 @@ Reaction &MarkovEvaluator::GetNextReaction() {
 // [region]
 NetworkState MarkovEvaluator::GetNextNetworkState() {
 	CalculateProbs();
+	if (mState.time > timeThreshold && timeThreshold != 0) {
+		finished = true;
+	}
 	if (finished) {
 		return mState;
 	}
@@ -58,6 +61,9 @@ NetworkState MarkovEvaluator::GetNextNetworkState() {
 	mState = mState - reaction.reactants;
 	mState = mState + reaction.products;
 	mState.time = currentTime;
+	if (timeThreshold == 0) {
+	std::cout << mState.PrintCsvRow() << std::endl;
+	}
 	return mState;
 }
 // [region]

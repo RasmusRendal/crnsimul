@@ -89,13 +89,18 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	std::string helperstring =
 			"Usage: crnsimul [OPTIONS] filename"
 			"Option types:\n"
-			"	-e to to enable eulerevaluator (Required)\n"
+			" Default evaluator is eulerEvaluator\n"
+			"	-m to to enable markov evaluator\n"
 			"	-p trace parsing\n"
 			"	-s trace scanning\n"
 			"	-P enable plotting in gnuplot\n"
 			"	-O <filename> output result to file, -r required\n"
 			"	-S <step size> set stepsize for eulerevaluator\n"
 			"	-T <threshold size> set the euler evaluator threshold\n"
+			" -t to set threshold for markovEvaluator\n"
+			" If -t 0 is provided the markovEvaluator will continue forever"
+			" and print the result as it is going to stdout\n"
+			" It can then be stopped with ctrl+c\n"
 			"	-C to select desired chemicals to plot\n"
 			"	These are seperated with the commaseperator\n";
 	"   -h Display help options";

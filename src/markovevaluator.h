@@ -21,6 +21,7 @@ public:
 	NetworkState GetNextNetworkState() override;
 	double timeThreshold;
 	bool print = false;
+
 private:
 	void CalculateProbs();
 	std::default_random_engine generator;

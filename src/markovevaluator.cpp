@@ -62,7 +62,7 @@ NetworkState MarkovEvaluator::GetNextNetworkState() {
 	mState = mState + reaction.products;
 	mState.time = currentTime;
 	if (timeThreshold == 0 && print == true) {
-	std::cout << mState.PrintCsvRow() << std::endl;
+		std::cout << mState.PrintCsvRow() << std::endl;
 	}
 	return mState;
 }

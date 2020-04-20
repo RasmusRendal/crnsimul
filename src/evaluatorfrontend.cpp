@@ -90,11 +90,8 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	} else if (errorCode == streamNullPtr)
 		std::cout << "filestreampointer was nullptr. Please try again" << std::endl;
 	std::string helperstring =
-<<<<<<< HEAD
-=======
 			"Usage: crnsimul [OPTIONS] filename\n"
 			"Option types:\n"
->>>>>>> ef44b0e2b01998053d160b1a3ee535eca32f0dec
 			"Default evaluator is eulerEvaluator\n"
 			"\t-m to to enable markov evaluator\n"
 			"\t-p trace parsing\n"
@@ -112,9 +109,5 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	"\t--stdout parameter prints the output to stdout\n"
 	"\t\tIt is recommended to use this when markovThreshold i set to 0\n";
 	"\t-h Display help options";
-<<<<<<< HEAD
-
-=======
->>>>>>> ef44b0e2b01998053d160b1a3ee535eca32f0dec
 	std::cout << helperstring << std::endl;
 }

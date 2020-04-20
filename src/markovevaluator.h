@@ -19,6 +19,7 @@ public:
 	@snippet{lineno} src/markovevaluator.cpp region
 	Needs description*/
 	NetworkState GetNextNetworkState() override;
+	double timeThreshold;
 
 private:
 	void CalculateProbs();

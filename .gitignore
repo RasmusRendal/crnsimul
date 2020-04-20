@@ -25,3 +25,4 @@ result
 htmloutput/*
 html
 latex
+.stdafx.c++.pch

@@ -51,6 +51,9 @@ Reaction &MarkovEvaluator::GetNextReaction() {
 // [region]
 NetworkState MarkovEvaluator::GetNextNetworkState() {
 	CalculateProbs();
+	if (mState.time > timeThreshold && timeThreshold != 0) {
+		finished = true;
+	}
 	if (finished) {
 		return mState;
 	}

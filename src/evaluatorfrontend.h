@@ -26,6 +26,7 @@ class EvaluatorFrontend {
 public:
 	bool plot = false;
 	bool print = false;
+	bool printStd = false;
 	std::string csvFilename;
 	driver *drv;
 	Evaluator *evaluator = nullptr;

@@ -73,6 +73,9 @@ void EvaluatorFrontend::FuncRunner() {
 void EvaluatorFrontend::RunEvaluator() {
 	while (!evaluator->IsFinished()) {
 		states.push_back(evaluator->GetNextNetworkState());
+		if (printStd) {
+			std::cout << states.back().PrintCsvRow();
+		}
 	}
 }
 // [runeval]
@@ -87,17 +90,24 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	} else if (errorCode == streamNullPtr)
 		std::cout << "filestreampointer was nullptr. Please try again" << std::endl;
 	std::string helperstring =
-			"Usage: crnsimul [OPTIONS] filename"
+			"Usage: crnsimul [OPTIONS] filename\n"
 			"Option types:\n"
-			"	-e to to enable eulerevaluator (Required)\n"
-			"	-p trace parsing\n"
-			"	-s trace scanning\n"
-			"	-P enable plotting in gnuplot\n"
-			"	-O <filename> output result to file, -r required\n"
-			"	-S <step size> set stepsize for eulerevaluator\n"
-			"	-T <threshold size> set the euler evaluator threshold\n"
-			"	-C to select desired chemicals to plot\n"
-			"	These are seperated with the commaseperator\n";
-	"   -h Display help options";
+			"Default evaluator is eulerEvaluator\n"
+			"\t-m to to enable markov evaluator\n"
+			"\t-p trace parsing\n"
+			"\t-s trace scanning\n"
+			"\t-P enable plotting in gnuplot\n"
+			"\t-O <filename> output result to file, -r required\n"
+			"\t-S <step size> set stepsize for eulerevaluator\n"
+			"\t-T <threshold size> set the euler evaluator threshold\n"
+			"\t-t to set threshold for markovEvaluator\n"
+			"\t\tIf -t 0 is provided the markovEvaluator will continue forever\n"
+			"\t\tand print the result as it is going to stdout\n"
+			"\t\tIt can then be stopped with ctrl+c\n"
+			"\t-C to select desired chemicals to plot\n"
+			"\t\tThese are seperated with the commaseperator\n";
+	"\t--stdout parameter prints the output to stdout\n"
+	"\t\tIt is recommended to use this when markovThreshold i set to 0\n";
+	"\t-h Display help options";
 	std::cout << helperstring << std::endl;
 }

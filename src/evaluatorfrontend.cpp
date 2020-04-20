@@ -35,6 +35,14 @@ std::vector<std::string> EvaluatorFrontend::GeneratePlotString() {
 	return plotStrings;
 }
 
+void EvaluatorFrontend::PrintSTDout() {
+	std::cout << initNetworkState.PrintCsvHeader();
+	std::cout << initNetworkState.PrintCsvRow();
+	for (auto &state : states) {
+		std::cout << state.PrintCsvRow();
+	}
+}
+
 void EvaluatorFrontend::Plot() {
 	std::vector<std::string> plotStrings = GeneratePlotString();
 	gp << "plot";
@@ -66,6 +74,8 @@ void EvaluatorFrontend::FuncRunner() {
 	}
 	if (plot)
 		Plot();
+	if (printStd)
+		PrintSTDout();
 }
 
 //! @file
@@ -103,6 +113,8 @@ void EvaluatorFrontend::Help(ErrorCode errorCode) {
 			" It can then be stopped with ctrl+c\n"
 			"	-C to select desired chemicals to plot\n"
 			"	These are seperated with the commaseperator\n";
-	"   -h Display help options";
+			" --stdout parameter prints the output to stdout\n"
+			" It is recommended to use this when markovThreshold i set to 0\n";
+			" -h Display help options";
 	std::cout << helperstring << std::endl;
 }

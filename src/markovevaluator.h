@@ -20,7 +20,6 @@ public:
 	Needs description*/
 	NetworkState GetNextNetworkState() override;
 	double timeThreshold;
-	bool print = false;
 
 private:
 	void CalculateProbs();

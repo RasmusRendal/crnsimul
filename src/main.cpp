@@ -19,7 +19,6 @@ int main(int argc, char *argv[]) {
 	std::stringstream *csvStream = nullptr;
 	driver drv;
 	EvaluatorFrontend frontEnd;
-	bool printMarkov = false;
 	bool evaluateEuler = true;
 	double estep = 0.01;
 	double ethreshold = 0.00001;
@@ -41,9 +40,6 @@ int main(int argc, char *argv[]) {
 			frontEnd.plot = true;
 		} else if (argv[i] == std::string("-t")) {
 			timeThreshold = std::stod(argv[++i]);
-			if (timeThreshold == 0) {
-				printMarkov = true;
-			}
 		} else if (argv[i] == std::string("-O")) {
 			frontEnd.print = true;
 			frontEnd.csvFilename = std::string(argv[++i]);
@@ -64,6 +60,8 @@ int main(int argc, char *argv[]) {
 				getline(chemArg, substr, ',');
 				frontEnd.desiredChemicals.push_back(substr);
 			}
+		} else if (argv[i] == std::string("--stdout")) {
+			frontEnd.printStd = true;
 		} else if (file_included(argv[i])) {
 			filename = argv[i];
 		} else {
@@ -99,7 +97,6 @@ int main(int argc, char *argv[]) {
 		} else {
 			auto markovEvaluator = new MarkovEvaluator(drv.network);
 			markovEvaluator->timeThreshold = timeThreshold;
-			markovEvaluator->print = printMarkov;
 			evaluator = markovEvaluator;
 		}
 		frontEnd.evaluator = evaluator;

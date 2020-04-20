@@ -26,6 +26,7 @@ class EvaluatorFrontend {
 public:
 	bool plot = false;
 	bool print = false;
+	bool printStd = false;
 	std::string csvFilename;
 	driver *drv;
 	Evaluator *evaluator = nullptr;
@@ -50,6 +51,7 @@ private:
 	std::ofstream csvFileStream;
 	void PrintCsv();
 	void Plot();
+	void PrintSTDout();
 	/*! This function runs the evaluator. Since both EulerEvaluator
 	and MarkovEvaluator inherits from Evaluator the call to perform
 	evaluation is as simple as follows

@@ -51,7 +51,6 @@ private:
 	std::ofstream csvFileStream;
 	void PrintCsv();
 	void Plot();
-	void PrintSTDout();
 	/*! This function runs the evaluator. Since both EulerEvaluator
 	and MarkovEvaluator inherits from Evaluator the call to perform
 	evaluation is as simple as follows

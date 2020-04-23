@@ -22,3 +22,8 @@ jobs:
       with:
         name: coverage_short
         path: htmloutput/coverage_short.html
+    - name: Copy the binary
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage_short
+        path: bin/crnsimul

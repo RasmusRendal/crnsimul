@@ -1,5 +1,5 @@
-#include "parser/driver.h"
 #include "markovevaluator.h"
+#include "parser/driver.h"
 #include <gtest/gtest.h>
 
 #define EXPECT_CLOSE(a, b) EXPECT_LT(abs((b) - (a)), 1)
@@ -15,17 +15,10 @@ protected:
 };
 
 TEST_F(MarkovTest, twoValues) {
-	NetworkState initNetworkState;
+	driver drv;
 	int startValue = 50;
-	initNetworkState.insert(std::make_pair("a", startValue));
-	std::vector<Reaction> reactions;
-	Reaction r;
-	r.reactionConstant = 1;
-	r.reactants.insert(std::make_pair("a", 1));
-	r.products.insert(std::make_pair("b", 1));
-	reactions.push_back(r);
-	ReactionNetwork network(initNetworkState, reactions);
-	MarkovEvaluator evaluator(network);
+	drv.parse_string("a := " + std::to_string(startValue) + "; a -> b;");
+	MarkovEvaluator evaluator(drv.network);
 	evaluator.timeThreshold = 0;
 	double oldTime = 0;
 	for (int i = 0; i < startValue * 2; i++) {
@@ -52,7 +45,7 @@ TEST_F(MarkovTest, threshold) {
 	drv.parse_string("a := 10; b := 15; a -> a + b; b -> 0;");
 	MarkovEvaluator markov(drv.network);
 	markov.timeThreshold = 5.0;
-	while(!markov.IsFinished()) {
+	while (!markov.IsFinished()) {
 		states.push_back(markov.GetNextNetworkState());
 	}
 	finalTime = states.back().time;

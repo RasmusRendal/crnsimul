@@ -32,11 +32,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	for (int i = 1; i < argc; ++i) {
-		if (argv[i] == std::string("-p")) {
-			drv.trace_parsing = true;
-		} else if (argv[i] == std::string("-s")) {
-			drv.trace_scanning = true;
-		} else if (argv[i] == std::string("-P")) {
+		if (argv[i] == std::string("-P")) {
 			frontEnd.plot = true;
 		} else if (argv[i] == std::string("-t")) {
 			timeThreshold = std::stod(argv[++i]);
@@ -86,7 +82,8 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	if (drv.parse_file(filename) == 0) {
+	int parseRes = drv.parse_file(filename);
+	if (parseRes == 0) {
 		frontEnd.drv = &drv;
 		Evaluator *evaluator;
 		if (evaluateEuler) {
@@ -101,10 +98,10 @@ int main(int argc, char *argv[]) {
 		}
 		frontEnd.evaluator = evaluator;
 		frontEnd.FuncRunner();
+		return 0;
 	} else {
-		EvaluatorFrontend::Help(pError);
-		return 1;
+		return parseRes;
 	}
 
-	return 0;
+	return 1;
 }

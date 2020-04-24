@@ -101,7 +101,7 @@ specie          : "number" "name" { $$ = std::make_pair<std::string,int>(std::mo
 
 %%
 
-void yy::parser::error (const location_type&, const std::string&)
+void yy::parser::error (const location_type &l, const std::string &s)
 {
-  //std::cerr << l << ": " << m << '\n';
+  std::cerr << l << ": " << s << '\n';
 }

@@ -92,7 +92,7 @@ reaction        : species "->" species ";" { $$ = Reaction($1, $3, 1); }
 
 species         : specie { auto map = std::map<std::string, int>(); InsertToSpecieMap(map, $1); $$ = map; }
                 | species "+" specie { auto map = std::move($1); InsertToSpecieMap(map, $3); $$ = map; }
-                | "number" { if ($1 != 0) throw std::runtime_error("Parser error"); $$ = std::map<std::string, int>(); }
+                | "number" { if ($1 != 0) { yy::parser::error(@1, "Standalone number in reaction"); YYABORT; } $$ = std::map<std::string, int>(); }
                 ;
 
 specie          : "number" "name" { $$ = std::make_pair<std::string,int>(std::move($2), std::move($1)); }
@@ -103,5 +103,5 @@ specie          : "number" "name" { $$ = std::make_pair<std::string,int>(std::mo
 
 void yy::parser::error (const location_type &l, const std::string &s)
 {
-  std::cerr << l << ": " << s << '\n';
+  std::cerr << l << ": " << s << std::endl;
 }

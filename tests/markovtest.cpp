@@ -1,5 +1,5 @@
-#include "parser/driver.h"
 #include "markovevaluator.h"
+#include "parser/driver.h"
 #include <gtest/gtest.h>
 
 #define EXPECT_CLOSE(a, b) EXPECT_LT(abs((b) - (a)), 1)
@@ -52,7 +52,7 @@ TEST_F(MarkovTest, threshold) {
 	drv.parse_string("a := 10; b := 15; a -> a + b; b -> 0;");
 	MarkovEvaluator markov(drv.network);
 	markov.timeThreshold = 5.0;
-	while(!markov.IsFinished()) {
+	while (!markov.IsFinished()) {
 		states.push_back(markov.GetNextNetworkState());
 	}
 	finalTime = states.back().time;

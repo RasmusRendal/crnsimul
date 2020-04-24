@@ -178,3 +178,17 @@ TEST_F(NetworkStateTest, SubtractFinding) {
 	ASSERT_EQ(next["a"], 0);
 	ASSERT_EQ(std::roundf(next["b"]), 0);
 }
+
+TEST_F(NetworkStateTest, FoundABug) {
+	NetworkState state1;
+	state1.insert(std::pair<std::string, double>("a", 10));
+	state1.insert(std::pair<std::string, double>("b", 0));
+
+	NetworkState state2 = state1.DeepCopy();
+	state2["a"] = 9.9;
+	state2["b"] = 0.1;
+
+	ASSERT_FLOAT_EQ(state1.Diff(state2), 0.2);
+
+
+}

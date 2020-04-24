@@ -21,6 +21,7 @@ TEST_F(FrontendTest, PrintEvaluatedCSV) {
 	frontend.csvStream = csvStream;
 	frontend.drv = &drv;
 	EulerEvaluator e(drv.network);
+	e.threshold = 1;
 	frontend.evaluator = &e;
 	frontend.FuncRunner();
 	frontend.PrintCsvString();

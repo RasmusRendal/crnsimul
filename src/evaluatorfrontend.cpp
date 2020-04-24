@@ -21,7 +21,6 @@ std::vector<std::string> EvaluatorFrontend::GeneratePlotString() {
 	if (!desiredChemicals.empty()) {
 		for (const auto &specieName : desiredChemicals) {
 			auto toPlot = initNetworkState.find(specieName);
-			std::cout << toPlot->first << std::endl;
 			if (toPlot == initNetworkState.end()) {
 				throw std::runtime_error("Tried to plot chemical not in CRN");
 			}

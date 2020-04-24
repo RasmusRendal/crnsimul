@@ -1,0 +1,4 @@
+#!/usr/bin/env -S crnsimul -P
+a := 100;
+a -> a + b;
+b -> 0;

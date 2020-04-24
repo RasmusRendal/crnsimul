@@ -1,4 +1,5 @@
 #include "networkstate.h"
+#include <cmath>
 
 NetworkState NetworkState::DeepCopy() {
 	NetworkState copy;
@@ -46,14 +47,14 @@ double NetworkState::Diff(const NetworkState &other) {
 	double diff = 0;
 	for (auto &pair : other) {
 		if (find(pair.first) == end()) {
-			diff += pair.second;
+			diff += std::abs(pair.second);
 		} else {
-			diff += pair.second - at(pair.first);
+			diff += std::abs(pair.second - at(pair.first));
 		}
 	}
 	for (auto &pair : *this) {
 		if (other.find(pair.first) == other.end()) {
-			diff += pair.second;
+			diff += std::abs(pair.second);
 		}
 	}
 	return diff;

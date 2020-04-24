@@ -15,17 +15,10 @@ protected:
 };
 
 TEST_F(MarkovTest, twoValues) {
-	NetworkState initNetworkState;
+	driver drv;
 	int startValue = 50;
-	initNetworkState.insert(std::make_pair("a", startValue));
-	std::vector<Reaction> reactions;
-	Reaction r;
-	r.reactionConstant = 1;
-	r.reactants.insert(std::make_pair("a", 1));
-	r.products.insert(std::make_pair("b", 1));
-	reactions.push_back(r);
-	ReactionNetwork network(initNetworkState, reactions);
-	MarkovEvaluator evaluator(network);
+	drv.parse_string("a := " + std::to_string(startValue) + "; a -> b;");
+	MarkovEvaluator evaluator(drv.network);
 	evaluator.timeThreshold = 0;
 	double oldTime = 0;
 	for (int i = 0; i < startValue * 2; i++) {

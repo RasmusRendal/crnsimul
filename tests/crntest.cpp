@@ -68,7 +68,7 @@ TEST_F(CrnTest, parseZero) {
 
 TEST_F(CrnTest, doesNotParseINvalid) {
 	driver drv;
-	ASSERT_ANY_THROW(drv.parse_string("a:=3; a->b; b->7;"));
+	ASSERT_EQ(drv.parse_string("a:=3; a->b; b->7;"), 1);
 }
 
 TEST_F(CrnTest, goNuts) {

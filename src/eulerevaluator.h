@@ -5,7 +5,7 @@
 #include <vector>
 
 // A term of e differential equation for a single specie
-using equation_term = std::pair<int, NetworkState>;
+using equation_term = std::pair<double, NetworkState>;
 // The differential equation for a single specie
 using equation = std::vector<equation_term>;
 // A set of differential equations representing a CRN

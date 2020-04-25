@@ -51,6 +51,7 @@ void InsertToSpecieMap(SpeciesList &list, SpeciesPair &toInsert) {
 
 %token <std::string>    T_NAME      "name"
 %token <int>            T_NUMBER    "number"
+%token <double>            T_DECIMAL    "decimal"
 %nterm <std::vector<Reaction>> reactions
 %nterm <Reaction> reaction
 %nterm <std::map<std::string, int>> species
@@ -87,6 +88,7 @@ reactions       : reaction { auto r = std::vector<Reaction>(); r.push_back(std::
                 ;
 
 reaction        : species "->" species ";" { $$ = Reaction($1, $3, 1); }
+                | species "->" "(" "decimal" ")" species ";" { $$ = Reaction($1, $6, $4); }
                 | species "->" "(" "number" ")" species ";" { $$ = Reaction($1, $6, $4); }
                 ;
 

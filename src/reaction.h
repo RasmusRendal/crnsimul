@@ -13,7 +13,7 @@ public:
 				reactionConstant(reactionConstant) {}
 	//! Constructor 2
 	Reaction(const std::map<std::string, int> &reactants,
-					 const std::map<std::string, int> &products, int reactionConstant)
+					 const std::map<std::string, int> &products, double reactionConstant)
 			: reactionConstant(reactionConstant) {
 		for (auto &specie : reactants) {
 			this->reactants[specie.first] = specie.second;
@@ -25,5 +25,5 @@ public:
 	Reaction() = default;
 	NetworkState reactants;
 	NetworkState products;
-	int reactionConstant = 1;
+	double reactionConstant = 1;
 };

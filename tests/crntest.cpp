@@ -154,6 +154,22 @@ TEST_F(CrnTest, parseReactConst) {
 	EXPECT_EQ(reaction1.reactionConstant, 2);
 }
 
+TEST_F(CrnTest, parseReactConstDouble) {
+	driver drv;
+	ASSERT_EQ(drv.parse_string("a:=3;a->(2.5)b;"), 0);
+
+	auto &network = drv.network;
+
+	EXPECT_EQ(network.initNetworkState["a"], 3);
+
+	EXPECT_EQ(network.reactionList.size(), 1);
+	auto reaction1 = network.reactionList[0];
+	EXPECT_EQ(reaction1.reactants["a"], 1);
+	EXPECT_EQ(reaction1.products["b"], 1);
+	EXPECT_EQ(reaction1.reactionConstant, 2.5);
+}
+
+
 TEST_F(CrnTest, testComment) {
 	driver drv;
 	int res = drv.parse_string("#lol\n"

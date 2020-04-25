@@ -101,3 +101,11 @@ NetworkState NetworkState::operator-(const NetworkState &other) {
 	}
 	return state;
 }
+
+void NetworkState::Verify() {
+	for (const auto &specie : *this) {
+		// A number that is NaN will not be equal to itself
+		if (specie.second != specie.second)
+			throw DoubleOverflowException();
+	}
+}

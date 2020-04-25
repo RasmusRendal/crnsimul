@@ -1,5 +1,5 @@
-#include "parser/driver.h"
 #include "eulerevaluator.h"
+#include "parser/driver.h"
 #include <gtest/gtest.h>
 
 #define EXPECT_CLOSE(a, b) EXPECT_LT(abs((b) - (a)), 1)
@@ -32,6 +32,21 @@ TEST_F(EulerTest, twoValues) {
 	auto nextState = evaluator.GetNextNetworkState();
 	EXPECT_CLOSE(nextState["a"], 0);
 	EXPECT_CLOSE(nextState["b"], 1);
+}
+
+TEST_F(EulerTest, fractionalRate) {
+	NetworkState initNetworkState;
+	initNetworkState.insert(std::make_pair("a", 1));
+	std::vector<Reaction> reactions;
+	Reaction r;
+	r.reactionConstant = 1.5;
+	r.reactants.insert(std::make_pair("a", 1));
+	r.products.insert(std::make_pair("b", 1));
+	reactions.push_back(r);
+	ReactionNetwork network(initNetworkState, reactions);
+	EulerEvaluator evaluator(network);
+	auto state = evaluator.GetNextNetworkState();
+	EXPECT_FLOAT_EQ(state["b"], 1.5 * evaluator.step);
 }
 
 TEST_F(EulerTest, multiplication) {
@@ -100,10 +115,10 @@ TEST_F(EulerTest, SanityCheck) {
 
 TEST_F(EulerTest, subtraction) {
 	NetworkState initNetworkState;
-	initNetworkState.insert(std::make_pair("x",8));
-	initNetworkState.insert(std::make_pair("y",6));
-	initNetworkState.insert(std::make_pair("z",0));
-	initNetworkState.insert(std::make_pair("c",0));
+	initNetworkState.insert(std::make_pair("x", 8));
+	initNetworkState.insert(std::make_pair("y", 6));
+	initNetworkState.insert(std::make_pair("z", 0));
+	initNetworkState.insert(std::make_pair("c", 0));
 	std::vector<Reaction> reactions;
 	{
 		Reaction r;
@@ -127,7 +142,7 @@ TEST_F(EulerTest, subtraction) {
 		r.reactants.insert(std::make_pair("z", 1));
 		reactions.push_back(r);
 	}
-		{
+	{
 		Reaction r;
 		r.reactionConstant = 1;
 		r.reactants.insert(std::make_pair("z", 1));
@@ -147,9 +162,9 @@ TEST_F(EulerTest, subtraction) {
 
 TEST_F(EulerTest, addition) {
 	NetworkState initNetworkState;
-	initNetworkState.insert(std::make_pair("x",4));
-	initNetworkState.insert(std::make_pair("y",7));
-	initNetworkState.insert(std::make_pair("z",0));
+	initNetworkState.insert(std::make_pair("x", 4));
+	initNetworkState.insert(std::make_pair("y", 7));
+	initNetworkState.insert(std::make_pair("z", 0));
 	std::vector<Reaction> reactions;
 	{
 		Reaction r;
@@ -185,9 +200,9 @@ TEST_F(EulerTest, addition) {
 
 TEST_F(EulerTest, division) {
 	NetworkState initNetworkState;
-	initNetworkState.insert(std::make_pair("x",56));
-	initNetworkState.insert(std::make_pair("y",8));
-	initNetworkState.insert(std::make_pair("z",0));
+	initNetworkState.insert(std::make_pair("x", 56));
+	initNetworkState.insert(std::make_pair("y", 8));
+	initNetworkState.insert(std::make_pair("z", 0));
 	std::vector<Reaction> reactions;
 	{
 		Reaction r;
@@ -217,9 +232,9 @@ TEST_F(EulerTest, division) {
 
 TEST_F(EulerTest, nthRoot) {
 	NetworkState initNetworkState;
-	initNetworkState.insert(std::make_pair("n",3));
-	initNetworkState.insert(std::make_pair("a",125));
-	initNetworkState.insert(std::make_pair("x",0));
+	initNetworkState.insert(std::make_pair("n", 3));
+	initNetworkState.insert(std::make_pair("a", 125));
+	initNetworkState.insert(std::make_pair("x", 0));
 	std::vector<Reaction> reactions;
 	{
 		Reaction r;
@@ -264,10 +279,10 @@ TEST_F(EulerTest, nthRoot) {
 
 TEST_F(EulerTest, comparison) {
 	NetworkState initNetworkState;
-	initNetworkState.insert(std::make_pair("x",0.8));
-	initNetworkState.insert(std::make_pair("y",0.2));
-	initNetworkState.insert(std::make_pair("a",0));
-	initNetworkState.insert(std::make_pair("b",0));
+	initNetworkState.insert(std::make_pair("x", 0.8));
+	initNetworkState.insert(std::make_pair("y", 0.2));
+	initNetworkState.insert(std::make_pair("a", 0));
+	initNetworkState.insert(std::make_pair("b", 0));
 	std::vector<Reaction> reactions;
 	{
 		Reaction r;

@@ -1,5 +1,9 @@
 # crnsimul
 crnsimul is an application that simulates Chemical Reaction Networks.
+## Trying it out
+If you have installed the program, you can just execute them using `./examples/multiply.crn`, and they will run. If not, you need to specify the interpreter you are using explicitly, so `./bin/crnsimul -P examples/multiply.crn`.
+
+See the examples directory for example reaction networks.
 ## Building
 The project uses cmake. To compile a project using cmake, the following commands should be used:
 ```sh

@@ -49,3 +49,5 @@ add_executable(tests
 	${FLEX_scanner_OUTPUTS}
 )
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system)
+
+install(TARGETS crnsimul DESTINATION /usr/bin/)

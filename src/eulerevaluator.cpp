@@ -56,6 +56,7 @@ NetworkState EulerEvaluator::GetNextNetworkState() {
 	}
 	mState.time = step * iterations;
 	finished = (oldState.Diff(mState) < threshold);
+	mState.Verify();
 	return mState;
 }
 // [flag]

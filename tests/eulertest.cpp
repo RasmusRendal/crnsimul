@@ -1,6 +1,8 @@
 #include "eulerevaluator.h"
 #include "parser/driver.h"
 #include <gtest/gtest.h>
+#include <limits>
+#include <math.h>
 
 #define EXPECT_CLOSE(a, b) EXPECT_LT(abs((b) - (a)), 1)
 
@@ -333,4 +335,14 @@ TEST_F(EulerTest, MultipleSame) {
 	EXPECT_EQ(e.GetNextNetworkState()["z"], e2.GetNextNetworkState()["z"]);
 	EXPECT_CLOSE(e2.GetNextNetworkState()["z"], 12);
 	EXPECT_CLOSE(e.GetNextNetworkState()["z"], 12);
+}
+
+TEST_F(EulerTest, OverflowException) {
+	driver drv;
+	ASSERT_EQ(drv.parse_string("a := 1000000000; a ->(100) b;"), 0);
+	drv.network.initNetworkState["b"] = std::numeric_limits<double>::max();
+	EulerEvaluator e(drv.network);
+	e.step = INFINITY;
+	e.GetNextNetworkState();
+	EXPECT_THROW(e.GetNextNetworkState(), DoubleOverflowException);
 }

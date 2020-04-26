@@ -34,6 +34,8 @@ int main(int argc, char *argv[]) {
 	for (int i = 1; i < argc; ++i) {
 		if (argv[i] == std::string("-P")) {
 			frontEnd.plot = true;
+		} else if (argv[i] == std::string("-RTP")) {
+			frontEnd.rtPlot = true;
 		} else if (argv[i] == std::string("-t")) {
 			timeThreshold = std::stod(argv[++i]);
 		} else if (argv[i] == std::string("-O")) {

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Comment out when not debugging
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fPIC")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fPIC -lgl")
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -28,6 +28,8 @@ file(GLOB TEST_SOURCES "tests/*.cpp")
 
 find_package(Boost 1.56 REQUIRED COMPONENTS iostreams system)
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/submodules/OpenRTPlotter)
+
 # add the executable
 add_executable(crnsimul
 	src/main.cpp
@@ -36,7 +38,7 @@ add_executable(crnsimul
 	${FLEX_scanner_OUTPUTS}
 )
 
-TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system)
+TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system OpenRTP)
 
 enable_testing()
 find_package(GTest REQUIRED)
@@ -48,4 +50,4 @@ add_executable(tests
 	${BISON_parser_OUTPUTS}
 	${FLEX_scanner_OUTPUTS}
 )
-target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system)
+target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system OpenRTP)

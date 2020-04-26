@@ -99,6 +99,7 @@ void EvaluatorFrontend::RunRTEvaluator() {
 	auto StartT = std::chrono::steady_clock::now();
 	auto EndT = std::chrono::steady_clock::now();
 	bool once = true;
+
 	while (!mPlot->OpenRTPlotterRun()) {
 		if (EvaluatorFunc()) {
 			EndT = std::chrono::steady_clock::now();

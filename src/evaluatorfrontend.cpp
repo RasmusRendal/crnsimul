@@ -74,16 +74,13 @@ void EvaluatorFrontend::FuncRunner() {
 		Plot();
 }
 
-int EvaluatorFrontend::EvaluatorFunc()
-{
-	if(!evaluator->IsFinished())
-	{
+int EvaluatorFrontend::EvaluatorFunc() {
+	if (!evaluator->IsFinished()) {
 		states.push_back(evaluator->GetNextNetworkState());
 		if (printStd) {
 			std::cout << states.back().PrintCsvRow();
 		}
-	}
-	else {
+	} else {
 		return 0;
 	}
 
@@ -93,7 +90,8 @@ int EvaluatorFrontend::EvaluatorFunc()
 //! @file
 // [runeval]
 void EvaluatorFrontend::RunEvaluator() {
-	while (EvaluatorFunc());
+	while (EvaluatorFunc())
+		;
 }
 // [runeval]
 
@@ -101,32 +99,32 @@ void EvaluatorFrontend::RunRTEvaluator() {
 	auto StartT = std::chrono::steady_clock::now();
 	auto EndT = std::chrono::steady_clock::now();
 	bool once = true;
-	while (!mPlot->OpenRTPlotterRun())
-	{
-		if(EvaluatorFunc()) {
+	while (!mPlot->OpenRTPlotterRun()) {
+		if (EvaluatorFunc()) {
 			EndT = std::chrono::steady_clock::now();
-			auto ETime = std::chrono::duration_cast<std::chrono::milliseconds>(EndT - StartT);
+			auto ETime =
+					std::chrono::duration_cast<std::chrono::milliseconds>(EndT - StartT);
 			auto UTime = std::chrono::milliseconds(UpdateRate);
 
-			if(ETime > UTime)
-			{
+			if (ETime > UTime) {
 				StartT = std::chrono::steady_clock::now();
 
 				for (int i = 0; i < ToPlot.size(); i++) {
-					for (int j = LastInsertedCount; j < states.size(); j++) {	
-						auto state = states[j];					
-						ToPlot[i].Function.push_back((OpenRTP::Point){(float)state.time, (float)state[ToPlot[i].Name]});
+					for (int j = LastInsertedCount; j < states.size(); j++) {
+						auto state = states[j];
+						ToPlot[i].Function.push_back((OpenRTP::Point){
+								(float)state.time, (float)state[ToPlot[i].Name]});
 					}
 				}
 
 				mPlot->InsertByPlot(ToPlot);
 				LastInsertedCount = states.size();
 			}
-		}
-		else if (once) {
+		} else if (once) {
 			for (int i = 0; i < ToPlot.size(); i++) {
-				for (int j = LastInsertedCount; j < states.size(); j++) {						
-					ToPlot[i].Function.push_back((OpenRTP::Point){(float)states[j].time, (float)states[j][ToPlot[i].Name]});
+				for (int j = LastInsertedCount; j < states.size(); j++) {
+					ToPlot[i].Function.push_back((OpenRTP::Point){
+							(float)states[j].time, (float)states[j][ToPlot[i].Name]});
 				}
 			}
 			mPlot->InsertByPlot(ToPlot);
@@ -136,12 +134,7 @@ void EvaluatorFrontend::RunRTEvaluator() {
 }
 
 void EvaluatorFrontend::RTPlotInit() {
-	OpenRTP::InitStruct Init 
-	{
-		"Window",
-		"Y",
-		"X"
-	};
+	OpenRTP::InitStruct Init{"Window", "Y", "X"};
 
 	std::vector<std::string> plotStrings = GeneratePlotString();
 	int plotStringsSize = static_cast<int>(plotStrings.size());
@@ -149,7 +142,8 @@ void EvaluatorFrontend::RTPlotInit() {
 		std::string title = plotStrings[i];
 		ToPlot.push_back(title);
 		ToPlot[i].Color = glm::vec4(1, 0, 0, 1);
-		ToPlot[i].Function.push_back((OpenRTP::Point){(float)initNetworkState.time, (float)initNetworkState[ToPlot[i].Name]});
+		ToPlot[i].Function.push_back((OpenRTP::Point){
+				(float)initNetworkState.time, (float)initNetworkState[ToPlot[i].Name]});
 	}
 
 	mPlot = new OpenRTP::OpenRTPlotter(Init, ToPlot);

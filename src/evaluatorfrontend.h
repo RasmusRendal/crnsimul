@@ -3,7 +3,6 @@
 #include "OpenRTPlotter.h"
 #include "evaluator.h"
 #include "gnuplot-iostream.h"
-#include "OpenRTPlotter.h"
 #include "networkstate.h"
 #include "parser/driver.h"
 #include "reaction.h"
@@ -14,7 +13,6 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <chrono>
 
 enum ErrorCode {
 	helpargument = 0,

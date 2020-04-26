@@ -1,3 +1,6 @@
 [submodule "submodules/gnuplot-iostream"]
 	path = submodules/gnuplot-iostream
 	url = https://github.com/dstahlke/gnuplot-iostream
+[submodule "submodules/OpenRTPlotter"]
+	path = submodules/OpenRTPlotter
+	url = https://github.com/SquareBlightStudio/OpenRTPlotter.git

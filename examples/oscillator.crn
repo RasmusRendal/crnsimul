@@ -1,0 +1,50 @@
+#!/usr/bin/env -S crnsimul --stdout
+
+# Based on the rock-paper-scissors oscillator from
+# "Implementing Arbritary CRNs using Strand Discplacing Polymerase"
+# By Shalin Shah, Tianqi Song, Xin Song, Ming Yang, and John Reif
+# http://doi.org/10.1007/978-3-030-26807-7_2
+
+a := 5;
+b := 4;
+c := 10;
+
+ga  := 1;
+gb  := 1;
+gc  := 1;
+gob := 1;
+goc := 1;
+goa := 1;
+
+a + b -> 2b;
+b + c -> 2c;
+c + a -> 2a;
+
+a + gb -> iab;
+
+iab + gob ->(1) 2b;
+
+b + lb ->(1) gb + lgb;
+gb + lgb ->(1) b + lb;
+
+b + gc -> ibc;
+
+ibc + goc ->(1) 2c;
+
+c + lc ->(1) gc + lgc;
+gc + lgc ->(1) c + lc;
+
+c + ga -> ica;
+
+ica + goa ->(1) 2a;
+
+a + la ->(1) ga + lga;
+ga + lga ->(1) a + la;
+
+
+0 ->(0.00001) ga;
+0 ->(0.00001) gb;
+0 ->(0.00001) gc;
+0 ->(0.00001) gob;
+0 ->(0.00001) goc;
+0 ->(0.00001) goa;

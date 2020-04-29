@@ -50,4 +50,4 @@ add_executable(tests
 )
 target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system)
 
-install(TARGETS crnsimul DESTINATION /usr/bin/)
+install(TARGETS crnsimul DESTINATION /usr/local/bin/)

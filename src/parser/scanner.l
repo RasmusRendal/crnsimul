@@ -82,7 +82,7 @@
 %}
 
 int             [0-9]+
-decimal             [0-9]+\.[0-9]+
+decimal         [0-9]+\.[0-9]+
 T_NAME          [a-zA-Z][a-zA-Z_0-9]*
 T_RIGHTARROW    "->"
 T_BIARROW       "<->"

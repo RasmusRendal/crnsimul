@@ -54,7 +54,7 @@ private:
 	std::ofstream csvFileStream;
 
 	std::vector<OpenRTP::Plot> ToPlot;
-	OpenRTP::OpenRTPlotter *mPlot;
+	OpenRTP::Plotter *mPlot;
 	int LastInsertedCount = 1;
 	int UpdateRate = 16;
 

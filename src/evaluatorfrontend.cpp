@@ -90,8 +90,7 @@ int EvaluatorFrontend::EvaluatorFunc() {
 //! @file
 // [runeval]
 void EvaluatorFrontend::RunEvaluator() {
-	while (EvaluatorFunc())
-		;
+	while (EvaluatorFunc());
 }
 // [runeval]
 
@@ -99,8 +98,8 @@ void EvaluatorFrontend::RunRTEvaluator() {
 	auto StartT = std::chrono::steady_clock::now();
 	auto EndT = std::chrono::steady_clock::now();
 	bool once = true;
-
-	while (!mPlot->OpenRTPlotterRun()) {
+	
+	while (!mPlot->RunPlot()) {
 		if (EvaluatorFunc()) {
 			EndT = std::chrono::steady_clock::now();
 			auto ETime =
@@ -118,7 +117,7 @@ void EvaluatorFrontend::RunRTEvaluator() {
 					}
 				}
 
-				mPlot->InsertByPlot(ToPlot);
+				mPlot->UpdatePlot();
 				LastInsertedCount = states.size();
 			}
 		} else if (once) {
@@ -128,7 +127,7 @@ void EvaluatorFrontend::RunRTEvaluator() {
 							(float)states[j].time, (float)states[j][ToPlot[i].Name]});
 				}
 			}
-			mPlot->InsertByPlot(ToPlot);
+			mPlot->UpdatePlot();
 			once = false;
 		}
 	}
@@ -142,13 +141,13 @@ void EvaluatorFrontend::RTPlotInit() {
 	for (int i = 0; i < plotStringsSize; i++) {
 		std::string title = plotStrings[i];
 		ToPlot.push_back(title);
-		ToPlot[i].Color = glm::vec4(1, 0, 0, 1);
+		//ToPlot[i].Color = glm::vec4(1, 0, 0, 1);
 		ToPlot[i].Function.push_back((OpenRTP::Point){
 				(float)initNetworkState.time, (float)initNetworkState[ToPlot[i].Name]});
 	}
 
-	mPlot = new OpenRTP::OpenRTPlotter(Init, ToPlot);
-	mPlot->OpenRTPlotterInit();
+	mPlot = new OpenRTP::Plotter(Init, &ToPlot);
+	mPlot->Init();
 }
 
 void EvaluatorFrontend::Help(ErrorCode errorCode) {

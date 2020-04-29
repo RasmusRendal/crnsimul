@@ -142,7 +142,6 @@ void EvaluatorFrontend::RTPlotInit() {
 	for (int i = 0; i < plotStringsSize; i++) {
 		std::string title = plotStrings[i];
 		ToPlot.push_back(title);
-		// ToPlot[i].Color = glm::vec4(1, 0, 0, 1);
 		ToPlot[i].Function.push_back((OpenRTP::Point){
 				(float)initNetworkState.time, (float)initNetworkState[ToPlot[i].Name]});
 	}

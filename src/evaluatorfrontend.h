@@ -55,8 +55,9 @@ private:
 
 	std::vector<OpenRTP::Plot> ToPlot;
 	OpenRTP::Plotter *mPlot;
-	int LastInsertedCount = 1;
-	int UpdateRate = 16;
+
+	int UpdateRate = 16; // Counts how many milliseconds between when to update
+											 // the plot info (The specie)
 
 	void PrintCsv();
 	void Plot();
@@ -69,5 +70,5 @@ private:
 	later be accessed by other functions */
 	void RunEvaluator();
 	void RunRTEvaluator();
-	int EvaluatorFunc();
+	bool EvaluatorFunc();
 };

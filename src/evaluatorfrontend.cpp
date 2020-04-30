@@ -74,17 +74,17 @@ void EvaluatorFrontend::FuncRunner() {
 		Plot();
 }
 
-int EvaluatorFrontend::EvaluatorFunc() {
+bool EvaluatorFrontend::EvaluatorFunc() {
 	if (!evaluator->IsFinished()) {
 		states.push_back(evaluator->GetNextNetworkState());
 		if (printStd) {
 			std::cout << states.back().PrintCsvRow();
 		}
 	} else {
-		return 0;
+		return false;
 	}
 
-	return 1;
+	return true;
 }
 
 //! @file
@@ -96,40 +96,43 @@ void EvaluatorFrontend::RunEvaluator() {
 // [runeval]
 
 void EvaluatorFrontend::RunRTEvaluator() {
-	auto StartT = std::chrono::steady_clock::now();
-	auto EndT = std::chrono::steady_clock::now();
-	bool once = true;
+	auto startTime = std::chrono::steady_clock::now();
+	auto endTime = std::chrono::steady_clock::now();
+	bool allStatesRendered = true;
 
 	while (!mPlot->RunPlot()) {
 		if (EvaluatorFunc()) {
-			EndT = std::chrono::steady_clock::now();
-			auto ETime =
-					std::chrono::duration_cast<std::chrono::milliseconds>(EndT - StartT);
-			auto UTime = std::chrono::milliseconds(UpdateRate);
+			endTime = std::chrono::steady_clock::now();
+			auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+					endTime - startTime);
+			auto updateTime = std::chrono::milliseconds(UpdateRate);
 
-			if (ETime > UTime) {
-				StartT = std::chrono::steady_clock::now();
+			if (elapsedTime > updateTime) {
+				startTime = std::chrono::steady_clock::now();
 
 				for (int i = 0; i < ToPlot.size(); i++) {
-					for (int j = LastInsertedCount; j < states.size(); j++) {
+					int currentSpeicePointSize = ToPlot[i].Function.size();
+					for (int j = currentSpeicePointSize; j < states.size(); j++) {
 						auto state = states[j];
-						ToPlot[i].Function.push_back((OpenRTP::Point){
-								(float)state.time, (float)state[ToPlot[i].Name]});
+						ToPlot[i].Function.push_back(
+								(OpenRTP::Point){static_cast<float>(state.time),
+																 static_cast<float>(state[ToPlot[i].Name])});
 					}
 				}
 
 				mPlot->UpdatePlot();
-				LastInsertedCount = states.size();
 			}
-		} else if (once) {
+		} else if (allStatesRendered) {
 			for (int i = 0; i < ToPlot.size(); i++) {
-				for (int j = LastInsertedCount; j < states.size(); j++) {
-					ToPlot[i].Function.push_back((OpenRTP::Point){
-							(float)states[j].time, (float)states[j][ToPlot[i].Name]});
+				int currentSpeicePointSize = ToPlot[i].Function.size();
+				for (int j = currentSpeicePointSize; j < states.size(); j++) {
+					ToPlot[i].Function.push_back(
+							(OpenRTP::Point){static_cast<float>(states[j].time),
+															 static_cast<float>(states[j][ToPlot[i].Name])});
 				}
 			}
 			mPlot->UpdatePlot();
-			once = false;
+			allStatesRendered = false;
 		}
 	}
 }
@@ -142,8 +145,9 @@ void EvaluatorFrontend::RTPlotInit() {
 	for (int i = 0; i < plotStringsSize; i++) {
 		std::string title = plotStrings[i];
 		ToPlot.push_back(title);
-		ToPlot[i].Function.push_back((OpenRTP::Point){
-				(float)initNetworkState.time, (float)initNetworkState[ToPlot[i].Name]});
+		ToPlot[i].Function.push_back(
+				(OpenRTP::Point){static_cast<float>(initNetworkState.time),
+												 static_cast<float>(initNetworkState[ToPlot[i].Name])});
 	}
 
 	mPlot = new OpenRTP::Plotter(Init, &ToPlot);

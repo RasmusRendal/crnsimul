@@ -53,7 +53,7 @@ private:
 	std::vector<NetworkState> states;
 	std::ofstream csvFileStream;
 
-	std::vector<OpenRTP::Plot> ToPlot; // The vector that stores information per.
+	std::vector<OpenRTP::Plot> toPlot; // The vector that stores information per.
 																		 // species in a plot struct
 	OpenRTP::Plotter *mPlot; // pointer to the plotter class, which controlls the
 													 // plotting window

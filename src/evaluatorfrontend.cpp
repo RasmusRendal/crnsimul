@@ -110,25 +110,25 @@ void EvaluatorFrontend::RunRTEvaluator() {
 			if (elapsedTime > updateTime) {
 				startTime = std::chrono::steady_clock::now();
 
-				for (int i = 0; i < ToPlot.size(); i++) {
-					int currentSpeicePointSize = ToPlot[i].Function.size();
+				for (int i = 0; i < toPlot.size(); i++) {
+					int currentSpeicePointSize = toPlot[i].Function.size();
 					for (int j = currentSpeicePointSize; j < states.size(); j++) {
 						auto state = states[j];
-						ToPlot[i].Function.push_back(
+						toPlot[i].Function.push_back(
 								(OpenRTP::Point){static_cast<float>(state.time),
-																 static_cast<float>(state[ToPlot[i].Name])});
+																 static_cast<float>(state[toPlot[i].Name])});
 					}
 				}
 
 				mPlot->UpdatePlot();
 			}
 		} else if (allStatesRendered) {
-			for (int i = 0; i < ToPlot.size(); i++) {
-				int currentSpeicePointSize = ToPlot[i].Function.size();
+			for (int i = 0; i < toPlot.size(); i++) {
+				int currentSpeicePointSize = toPlot[i].Function.size();
 				for (int j = currentSpeicePointSize; j < states.size(); j++) {
-					ToPlot[i].Function.push_back(
+					toPlot[i].Function.push_back(
 							(OpenRTP::Point){static_cast<float>(states[j].time),
-															 static_cast<float>(states[j][ToPlot[i].Name])});
+															 static_cast<float>(states[j][toPlot[i].Name])});
 				}
 			}
 			mPlot->UpdatePlot();
@@ -144,13 +144,13 @@ void EvaluatorFrontend::RTPlotInit() {
 	int plotStringsSize = static_cast<int>(plotStrings.size());
 	for (int i = 0; i < plotStringsSize; i++) {
 		std::string title = plotStrings[i];
-		ToPlot.push_back(title);
-		ToPlot[i].Function.push_back(
+		toPlot.push_back(title);
+		toPlot[i].Function.push_back(
 				(OpenRTP::Point){static_cast<float>(initNetworkState.time),
-												 static_cast<float>(initNetworkState[ToPlot[i].Name])});
+												 static_cast<float>(initNetworkState[toPlot[i].Name])});
 	}
 
-	mPlot = new OpenRTP::Plotter(Init, &ToPlot);
+	mPlot = new OpenRTP::Plotter(Init, &toPlot);
 	mPlot->Init();
 }
 

@@ -56,7 +56,14 @@ void EvaluatorFrontend::Plot() {
 
 void EvaluatorFrontend::FuncRunner() {
 	initNetworkState = drv->network.initNetworkState;
-	RunEvaluator();
+
+	if (rtPlot) {
+		RTPlotInit();
+		RunRTEvaluator();
+	} else {
+		RunEvaluator();
+	}
+
 	if (print) {
 		if (csvStream != nullptr)
 			PrintCsv();
@@ -67,17 +74,85 @@ void EvaluatorFrontend::FuncRunner() {
 		Plot();
 }
 
-//! @file
-// [runeval]
-void EvaluatorFrontend::RunEvaluator() {
-	while (!evaluator->IsFinished()) {
+bool EvaluatorFrontend::EvaluatorFunc() {
+	if (!evaluator->IsFinished()) {
 		states.push_back(evaluator->GetNextNetworkState());
 		if (printStd) {
 			std::cout << states.back().PrintCsvRow();
 		}
+	} else {
+		return false;
 	}
+
+	return true;
+}
+
+//! @file
+// [runeval]
+void EvaluatorFrontend::RunEvaluator() {
+	while (EvaluatorFunc())
+		;
 }
 // [runeval]
+
+void EvaluatorFrontend::RunRTEvaluator() {
+	auto startTime = std::chrono::steady_clock::now();
+	auto endTime = std::chrono::steady_clock::now();
+	bool remainingStatesNotAdded = true;
+
+	while (!mPlot->RunPlot()) {
+		if (EvaluatorFunc()) {
+			endTime = std::chrono::steady_clock::now();
+			auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+					endTime - startTime);
+			auto updateTime = std::chrono::milliseconds(UpdateRate);
+
+			if (elapsedTime > updateTime) {
+				startTime = std::chrono::steady_clock::now();
+
+				for (int i = 0; i < toPlot.size(); i++) {
+					int currentSpeicePointSize = toPlot[i].Function.size();
+					for (int j = currentSpeicePointSize; j < states.size(); j++) {
+						auto state = states[j];
+						toPlot[i].Function.push_back(
+								(OpenRTP::Point){static_cast<float>(state.time),
+																 static_cast<float>(state[toPlot[i].Name])});
+					}
+				}
+
+				mPlot->UpdatePlot();
+			}
+		} else if (remainingStatesNotAdded) {
+			for (int i = 0; i < toPlot.size(); i++) {
+				int currentSpeicePointSize = toPlot[i].Function.size();
+				for (int j = currentSpeicePointSize; j < states.size(); j++) {
+					toPlot[i].Function.push_back(
+							(OpenRTP::Point){static_cast<float>(states[j].time),
+															 static_cast<float>(states[j][toPlot[i].Name])});
+				}
+			}
+			mPlot->UpdatePlot();
+			remainingStatesNotAdded = false;
+		}
+	}
+}
+
+void EvaluatorFrontend::RTPlotInit() {
+	OpenRTP::InitStruct Init{"Window", "Y", "X"};
+
+	std::vector<std::string> plotStrings = GeneratePlotString();
+	int plotStringsSize = static_cast<int>(plotStrings.size());
+	for (int i = 0; i < plotStringsSize; i++) {
+		std::string title = plotStrings[i];
+		toPlot.push_back(title);
+		toPlot[i].Function.push_back(
+				(OpenRTP::Point){static_cast<float>(initNetworkState.time),
+												 static_cast<float>(initNetworkState[toPlot[i].Name])});
+	}
+
+	mPlot = new OpenRTP::Plotter(Init, &toPlot);
+	mPlot->Init();
+}
 
 void EvaluatorFrontend::Help(ErrorCode errorCode) {
 	if (errorCode == fileError) {

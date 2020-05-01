@@ -1,11 +1,13 @@
 #pragma once
 
+#include "OpenRTPlotter.h"
 #include "evaluator.h"
 #include "gnuplot-iostream.h"
 #include "networkstate.h"
 #include "parser/driver.h"
 #include "reaction.h"
 #include "reactionnetwork.h"
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -25,6 +27,7 @@ enum ErrorCode {
 class EvaluatorFrontend {
 public:
 	bool plot = false;
+	bool rtPlot = false;
 	bool print = false;
 	bool printStd = false;
 	std::string csvFilename;
@@ -49,8 +52,18 @@ private:
 	Gnuplot gp;
 	std::vector<NetworkState> states;
 	std::ofstream csvFileStream;
+
+	std::vector<OpenRTP::Plot> toPlot; // The vector that stores information per.
+																		 // species in a plot struct
+	OpenRTP::Plotter *mPlot; // pointer to the plotter class, which controlls the
+													 // plotting window
+
+	int UpdateRate = 16; // Counts how many milliseconds between when to update
+											 // the plot info (The specie)
+
 	void PrintCsv();
 	void Plot();
+	void RTPlotInit();
 	/*! This function runs the evaluator. Since both EulerEvaluator
 	and MarkovEvaluator inherits from Evaluator the call to perform
 	evaluation is as simple as follows
@@ -58,4 +71,6 @@ private:
 	The result is stored in the vector states, which can then
 	later be accessed by other functions */
 	void RunEvaluator();
+	void RunRTEvaluator();
+	bool EvaluatorFunc();
 };

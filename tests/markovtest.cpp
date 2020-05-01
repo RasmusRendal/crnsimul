@@ -28,13 +28,13 @@ TEST_F(MarkovTest, twoValues) {
 
 		EXPECT_GT(nextState.time, oldTime);
 		oldTime = nextState.time;
-		EXPECT_CLOSE(nextState["a"], startValue - 1 - i);
-		EXPECT_CLOSE(nextState["b"], i + 1);
+		EXPECT_FLOAT_EQ(nextState["a"], startValue - 1 - i);
+		EXPECT_FLOAT_EQ(nextState["b"], i + 1);
 	}
 
 	auto finalState = evaluator.GetNextNetworkState();
-	EXPECT_CLOSE(finalState["a"], 0);
-	EXPECT_CLOSE(finalState["b"], startValue);
+	EXPECT_FLOAT_EQ(finalState["a"], 0);
+	EXPECT_FLOAT_EQ(finalState["b"], startValue);
 	EXPECT_EQ(evaluator.IsFinished(), true);
 }
 

@@ -28,6 +28,8 @@ file(GLOB TEST_SOURCES "tests/*.cpp")
 
 find_package(Boost 1.56 REQUIRED COMPONENTS iostreams system)
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/submodules/OpenRTPlotter)
+
 # add the executable
 add_executable(crnsimul
 	src/main.cpp
@@ -36,7 +38,7 @@ add_executable(crnsimul
 	${FLEX_scanner_OUTPUTS}
 )
 
-TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system)
+TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system OpenRTP)
 
 enable_testing()
 find_package(GTest REQUIRED)
@@ -48,6 +50,7 @@ add_executable(tests
 	${BISON_parser_OUTPUTS}
 	${FLEX_scanner_OUTPUTS}
 )
-target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system)
+
+target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system OpenRTP)
 
 install(TARGETS crnsimul DESTINATION /usr/bin/)

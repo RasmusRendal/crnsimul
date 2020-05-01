@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk add clang boost-iostreams boost-dev libstdc++ cmake make build-base gcc flex bison libc-dev gtest gtest-dev bash gcovr glfw-dev glew-dev freetype-dev glm-dev mesa mesa-dev
+RUN apk add clang boost-iostreams boost-dev libstdc++ cmake make build-base gcc flex bison libc-dev gtest gtest-dev bash gcovr glfw-dev glew-dev freetype-dev glm-dev mesa mesa-dev fontconfig-dev
 
 RUN mkdir /chem
 

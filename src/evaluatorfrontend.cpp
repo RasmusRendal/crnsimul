@@ -98,7 +98,7 @@ void EvaluatorFrontend::RunEvaluator() {
 void EvaluatorFrontend::RunRTEvaluator() {
 	auto startTime = std::chrono::steady_clock::now();
 	auto endTime = std::chrono::steady_clock::now();
-	bool allStatesRendered = true;
+	bool remainingStatesNotAdded = true;
 
 	while (!mPlot->RunPlot()) {
 		if (EvaluatorFunc()) {
@@ -122,7 +122,7 @@ void EvaluatorFrontend::RunRTEvaluator() {
 
 				mPlot->UpdatePlot();
 			}
-		} else if (allStatesRendered) {
+		} else if (remainingStatesNotAdded) {
 			for (int i = 0; i < toPlot.size(); i++) {
 				int currentSpeicePointSize = toPlot[i].Function.size();
 				for (int j = currentSpeicePointSize; j < states.size(); j++) {
@@ -132,7 +132,7 @@ void EvaluatorFrontend::RunRTEvaluator() {
 				}
 			}
 			mPlot->UpdatePlot();
-			allStatesRendered = false;
+			remainingStatesNotAdded = false;
 		}
 	}
 }

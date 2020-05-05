@@ -24,7 +24,7 @@
 %define parse.error verbose
 
 %code {
-# include "driver.h"
+#include "driver.h"
 using SpeciesPair = std::pair<std::string, int>;
 using SpeciesList = std::map<std::string, int>;
 
@@ -56,16 +56,6 @@ void InsertToSpecieMap(SpeciesList &list, SpeciesPair &toInsert) {
 %nterm <Reaction> reaction
 %nterm <std::map<std::string, int>> species
 %nterm <std::pair<std::string, int>> specie
-
-// Bison enforces that all datatypes used in terms are printable
-// with the << operator, or have a custom printer defined.
-// We bypass this by doing nothing.
-%printer {} <std::vector<Reaction>>
-%printer {} <Reaction>
-%printer {} <std::map<std::string, int>>
-%printer {} <std::pair<std::string, int>>
-
-%printer {yyo << $$;} <*>;
 
 %%
 

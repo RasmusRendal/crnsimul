@@ -58,10 +58,12 @@ NetworkState MarkovEvaluator::GetNextNetworkState() {
 		return mState;
 	}
 	Reaction &reaction = GetNextReaction();
-	mState = mState - reaction.reactants;
-	mState = mState + reaction.products;
-	mState.time = currentTime;
-	mState.Verify();
-	return mState;
+	NetworkState newState = mState.DeepCopy();
+	newState = newState - reaction.reactants;
+	newState = newState + reaction.products;
+	newState.time = currentTime;
+	newState.Verify();
+	mState = newState;
+	return newState;
 }
 // [region]

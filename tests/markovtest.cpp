@@ -42,12 +42,13 @@ TEST_F(MarkovTest, threshold) {
 	double finalTime;
 	driver drv;
 	std::vector<NetworkState> states;
-	drv.parse_string("a := 10; b := 15; a -> a + b; b -> 0;");
+	drv.parse_string("a := 10; b := 15; a -> a + b; b -> 0;0 -> b;");
 	MarkovEvaluator markov(drv.network);
-	markov.timeThreshold = 5.0;
+	markov.timeThreshold = 50000;
 	while (!markov.IsFinished()) {
 		states.push_back(markov.GetNextNetworkState());
 	}
 	finalTime = states.back().time;
-	ASSERT_TRUE(finalTime >= 5 && finalTime < 5.1);
+	EXPECT_GT(finalTime, 50000);
+	EXPECT_LT(finalTime, 51000);
 }

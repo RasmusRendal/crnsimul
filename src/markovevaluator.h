@@ -22,9 +22,10 @@ public:
 	double timeThreshold;
 
 private:
-	void CalculateProbs();
+	void CalculateFiringRate();
 	std::default_random_engine generator;
 	std::uniform_real_distribution<double> distribution;
-	std::vector<std::tuple<double, int>> reactionProbs;
+	std::vector<std::tuple<double, int>> firingRates;
 	Reaction &GetNextReaction();
+	double accFiringRate = 0;
 };

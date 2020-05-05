@@ -64,6 +64,7 @@ void InsertToSpecieMap(SpeciesList &list, SpeciesPair &toInsert) {
 program         : %empty {}
                 | concentrations {}
                 | concentrations reactions { drv.network.reactionList = $2; }
+                | reactions { drv.network.reactionList = $1; }
                 ;
 
 concentrations  : concentration {}

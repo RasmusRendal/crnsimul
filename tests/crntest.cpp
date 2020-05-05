@@ -210,3 +210,26 @@ TEST_F(CrnTest, testComment) {
 		EXPECT_EQ(products.size(), 0);
 	}
 }
+
+TEST_F(CrnTest, testNoConcs) {
+	driver drv;
+	drv.parse_string("a->(2)b; b -> c;");
+
+	auto &network = drv.network;
+
+	EXPECT_EQ(network.initNetworkState["a"], 0);
+	EXPECT_EQ(network.initNetworkState["b"], 0);
+
+	EXPECT_EQ(network.reactionList.size(), 2);
+	auto reaction1 = network.reactionList[0];
+	EXPECT_EQ(reaction1.reactants["a"], 1);
+	EXPECT_EQ(reaction1.products["b"], 1);
+	EXPECT_EQ(reaction1.reactionConstant, 2);
+
+	auto reaction2 = network.reactionList[1];
+	EXPECT_EQ(reaction2.reactants["b"], 1);
+	EXPECT_EQ(reaction2.products["c"], 1);
+	EXPECT_EQ(reaction2.reactionConstant, 1);
+
+}
+

@@ -13,6 +13,8 @@ project(crnsimul VERSION 0.1)
 find_package(FLEX REQUIRED)
 find_package(BISON REQUIRED)
 
+find_package(Threads REQUIRED)
+
 BISON_TARGET(parser src/parser/parser.yy ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/parser.cpp)
 FLEX_TARGET(scanner src/parser/scanner.l ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/scanner.cpp)
 ADD_FLEX_BISON_DEPENDENCY(scanner parser)
@@ -38,7 +40,7 @@ add_executable(crnsimul
 	${FLEX_scanner_OUTPUTS}
 )
 
-TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system OpenRTP)
+TARGET_LINK_LIBRARIES(crnsimul LINK_PUBLIC Boost::iostreams Boost::system OpenRTP ${CMAKE_THREAD_LIBS_INIT})
 
 enable_testing()
 find_package(GTest REQUIRED)
@@ -51,6 +53,6 @@ add_executable(tests
 	${FLEX_scanner_OUTPUTS}
 )
 
-target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system OpenRTP)
+target_link_libraries(tests ${GTEST_BOTH_LIBRARIES} Boost::iostreams Boost::system OpenRTP ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS crnsimul DESTINATION /usr/bin/)

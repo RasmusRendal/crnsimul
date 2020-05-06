@@ -1,4 +1,7 @@
 #include "evaluatorfrontend.h"
+#include <boost/lockfree/queue.hpp>
+#include <mutex>
+#include <thread>
 
 void EvaluatorFrontend::PrintCsvString() {
 	*csvStream << initNetworkState.PrintCsvHeader();
@@ -100,41 +103,54 @@ void EvaluatorFrontend::RunRTEvaluator() {
 	auto endTime = std::chrono::steady_clock::now();
 	bool remainingStatesNotAdded = true;
 
-	while (!mPlot->RunPlot()) {
-		if (EvaluatorFunc()) {
-			endTime = std::chrono::steady_clock::now();
-			auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(
-					endTime - startTime);
-			auto updateTime = std::chrono::milliseconds(UpdateRate);
+	boost::lockfree::queue<NetworkState *> stateQueue(1024);
 
-			if (elapsedTime > updateTime) {
-				startTime = std::chrono::steady_clock::now();
+	if (!stateQueue.is_lock_free()) {
+		throw std::runtime_error("Queue is not lockfree");
+	}
+
+	std::thread threadObj([this, &stateQueue] {
+		while (!evaluator->IsFinished()) {
+			states.push_back(evaluator->GetNextNetworkState());
+			if (printStd)
+				std::cout << states.back().PrintCsvRow();
+			NetworkState *copy = new NetworkState(states.back());
+			if (!stateQueue.push(copy)) {
+				throw std::runtime_error("Push failed");
+			}
+		}
+	});
+
+	while (!mPlot->RunPlot()) {
+		endTime = std::chrono::steady_clock::now();
+		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+				endTime - startTime);
+		auto updateTime = std::chrono::milliseconds(UpdateRate);
+
+		if (elapsedTime > updateTime) {
+			startTime = std::chrono::steady_clock::now();
+
+			while (!stateQueue.empty()) {
+				NetworkState *state = nullptr;
+				bool res = stateQueue.pop(state);
+				if (!res)
+					throw std::runtime_error("Could not pop from state queue");
 
 				for (int i = 0; i < toPlot.size(); i++) {
-					int currentSpeicePointSize = toPlot[i].Function.size();
-					for (int j = currentSpeicePointSize; j < states.size(); j++) {
-						auto state = states[j];
-						toPlot[i].Function.push_back(
-								(OpenRTP::Point){static_cast<float>(state.time),
-																 static_cast<float>(state[toPlot[i].Name])});
-					}
+					auto &name = toPlot[i].Name;
+					auto &time = state->time;
+					double value = 0;
+					value = state->at(toPlot[i].Name);
+					toPlot[i].Function.push_back((OpenRTP::Point){
+							static_cast<float>(time), static_cast<float>(value)});
 				}
+				delete state;
+			}
 
-				mPlot->UpdatePlot();
-			}
-		} else if (remainingStatesNotAdded) {
-			for (int i = 0; i < toPlot.size(); i++) {
-				int currentSpeicePointSize = toPlot[i].Function.size();
-				for (int j = currentSpeicePointSize; j < states.size(); j++) {
-					toPlot[i].Function.push_back(
-							(OpenRTP::Point){static_cast<float>(states[j].time),
-															 static_cast<float>(states[j][toPlot[i].Name])});
-				}
-			}
 			mPlot->UpdatePlot();
-			remainingStatesNotAdded = false;
 		}
 	}
+	threadObj.join();
 }
 
 void EvaluatorFrontend::RTPlotInit() {

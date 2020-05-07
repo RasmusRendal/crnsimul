@@ -1,0 +1,4 @@
+#!/usr/bin/env -S crnsimul -RTP -m -t 0
+a -> 0;
+0 -> a;
+a -> 2a;

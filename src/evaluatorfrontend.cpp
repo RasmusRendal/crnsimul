@@ -101,7 +101,6 @@ void EvaluatorFrontend::RunEvaluator() {
 void EvaluatorFrontend::RunRTEvaluator() {
 	auto startTime = std::chrono::steady_clock::now();
 	auto endTime = std::chrono::steady_clock::now();
-	bool remainingStatesNotAdded = true;
 
 	boost::lockfree::queue<NetworkState *> stateQueue(1024);
 
@@ -121,33 +120,36 @@ void EvaluatorFrontend::RunRTEvaluator() {
 		}
 	});
 
+	bool plotUpdated = false;
+
 	while (!mPlot->RunPlot()) {
 		endTime = std::chrono::steady_clock::now();
 		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(
 				endTime - startTime);
 		auto updateTime = std::chrono::milliseconds(UpdateRate);
 
-		if (elapsedTime > updateTime) {
-			startTime = std::chrono::steady_clock::now();
+		while (!stateQueue.empty()) {
+			NetworkState *state = nullptr;
+			bool res = stateQueue.pop(state);
+			if (!res)
+				throw std::runtime_error("Could not pop from state queue");
 
-			while (!stateQueue.empty()) {
-				NetworkState *state = nullptr;
-				bool res = stateQueue.pop(state);
-				if (!res)
-					throw std::runtime_error("Could not pop from state queue");
-
-				for (int i = 0; i < toPlot.size(); i++) {
-					auto &name = toPlot[i].Name;
-					auto &time = state->time;
-					double value = 0;
-					value = state->at(toPlot[i].Name);
-					toPlot[i].Function.push_back((OpenRTP::Point){
-							static_cast<float>(time), static_cast<float>(value)});
-				}
-				delete state;
+			for (int i = 0; i < toPlot.size(); i++) {
+				auto &name = toPlot[i].Name;
+				auto &time = state->time;
+				double value = 0;
+				value = state->at(toPlot[i].Name);
+				toPlot[i].Function.push_back((OpenRTP::Point){
+						static_cast<float>(time), static_cast<float>(value)});
 			}
+			delete state;
+			plotUpdated = true;
+		}
 
+		if (plotUpdated && elapsedTime > updateTime) {
+			startTime = std::chrono::steady_clock::now();
 			mPlot->UpdatePlot();
+			plotUpdated = false;
 		}
 	}
 	threadObj.join();

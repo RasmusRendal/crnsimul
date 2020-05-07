@@ -108,8 +108,10 @@ void EvaluatorFrontend::RunRTEvaluator() {
 		throw std::runtime_error("Queue is not lockfree");
 	}
 
-	std::thread threadObj([this, &stateQueue] {
-		while (!evaluator->IsFinished()) {
+	bool plotterRunning = true;
+
+	std::thread threadObj([this, &stateQueue, &plotterRunning] {
+		while (!evaluator->IsFinished() && plotterRunning) {
 			states.push_back(evaluator->GetNextNetworkState());
 			if (printStd)
 				std::cout << states.back().PrintCsvRow();
@@ -152,6 +154,7 @@ void EvaluatorFrontend::RunRTEvaluator() {
 			plotUpdated = false;
 		}
 	}
+	plotterRunning = false;
 	threadObj.join();
 }
 

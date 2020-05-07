@@ -9,6 +9,13 @@ NetworkState NetworkState::DeepCopy() {
 	return copy;
 }
 
+NetworkState::NetworkState(const NetworkState &other) {
+	for (const auto &specie : other) {
+		insert(specie);
+	}
+	time = other.time;
+}
+
 void NetworkState::Print() {
 	for (const auto &specie : *this) {
 		std::cout << specie.first << ": " << specie.second << std::endl;

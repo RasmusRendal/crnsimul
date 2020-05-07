@@ -26,6 +26,7 @@ the speciename and a double, the concentration */
 class NetworkState : public std::map<std::string, double> {
 public:
 	NetworkState() = default;
+	NetworkState(const NetworkState &other);
 	NetworkState DeepCopy();
 	std::string PrintCsvHeader();
 	std::string PrintCsvRow();

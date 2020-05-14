@@ -19,6 +19,7 @@ This manual covers information of how to operate of the program and does not go 
     - [4. Evaluators](#4-evaluators)
       - [4.1 Euler evaluator](#41-euler-evaluator)
       - [4.2 Markov evaluator](#42-markov-evaluator)
+    - [5. Stdout](#5-stdout)
 <br />
 
 ### 1. Writing simple chemical reaction networks
@@ -26,7 +27,7 @@ The crnsimul program works on filetypes of the **".crn"** extension, where the p
 An easy way to create these **".crn"** files is to create a new file of the **".txt"** format and save it as an **".crn"** format containing the chemical reaction network.
 
 **Note:**
-The following command below is necessary to have when running UNIX as it is a **shebang** used for specifying what program should be called to run the script. In our language it is solely seen as a comment, but will be included in future examples in order to attain for a good convention.
+The following command is necessary to have when running UNIX as it is a **shebang** used for specifying what program should be called to run the script. In our language it is solely seen as a comment, but will be included in future examples in order to attain for a good convention.
 ``` c++
 #!/usr/bin/env -S crnsimul -P 
 ```
@@ -67,10 +68,10 @@ To use Gnuplot instead of the OpenRTPlotter, the following command line will be 
 ```c++
 ./bin/crnsimul -P examples/plus.crn
 ```
-![Image of the OpenRTPlotter](https://puu.sh/FKhhd/ef382aa6ed.png)
+![Image of the Gnuplot](https://puu.sh/FKhhd/ef382aa6ed.png)
 
 #### 3. Printing to .csv files
-It is also possible to print out the CRN data to a **".csv"** file for further data processing. To print the **".csv"** file of our example **plus.crn** module. the following command line will be used:
+It is also possible to print out the CRN data to a **".csv"** file for further data processing. To print the **".csv"** file of our example **plus.crn** module. The following command line will be used:
 
 ```c++
 ./bin/crnsimul examples/plus.crn -O [Name of file]
@@ -78,7 +79,51 @@ It is also possible to print out the CRN data to a **".csv"** file for further d
 By calling our file **plusCsv**, a **".csv"** file of this name can be found in the crnsimul repository. 
 
 ### 4. Evaluators
+The crnsimul program offers two types of evaluations, namely euler evaluator and Markov evaluator. These two types of evaluators have their own command line parameter to specify which evaluation will be used. The previous examples in this manual were evaluated with the euler evaluator, as it is the default evaluator if no evaluations are specified. 
+
 
 #### 4.1 Euler evaluator
+As mentioned earlier, euler evaluator is the default evaluator which will be used when no evaluators have been specified in the command line. 
+In order to implicitly specify the euler evaluator, the **"-e"** command line parameter will be used.  
+```c++
+./bin/crnsimul examples/plus.crn -e
+```
+When working with the euler evaluator. It is also possible to specify the step size using the **"-S"** command line parameter followed by a number representing the new step size. Furthermore, this also applies for specifying the threshold with the **"-T"** parameter instead.
+
+These are the predefined values of step size and threshold:
+```c++
+double estep = 0.01;
+double ethreshold = 0.00001;
+```
+
+As an example, by increasing the step size and threshhold, we will be given a less precise evaluation of the plus CRN as seen below.
+```c++
+./bin/crnsimul examples/plus.crn -S 0.8 -T 0.0001 -RTP
+```
+![Image of the lower precision](https://puu.sh/FKj7i/7d890f8696.png)
 
 #### 4.2 Markov evaluator
+In order to access the Markov evaluator, you must implicitly specify it by using the **"-m"** parameter.
+
+```c++
+./bin/crnsimul examples/plus.crn -m
+```
+It is also possible to specify the threshold of the Markov evaluator by using the **"-t"** parameter followed by a number representing the new threshold. 
+This is the predefined value of the Markov evaluator threshold:
+```c++
+double timeThreshold = 5.0;
+```
+
+Note that **"-t"** and **"-T"** from the euler evaluator are different from eachother as they dont specify the same threshold.
+
+randomwal.crn, a CRN module in the examples folder, will be used in this example to showcase the Markov evaluator. The following command line will be used:
+
+```c++
+./bin/crnsimul examples/randomwalk.crn -m -t 2 -RTP
+```
+![Image of the Markov evaluator](https://puu.sh/FKjlj/778df5d515.png)
+
+### 5. Stdout
+When using the OpenRTPlotter for real time plotting. It is also possible for the terminal to print out the output of the CRN using the **"--stdout"** command line. This can be seen below.
+
+![Image of the stdout functionality](https://puu.sh/FKjuK/f8623ae265.jpg)

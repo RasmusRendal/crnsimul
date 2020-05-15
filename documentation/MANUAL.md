@@ -60,7 +60,7 @@ If you wish to use the OpenRTPlotter to simulate the previous example. Create a 
 ```
 **-RTP** is a command line parameter which opens up the OpenRTPlotter. If crnsimul is correctly installed, the OpenRTPlotter will open up and begin to simulate the given CRN.
 
-![Image of the OpenRTPlotter](https://puu.sh/FKh2r/d2064a145b.png)
+![Image of the OpenRTPlotter](https://github.com/RasmusRendal/crnsimul/blob/milestone/1.0/documentation/Pictures/AdditionExample.gif)
 #### 2.2 GNU plotting 
 Gnuplot is a graphing utility which also works in the plotting of CRNs. Gnuplot does not plot in real time and can lead to problems with CRNs that either takes a very long time to simulate, or never ends. For very small CRNs, Gnuplot is still a viable tool for plotting, but OpenRTPlotter is still the recommended tool for plotting and simulating.
 
@@ -119,9 +119,9 @@ Note that **"-t"** and **"-T"** from the euler evaluator are different from each
 randomwal.crn, a CRN module in the examples folder, will be used in this example to showcase the Markov evaluator. The following command line will be used:
 
 ```c++
-./bin/crnsimul examples/randomwalk.crn -m -t 2 -RTP
+./bin/crnsimul examples/randomwalk.crn -m -t 3000 -RTP
 ```
-![Image of the Markov evaluator](https://puu.sh/FKjlj/778df5d515.png)
+![Image of the Markov evaluator](https://github.com/RasmusRendal/crnsimul/blob/milestone/1.0/documentation/Pictures/RandomWalkExample.gif)
 
 ### 5. Stdout
 When using the OpenRTPlotter for real time plotting. It is also possible for the terminal to print out the output of the CRN using the **"--stdout"** command line. This can be seen below.

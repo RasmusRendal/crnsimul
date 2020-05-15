@@ -28,7 +28,7 @@ To compile and install crnsimul, check the [README](https://github.com/RasmusRen
 The crnsimul takes input files formatted as CRNs. It is convention to give these files the **".crn** extension, but the program does not care.
 
 If you are deveoping your CRN for use in a UNIX-like system, it can be helpful to add a shebang and mark it as executable, to allow executing the file directly. The recommended shebang is of the format:
-``` c++
+``` console
 #!/usr/bin/env -S crnsimul -RTP 
 ```
 <br />
@@ -58,7 +58,7 @@ The reason for creating OpenRTPlotter was due to the fact that Gnuplot is unable
 Besides that, OpenRTPlotter is generally faster, so it is recommended for all use cases.
 
 If you wish to use the OpenRTPlotter to simulate the previous example, use the following command-line invocation: 
-```c++
+```console
 $ crnsimul -RTP examples/plus.crn
 ```
 **-RTP** is a command line parameter which opens up the OpenRTPlotter. If crnsimul is correctly installed, the OpenRTPlotter will open up and begin to simulate the given CRN.
@@ -70,7 +70,7 @@ Gnuplot does not plot in real time and can lead to problems with CRNs that eithe
 For very small CRNs, Gnuplot is still a viable tool for plotting, but OpenRTPlotter is the recommended tool for plotting and simulating.
 
 To use Gnuplot instead of the OpenRTPlotter, the following command line will be used instead:
-```c++
+```console
 $ crnsimul -P examples/plus.crn
 ```
 ![Image of the Gnuplot](https://puu.sh/FKhhd/ef382aa6ed.png)
@@ -79,7 +79,7 @@ $ crnsimul -P examples/plus.crn
 It is also possible to print out the CRN data to a **".csv"** file for further data processing.
 To print the **".csv"** file of our example **plus.crn** module. The following command line will be used:
 
-```c++
+```console
 $ crnsimul examples/plus.crn -O plus.csv
 ```
 This will produce a comma-seperated values file which contains the concentrations at each step of the simulation.
@@ -93,7 +93,7 @@ The previous examples in this manual were evaluated with the Euler evaluator, as
 #### 4.1 Euler evaluator
 As mentioned earlier, the Euler evaluator is the default evaluator which will be used when no evaluators have been specified in the command line. 
 In order to implicitly specify the Euler evaluator, the **"-e"** command line parameter should be used.  
-```c++
+```console
 $ crnsimul examples/plus.crn -e
 ```
 When working with the Euler evaluator.
@@ -103,7 +103,7 @@ Furthermore, this also applies for specifying the threshold with the **"-T"** pa
 The default step value is `0.01`, and the default threshold is `0.00001`
 
 As an example, by increasing the step size and threshhold, we will be given a less precise, but faster evaluation of the plus CRN as seen below.
-```c++
+```console
 $ crnsimul examples/plus.crn -S 0.8 -T 0.0001 -RTP
 ```
 ![Image of the lower precision](https://puu.sh/FKj7i/7d890f8696.png)
@@ -113,7 +113,7 @@ If a too low simulation is used, it might result in a float overflow. The simula
 #### 4.2 Markov evaluator
 In order to access the Markov evaluator, you must specify it by using the **"-m"** parameter.
 
-```c++
+```console
 $ crnsimul examples/plus.crn -m
 ```
 It is also possible to specify the threshold of the Markov evaluator by using the **"-t"** parameter followed by a number representing the new threshold. 
@@ -124,7 +124,7 @@ Note that **"-t"** and **"-T"** from the Euler evaluator are different from each
 
 randomwalk.crn, a CRN module in the examples folder, will be used in this example to showcase the Markov evaluator. The following command line will be used:
 
-```c++
+```console
 $ crnsimul examples/randomwalk.crn -m -t 3000 -RTP
 ```
 ![Image of the Markov evaluator](https://raw.githubusercontent.com/RasmusRendal/crnsimul/milestone/1.0/documentation/RandomWalkExample.gif)

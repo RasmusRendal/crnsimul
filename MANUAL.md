@@ -61,7 +61,9 @@ The number in the paretheses specify a reaction rate constant, with which the re
 
 The list of species on each side can be a single specie name `a`, multiple specie names of the format `a + b + c ...`, or simply `0`, to signify that this reaction requires or produces nothing.
 
-Now that we have introduced the syntax of crnsimul, let us move on to the command line parameters available.
+To see examples of CRN syntax, see the `examples` directory.
+
+Now that we have introduced the syntax of CRNs, we will demonstrate the command-line parameters available in the application.
 ### 2. Plotting of CRNs 
 The main feature of the crnsimul program is the ability to have real time plotting of the CRN's.
 Currently crnsimul supports plotting through the [Gnuplot](http://www.gnuplot.info) graphing utility and custom made OpenRTPlotter. 

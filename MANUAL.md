@@ -13,7 +13,7 @@ To compile and install crnsimul, check the [README](https://github.com/RasmusRen
 - [crnsimul - Manual](#crnsimul---manual)
       - [Prerequisites](#prerequisites)
   - [Table of Content](#table-of-content)
-    - [1. Writing simple chemical reaction networks](#1-writing-simple-chemical-reaction-networks)
+    - [1. CRN Syntax](#1-crn-syntax)
     - [2. Plotting of CRNs](#2-plotting-of-crns)
       - [2.1 OpenRTPlotter](#21-openrtplotter)
       - [2.2 GNU plotting](#22-gnu-plotting)
@@ -24,7 +24,7 @@ To compile and install crnsimul, check the [README](https://github.com/RasmusRen
     - [5. Stdout](#5-stdout)
 <br />
 
-### 1. Writing simple chemical reaction networks
+### 1. CRN Syntax
 The crnsimul takes input files formatted as CRNs. It is convention to give these files the **".crn** extension, but the program does not care.
 
 If you are deveoping your CRN for use in a UNIX-like system, it can be helpful to add a shebang and mark it as executable, to allow executing the file directly. The recommended shebang is of the format:
@@ -45,9 +45,23 @@ a -> x;
 b -> x;
 x -> 0;
 ```
-Here, the first two lines following the UNIX shebang are assigned concentrations whereas the rest of the CRN module shows the chemical reactions.
-Various examples of CRN modules can be found in the examples folder within the crnsimul repository. 
+The first line contains a UNIX shebang. It is good convention.
 
+Next in the program are the concentrations.
+It is enforced by the grammar that all concentrations must come before the reactions.
+
+The concentration is always of the format `specieName := number`. 
+Concentrations cannot be decimal numbers.
+
+Specie names consist of uppercase and lowercase letter, numbers, and underscores, but can only start with a letter.
+
+After the concentrations, come the reactions.
+Reactions are of the format `species -> species`, or alternatively `species ->(decimal) species`.
+The number in the paretheses specify a reaction rate constant, with which the reaction speed will be multiplied.
+
+The list of species on each side can be a single specie name `a`, multiple specie names of the format `a + b + c ...`, or simply `0`, to signify that this reaction requires or produces nothing.
+
+Now that we have introduced the syntax of crnsimul, let us move on to the command line parameters available.
 ### 2. Plotting of CRNs 
 The main feature of the crnsimul program is the ability to have real time plotting of the CRN's.
 Currently crnsimul supports plotting through the [Gnuplot](http://www.gnuplot.info) graphing utility and custom made OpenRTPlotter. 

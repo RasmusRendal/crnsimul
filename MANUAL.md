@@ -57,7 +57,7 @@ Specie names consist of uppercase and lowercase letter, numbers, and underscores
 
 After the concentrations, come the reactions.
 Reactions are of the format `species -> species`, or alternatively `species ->(decimal) species`.
-The number in the paretheses specify a reaction rate constant, with which the reaction speed will be multiplied.
+The number in the parentheses specify a reaction rate constant, with which the reaction speed will be multiplied.
 
 The list of species on each side can be a single specie name `a`, multiple specie names of the format `a + b + c ...`, or simply `0`, to signify that this reaction requires or produces nothing.
 

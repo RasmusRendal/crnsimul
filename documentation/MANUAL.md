@@ -14,7 +14,7 @@ To compile and install crnsimul, check the [README](https://github.com/RasmusRen
       - [Prerequisites](#prerequisites)
   - [Table of Content](#table-of-content)
     - [1. CRN Syntax](#1-crn-syntax)
-    - [2. Plotting of CRNs](#2-plotting-of-crns)
+    - [2. Invokation](#2-invokation)
       - [2.1 OpenRTPlotter](#21-openrtplotter)
       - [2.2 GNU plotting](#22-gnu-plotting)
       - [3. Printing to .csv files](#3-printing-to-csv-files)
@@ -64,9 +64,12 @@ The list of species on each side can be a single specie name `a`, multiple speci
 To see examples of CRN syntax, see the `examples` directory.
 
 Now that we have introduced the syntax of CRNs, we will demonstrate the command-line parameters available in the application.
-### 2. Plotting of CRNs 
-The main feature of the crnsimul program is the ability to have real time plotting of the CRN's.
-Currently crnsimul supports plotting through the [Gnuplot](http://www.gnuplot.info) graphing utility and custom made OpenRTPlotter. 
+### 2. Invokation
+crnsimul is called with the following format:
+```command
+$ crnsimul [options] filename
+```
+In the following sections, we will describe the options for customizing the generated plot, if used.
 
 #### 2.1 OpenRTPlotter
 OpenRTPlotter is a custom made plotter for this project.

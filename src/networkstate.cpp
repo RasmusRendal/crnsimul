@@ -72,9 +72,13 @@ NetworkState NetworkState::operator+(const NetworkState &other) {
 	for (const auto &specie : *this) {
 		std::string name = specie.first;
 		auto otherVal = other.find(specie.first);
-		double value = specie.second + otherVal->second;
-		auto pair = std::pair<std::string, double>(name, value);
-		state.insert(pair);
+		if (otherVal == other.end()) {
+			state.insert(specie);
+		} else {
+			double value = specie.second + otherVal->second;
+			auto pair = std::pair<std::string, double>(name, value);
+			state.insert(pair);
+		}
 	}
 
 	for (const auto &specie : other) {

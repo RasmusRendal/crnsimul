@@ -125,10 +125,6 @@ void EvaluatorFrontend::RunRTEvaluator() {
 	bool plotUpdated = false;
 
 	while (!mPlot->RunPlot()) {
-		endTime = std::chrono::steady_clock::now();
-		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(
-				endTime - startTime);
-		auto updateTime = std::chrono::milliseconds(UpdateRate);
 
 		while (!stateQueue.empty()) {
 			NetworkState *state = nullptr;
@@ -147,6 +143,11 @@ void EvaluatorFrontend::RunRTEvaluator() {
 			delete state;
 			plotUpdated = true;
 		}
+
+		endTime = std::chrono::steady_clock::now();
+		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+				endTime - startTime);
+		auto updateTime = std::chrono::milliseconds(UpdateRate);
 
 		if (plotUpdated && elapsedTime > updateTime) {
 			startTime = std::chrono::steady_clock::now();

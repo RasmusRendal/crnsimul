@@ -17,7 +17,7 @@ void MarkovEvaluator::CalculateFiringRate() {
 			const auto &specie = reactant.first;
 			const auto &stoichiometry = reactant.second;
 			prob *= mState[specie];
-			if (mState[reactant.first] < stoichiometry) {
+			if (mState[specie] < stoichiometry) {
 				prob = 0;
 				break;
 			}

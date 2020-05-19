@@ -12,19 +12,19 @@ void MarkovEvaluator::CalculateFiringRate() {
 	int index = 0;
 	accFiringRate = 0;
 	for (const auto &reaction : mNetwork.reactionList) {
-		double prob = 1;
+		double firingRate = 1;
 		for (const auto &reactant : reaction.reactants) {
 			const auto &specie = reactant.first;
 			const auto &stoichiometry = reactant.second;
-			prob *= mState[specie];
-			if (mState[reactant.first] < stoichiometry) {
-				prob = 0;
+			firingRate *= mState[specie];
+			if (mState[specie] < stoichiometry) {
+				firingRate = 0;
 				break;
 			}
 		}
-		if (prob > 0.1) {
-			firingRates.emplace_back(std::make_pair(prob, index));
-			accFiringRate += prob;
+		if (firingRate > 0.1) {
+			firingRates.emplace_back(std::make_pair(firingRate, index));
+			accFiringRate += firingRate;
 		}
 		index++;
 	}

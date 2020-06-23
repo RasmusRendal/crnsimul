@@ -38,24 +38,34 @@ void EulerEvaluator::InitializeEquationParts() {
 	}
 }
 
+NetworkState EulerEvaluator::calculateDiff(const NetworkState &delta) const {
+	NetworkState res = NetworkState();
+	for (const auto &specie : equationParts) {
+		for (const equation_term &term : specie.second) {
+			double change = term.first;
+			for (const auto &reactant : term.second) {
+				change *= pow(mState.get(reactant.first) + delta.get(reactant.first),
+											reactant.second);
+			}
+			res[specie.first] += change;
+		}
+	}
+	return res;
+}
+
 //! \file
 // [flag]
 NetworkState EulerEvaluator::GetNextNetworkState() {
 	iterations++;
-	auto oldState = mState.DeepCopy();
-	for (auto &specie : equationParts) {
-		double diff = 0;
-		for (equation_term &term : specie.second) {
-			double change = term.first;
-			for (auto &reactant : term.second) {
-				change *= pow(oldState[reactant.first], reactant.second);
-			}
-			diff += change;
-		}
-		mState[specie.first] += diff * step;
-	}
+	NetworkState k1 = calculateDiff(NetworkState());
+	NetworkState k2 = calculateDiff((k1) * (step / 2));
+	NetworkState k3 = calculateDiff((k2) * (step / 2));
+	NetworkState k4 = calculateDiff(k3 * step);
+	NetworkState oldState = NetworkState(mState);
+	auto totalChange = (k1 + k2 * 2 + k3 * 2 + k4) * (step / 6);
+	mState = mState + totalChange;
 	mState.time = step * iterations;
-	finished = (oldState.Diff(mState) < threshold);
+	finished = (mState.Diff(oldState) < threshold);
 	mState.Verify();
 	return mState;
 }

@@ -32,9 +32,9 @@ public:
 	void PrintEquations();
 	//! Stepsize in regards to Euler Method, can be changed when given as an
 	//! argument.
-	double step = 0.0001;
+	double step = 0.001;
 	//! Threshold for when evaluation stops.
-	double threshold = 0.0001;
+	double threshold = 0.001;
 	//! Inherited function from the evaluator class.
 	/*! This function implements the Euler method and gets the next state of the
 		network. Each state is a map with the specie name and concentration,
@@ -46,6 +46,7 @@ public:
 
 private:
 	void InitializeEquationParts();
+	NetworkState calculateDiff(const NetworkState &change) const;
 
 	// The differential equations are stored here
 	equation_set equationParts;

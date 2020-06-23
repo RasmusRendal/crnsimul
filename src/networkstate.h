@@ -32,8 +32,10 @@ public:
 	std::string PrintCsvRow();
 	void Print();
 	double time = 0;
-	double Diff(const NetworkState &other);
+	double Diff(const NetworkState &other) const;
 	void Verify();
-	NetworkState operator+(const NetworkState &);
-	NetworkState operator-(const NetworkState &);
+	NetworkState operator*(const double)const;
+	NetworkState operator+(const NetworkState &) const;
+	NetworkState operator-(const NetworkState &) const;
+	double get(const std::string &index) const;
 };

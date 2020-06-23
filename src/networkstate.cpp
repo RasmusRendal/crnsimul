@@ -50,13 +50,13 @@ std::string NetworkState::PrintCsvRow() {
 	return result;
 }
 
-double NetworkState::Diff(const NetworkState &other) {
+double NetworkState::Diff(const NetworkState &other) const {
 	double diff = 0;
 	for (auto &pair : other) {
 		if (find(pair.first) == end()) {
 			diff += std::abs(pair.second);
 		} else {
-			diff += std::abs(pair.second - at(pair.first));
+			diff += std::abs(pair.second - get(pair.first));
 		}
 	}
 	for (auto &pair : *this) {
@@ -67,7 +67,7 @@ double NetworkState::Diff(const NetworkState &other) {
 	return diff;
 }
 
-NetworkState NetworkState::operator+(const NetworkState &other) {
+NetworkState NetworkState::operator+(const NetworkState &other) const {
 	NetworkState state;
 	for (const auto &specie : *this) {
 		std::string name = specie.first;
@@ -89,7 +89,7 @@ NetworkState NetworkState::operator+(const NetworkState &other) {
 	return state;
 }
 
-NetworkState NetworkState::operator-(const NetworkState &other) {
+NetworkState NetworkState::operator-(const NetworkState &other) const {
 	NetworkState state;
 	for (const auto &specie : *this) {
 		std::string name = specie.first;
@@ -113,10 +113,26 @@ NetworkState NetworkState::operator-(const NetworkState &other) {
 	return state;
 }
 
+NetworkState NetworkState::operator*(const double other) const {
+	NetworkState newState(*this);
+	for (auto &specie : newState) {
+		specie.second *= other;
+	}
+	return newState;
+}
+
 void NetworkState::Verify() {
 	for (const auto &specie : *this) {
 		// A number that is NaN will not be equal to itself
 		if (specie.second != specie.second)
 			throw DoubleOverflowException();
+	}
+}
+
+double NetworkState::get(const std::string &index) const {
+	try {
+		return at(index);
+	} catch (std::out_of_range &e) {
+		return 0;
 	}
 }

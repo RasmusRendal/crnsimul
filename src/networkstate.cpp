@@ -1,14 +1,6 @@
 #include "networkstate.h"
 #include <cmath>
 
-NetworkState NetworkState::DeepCopy() {
-	NetworkState copy;
-	for (const auto &specie : *this) {
-		copy.insert(specie);
-	}
-	return copy;
-}
-
 NetworkState::NetworkState(const NetworkState &other) {
 	for (const auto &specie : other) {
 		insert(specie);

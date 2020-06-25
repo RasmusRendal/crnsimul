@@ -186,7 +186,7 @@ TEST_F(NetworkStateTest, NetworkStateIsAbs) {
 	state1.insert(std::pair<std::string, double>("a", 10));
 	state1.insert(std::pair<std::string, double>("b", 0));
 
-	NetworkState state2 = state1.DeepCopy();
+	NetworkState state2 = NetworkState(state1);
 	state2["a"] = 9.9;
 	state2["b"] = 0.1;
 

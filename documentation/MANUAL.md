@@ -19,7 +19,7 @@ To compile and install crnsimul, check the [README](https://github.com/RasmusRen
       - [2.2 GNU plotting](#22-gnu-plotting)
       - [3. Printing to .csv files](#3-printing-to-csv-files)
     - [4. Evaluators](#4-evaluators)
-      - [4.1 Euler evaluator](#41-Euler-evaluator)
+      - [4.1 ODE evaluator](#41-ODE-evaluator)
       - [4.2 Markov evaluator](#42-markov-evaluator)
     - [5. Stdout](#5-stdout)
 <br />
@@ -104,18 +104,19 @@ $ crnsimul examples/plus.crn -O plus.csv
 This will produce a comma-seperated values file which contains the concentrations at each step of the simulation.
 
 ### 4. Evaluators
-The crnsimul program offers two types of evaluations, namely the Euler evaluator and the Markov evaluator.
+The crnsimul program offers two types of evaluations, namely the ODE evaluator and the Markov evaluator.
 These two types of evaluators have their own command line parameter to specify which evaluation will be used.
-The previous examples in this manual were evaluated with the Euler evaluator, as it is the default evaluator if no evaluations are specified. 
+The previous examples in this manual were evaluated with the ODE evaluator, as it is the default evaluator if no evaluations are specified. 
 
 
-#### 4.1 Euler evaluator
-As mentioned earlier, the Euler evaluator is the default evaluator which will be used when no evaluators have been specified in the command line. 
-In order to implicitly specify the Euler evaluator, the **"-e"** command line parameter should be used.  
+#### 4.1 ODE evaluator
+As mentioned earlier, the ODE evaluator is the default evaluator which will be used when no evaluators have been specified in the command line. 
+It works by using the RK4 method.
+In order to implicitly specify the ODE evaluator, the **"-e"** command line parameter should be used.  
 ```console
 $ crnsimul examples/plus.crn -e
 ```
-When working with the Euler evaluator.
+When working with the ODE evaluator.
 It is also possible to specify the step size using the **"-S"** command line parameter followed by a number representing the new step size.
 Furthermore, this also applies for specifying the threshold with the **"-T"** parameter instead.
 
@@ -139,7 +140,7 @@ It is also possible to specify the threshold of the Markov evaluator by using th
 The threshold specifies the iteration at which the Markov evaluator will terminate.
 By default, it is set to `5.0`
 
-Note that **"-t"** and **"-T"** from the Euler evaluator are different from eachother as they dont specify the same threshold.
+Note that **"-t"** and **"-T"** from the ODE evaluator are different from eachother as they dont specify the same threshold.
 
 randomwalk.crn, a CRN module in the examples folder, will be used in this example to showcase the Markov evaluator. The following command line will be used:
 

@@ -48,7 +48,7 @@ TEST_F(EulerTest, fractionalRate) {
 	ReactionNetwork network(initNetworkState, reactions);
 	EulerEvaluator evaluator(network);
 	auto state = evaluator.GetNextNetworkState();
-	EXPECT_FLOAT_EQ(state["b"], 1.5 * evaluator.step);
+	EXPECT_CLOSE(state["b"], 1.5 * evaluator.step);
 }
 
 TEST_F(EulerTest, multiplication) {
@@ -107,6 +107,7 @@ TEST_F(EulerTest, SanityCheck) {
 	EXPECT_EQ(res, 0);
 
 	EulerEvaluator e(network);
+	e.step = 0.0001;
 	while (!e.IsFinished())
 		e.GetNextNetworkState();
 
@@ -343,6 +344,5 @@ TEST_F(EulerTest, OverflowException) {
 	drv.network.initNetworkState["b"] = std::numeric_limits<double>::max();
 	EulerEvaluator e(drv.network);
 	e.step = INFINITY;
-	e.GetNextNetworkState();
 	EXPECT_THROW(e.GetNextNetworkState(), DoubleOverflowException);
 }

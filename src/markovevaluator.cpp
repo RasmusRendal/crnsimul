@@ -59,7 +59,7 @@ NetworkState MarkovEvaluator::GetNextNetworkState() {
 		return mState;
 	}
 	Reaction &reaction = GetNextReaction();
-	NetworkState newState = mState.DeepCopy();
+	NetworkState newState = NetworkState(mState);
 	newState = newState - reaction.reactants;
 	newState = newState + reaction.products;
 
